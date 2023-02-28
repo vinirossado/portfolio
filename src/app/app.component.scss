@@ -1,0 +1,534 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,700');
+
+
+* {
+    -webkit-user-select: none;
+    /* Chrome all / Safari all */
+    -moz-user-select: none;
+    /* Firefox all */
+    -ms-user-select: none;
+    /* IE 10+ */
+    user-select: none;
+    /* Likely future */
+}
+
+
+body {
+
+    //Variables
+    $categoryCount: 8;
+    $globalPerspective: 800px;
+    $sceneAxis: -20deg;
+    $itemSectionSpacing: 2500px;
+    $traverse: "";
+    $traverseTriggers: "";
+
+    //Colors
+    $aboutme: #E8927C;
+    $experience: #26daaa;
+    $education: #b29d81;
+    $licensescertifications: #E8927C;
+    // $experience: #E8927C;
+    // $experience: #E8927C;
+
+    %absPosition {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        margin: auto;
+    }
+
+    %trigger {
+        @extend %absPosition;
+
+        width: 220px;
+        height: 220ox;
+        border-radius: 550px;
+        appearance: none;
+        outline: none;
+        cursor: pointer;
+        z-index: 12;
+        left: 18px;
+        bottom: 300px;
+    }
+
+    %viewPort {
+        position: absolute;
+        transform: rotateX($sceneAxis);
+        perspective: $globalPerspective;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+    }
+
+    %movement {
+        border: 2px dashed white;
+        position: absolute;
+        border-radius: 4000px;
+        background: none !important;
+        z-index: -2;
+    }
+
+    %item {
+        height: 1200px;
+        width: 1200px;
+        border-radius: 10px;
+        transition: transform 3s .23s cubic-bezier(0.33, 0, 0, 1), opacity 2s .8s, box-shadow 0s 0s;
+        background: lightgoldenrodyellow;
+        background-size: 1140px 910px !important;
+        top: auto;
+
+        @keyframes item {
+            from {
+                background-position-y: 0px;
+            }
+
+            to {
+                background-position-y: -1000px;
+            }
+        }
+    }
+
+
+    overflow: hidden;
+    background: black;
+    height: 100vh;
+    font-family: 'Montserrat',
+    sans-serif;
+
+
+
+    @mixin makeSectionItem($outer, $inner, $texture) {
+        background: url($texture);
+        box-shadow: 0 (-590px) 150px black inset, 0 0px 130px 40px $inner inset, 0 0px 23px 4px $inner inset, 0 -10px 130px $outer;
+
+    }
+
+    @mixin makeMovement($width, $left, $top) {
+        @extend %movement;
+
+        width: $width;
+        height: $width;
+        left: $left;
+        top: $top;
+    }
+
+
+    .logo {
+        color: white;
+        position: absolute;
+        top: 40px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        text-align: center;
+        font-size: 28px;
+        text-transform: uppercase;
+        font-weight: 100;
+        letter-spacing: 4px;
+        z-index: 3;
+
+        span {
+            font-size: 12px;
+            color: #f39041;
+            display: block;
+        }
+
+    }
+
+
+    input[type="radio"][name=item] {
+        appearance: none;
+        margin: 3px 3px 0px 5px;
+
+        &::after {
+            @extend %absPosition;
+
+            content: '';
+        }
+    }
+
+    label {}
+
+    label.menu {
+        color: white;
+        display: block;
+        position: absolute;
+        cursor: pointer;
+        left: 90px;
+        z-index: 2;
+
+        &:after {
+            display: block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid white;
+            border-radius: 60px;
+            content: '';
+            z-index: 2;
+            position: absolute;
+            top: -4px;
+            left: -4px;
+        }
+
+        &:hover {
+
+            h2,
+            h3 {
+                opacity: 1;
+            }
+        }
+
+        &.about-me {
+            h2 .icon {
+                background: $aboutme;
+            }
+        }
+
+        &.experience {
+            h2 .icon {
+                background: $experience;
+            }
+        }
+
+        &.education {
+            h2 .icon {
+                background: $education;
+            }
+        }
+
+        &.licenses-certifications {
+            h2 .icon {
+                background: $licensescertifications;
+            }
+        }
+
+
+        & .preview {
+            width: 30px;
+            height: 30px;
+            background: yellow;
+            float: left;
+            background-size: auto 100% !important;
+            position: absolute;
+            border-radius: 100px;
+            //border: 2px solid white;
+            box-shadow: 0 -13px 10px 2px black inset;
+        }
+
+        & .info {
+            position: relative;
+            left: 50px;
+            top: 1px;
+        }
+
+
+        h2,
+        h3 {
+            text-transform: uppercase;
+            margin: 0;
+            font-weight: 100;
+            letter-spacing: 2px;
+
+        }
+
+        h2 {
+            font-size: 11px;
+            opacity: 0.4;
+            margin-bottom: 4px;
+
+
+            & .icon {
+                width: 0;
+                height: 9px;
+                background: #fea082;
+                float: left;
+                position: relative;
+                top: 3px;
+                transition: all 0.3s;
+                //transform: skew(-10deg);
+                margin-right: 0px;
+            }
+        }
+
+        h3 {
+            font-size: 8px;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            opacity: 0.3;
+        }
+
+        @for $i from 1 through $categoryCount {
+            &:nth-of-type(#{$i}) {
+                $labelSize: 34px;
+                $labelSpacing : 14px;
+                $totalHeight: ($labelSize & $categoryCount)+calc((14 * ($categoryCount)/ 2));
+
+                top: calc(50vh + 100px + ((#{$labelSpacing} + #{$labelSize}) * #{$i} + 0px - #{$totalHeight}));
+            }
+        }
+    }
+
+    & input.read {
+        display: none;
+    }
+
+    & .read:checked+label+input+.panel {
+        right: 0;
+    }
+
+    & .read:checked+label {
+        width: calc(100% - 420px);
+
+        &::after {
+            opacity: 1;
+            left: 0;
+        }
+    }
+
+    & .read:checked+label+label {
+        transition: all 0.3s .6s;
+        opacity: 1;
+    }
+
+    & .read:not(:checked)+label+label {
+        transition: all 0.3s 0s;
+        opacity: 0;
+    }
+
+    label.close {
+        position: absolute;
+        right: 60px;
+        opacity: 0;
+        transition: all 0.3s 0.4s;
+        z-index: 3;
+        top: 65px;
+
+    }
+
+    label.closeBig {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 3;
+        height: 100vh;
+        transition: all 0.2s;
+        z-index: 10;
+
+        width: 0;
+        background: rgba(56, 37, 99, 0.38);
+
+        &::after {
+            content: 'Back';
+            text-align: center;
+            font-size: 30px;
+            color: white;
+            position: absolute;
+            left: -140px;
+            opacity: 0;
+            right: 0;
+
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+    }
+
+    & .overlay {
+        @extend %absPosition;
+        width: 1200px;
+        height: 620px;
+        top: auto;
+        z-index: 4;
+        border-bottom: 1000px solid black;
+        border-radius: 100%;
+        opacity: 1;
+        top: -240px;
+        left: -303px;
+        box-shadow: 0px -200px 215px 110px black inset;
+    }
+
+    @for $i from 1 through $categoryCount {
+
+        $traverse : $traverse + "input + label +";
+        $traverseTriggers : $traverseTriggers + "input + label +";
+
+        @if ($i ==1) {
+            $traverseTriggers: "label +";
+            $traverse: "label +";
+        }
+
+
+        @if ($i ==2) {
+            $traverseTriggers: "label +";
+        }
+
+        input[type="radio"][name=item] {
+            appearance: none;
+            margin: 3px 3px 0px 5px;
+
+            &::after {
+                @extend %absPosition;
+                @extend %trigger;
+
+                content: '';
+            }
+        }
+    }
+
+    .section {
+        @extend %viewPort;
+
+        &-item {
+            @for $i from 1 through 9 {
+                &:nth-of-type(#{$i}) {
+                    & .item {
+
+                        $translateZ: -$itemSectionSpacing * ($i - 1);
+                        $translateY: 0;
+                        $rotateX: 4deg;
+                        $scaleOffset: 1;
+                        $opacity: 2 - ($i - 1);
+
+                        transform: translateZ($translateZ) translateY($translateY) rotateX($rotateX) scaleX($scaleOffset);
+
+                        opacity: $opacity;
+
+                        animation: item 60s 3.9s infinite linear;
+
+                        &-description {
+                            opacity: 1;
+                            transition: all .6 2.6s;
+
+                            h2,
+                            h1 {
+                                position: relative;
+                                top: 1px;
+                                transition: all .5 3s;
+                                color: white;
+                            }
+
+                            p,
+                            a {
+                                transition: all 1s 3.5s, padding 0.3s 0s;
+                                opacity: 1;
+                                color: white;
+
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            & .item {
+                @extend %absPosition;
+                @extend %item;
+
+                & .trajectory {
+                    // transition: all .6s 0s;
+                    opacity: 0;
+                }
+
+                &.about-me {
+                    @include makeSectionItem(rgba(188, 143, 127, 0.6), rgba(234, 205, 199, 0.6), 'https://www.seekpng.com/png/detail/911-9115040_blank-magic-card-template-best-photos-of-template.png');
+                }
+
+                &-description {
+                    width: 620px;
+                    text-align: center;
+                    position: absolute;
+                    margin: auto;
+                    left: 0;
+                    z-index: 2;
+                    right: 0;
+                    color: white;
+                    font-weight: 100;
+                    transition: all .4s 0s;
+                    text-transform: uppercase;
+                    z-index: 1;
+
+                    &.about-me {
+                        a {
+                            color: $aboutme;
+                        }
+
+                        h2 {
+                            color: lighten($aboutme, 20);
+                        }
+                    }
+
+                    h1,
+                    h2,
+                    p,
+                    a {
+                        font-weight: 100;
+                        font-size: 10px;
+                        letter-spacing: 5px;
+                        margin: 0;
+                    }
+
+                    h1 {
+                        letter-spacing: 16px;
+                        font-size: 34px;
+                    }
+
+                    h2,
+                    a {
+                        color: #fabfad;
+                    }
+
+                    h2 {
+                        margin-top: 60px;
+                        margin-bottom: 6px;
+                    }
+
+                    p {
+                        line-height: 26px;
+                        margin-top: 14px;
+                        opacity: 0.9;
+                        margin-bottom: 10px;
+                    }
+
+                    a {
+                        color: #fea082;
+                        font-size: 11px;
+                        font-weight: 500;
+                        padding: 0 2px 5px 0px;
+                        border-bottom: 2px solid;
+                        transition: all 0.2s;
+                        position: relative;
+                        left: 0;
+
+                        &:hover {
+                            padding: 0 10px 5px 10px;
+                            left: -1px;
+                        }
+
+                        span {
+                            letter-spacing: 0;
+                            margin-left: -5px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    & .panel {
+        position: absolute;
+        height: 100vh;
+        top: 0;
+        color: black;
+        background: whitesmoke;
+        overflow: scroll;
+        right: -520px;
+        width: 300px;
+        transition: all 0.3s;
+        padding: 10px 60px 0px 60px;
+
+    }
+
+}
