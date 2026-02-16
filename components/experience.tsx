@@ -175,7 +175,7 @@ export default function Experience() {
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                   <div className="flex items-start gap-4">
                     <div
-                      className={`p-3 rounded-lg ${exp.featured 
+                      className={`p-3 rounded-lg ${exp.featured
                         ? "bg-blue-100 text-blue-600 dark:bg-slate-700 dark:text-orange-500"
                         : "bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-400"
                       } flex-shrink-0`}
@@ -280,4 +280,3 @@ export default function Experience() {
     </section>
   )
 }
-
