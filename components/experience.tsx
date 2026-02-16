@@ -14,6 +14,7 @@ const experiences = [
     locationKey: "exp1Location",
     periodKey: "exp1Period",
     descriptionKey: "exp1Description",
+    responsibilityKeys: ["exp1Resp1", "exp1Resp2", "exp1Resp3", "exp1Resp4"],
     featured: true,
     technologies: ["C#", ".Net", "TypeScript", "Ionic", "StencilJS", "Azure"],
   },
@@ -25,6 +26,7 @@ const experiences = [
     locationKey: "exp2Location",
     periodKey: "exp2Period",
     descriptionKey: "exp2Description",
+    responsibilityKeys: ["exp2Resp1", "exp2Resp2", "exp2Resp3", "exp2Resp4"],
     technologies: ["C#", ".Net", "TypeScript", "Ionic", "StencilJS", "Azure"],
   },
   {
@@ -34,6 +36,7 @@ const experiences = [
     locationKey: "exp3Location",
     periodKey: "exp3Period",
     descriptionKey: "exp3Description",
+    responsibilityKeys: ["exp3Resp1", "exp3Resp2", "exp3Resp3", "exp3Resp4"],
     technologies: ["C#", ".NET", "Angular", "React Native", "Oracle", "SQL Server", "MongoDB"],
   },
   {
@@ -43,6 +46,7 @@ const experiences = [
     locationKey: "exp4Location",
     periodKey: "exp4Period",
     descriptionKey: "exp4Description",
+    responsibilityKeys: ["exp4Resp1", "exp4Resp2", "exp4Resp3", "exp4Resp4"],
     technologies: ["C#", "Elixir", ".NET", "Angular", "Flutter", "SQL Server", "MongoDB"],
   },
   {
@@ -52,6 +56,7 @@ const experiences = [
     locationKey: "exp5Location",
     periodKey: "exp5Period",
     descriptionKey: "exp5Description",
+    responsibilityKeys: ["exp5Resp1", "exp5Resp2", "exp5Resp3"],
     technologies: ["C#", ".NET", "Angular", "SQL Server"],
   },
   {
@@ -61,6 +66,7 @@ const experiences = [
     locationKey: "exp6Location",
     periodKey: "exp6Period",
     descriptionKey: "exp6Description",
+    responsibilityKeys: ["exp6Resp1", "exp6Resp2", "exp6Resp3"],
     technologies: ["C#", ".NET", "Angular", "Xamarin", "SQL Server"],
   },
   {
@@ -70,6 +76,7 @@ const experiences = [
     locationKey: "exp7Location",
     periodKey: "exp7Period",
     descriptionKey: "exp7Description",
+    responsibilityKeys: ["exp7Resp1", "exp7Resp2", "exp7Resp3"],
     technologies: ["Ruby", "Ruby on Rails", "Angular", "SQL Server"],
   },
 ]
@@ -265,10 +272,9 @@ export default function Experience() {
                   <div className="pt-4 border-t border-slate-100 dark:border-slate-700">
                     <h4 className="font-medium text-slate-800 dark:text-white mb-3">{t("responsibilities")}</h4>
                     <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300 list-disc pl-5">
-                      <li>{t("expWebDevelopment")}</li>
-                      <li>{t("expTeamCollaboration")}</li>
-                      <li>{t("expBestPractices")}</li>
-                      <li>{t("expCodeReview")}</li>
+                      {exp.responsibilityKeys.map((key) => (
+                        <li key={key}>{t(key)}</li>
+                      ))}
                     </ul>
                   </div>
                 </motion.div>

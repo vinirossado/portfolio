@@ -128,6 +128,15 @@ export default function Skills() {
   const [isLoading, setIsLoading] = useState(false)
 
   const { t } = useLanguage()
+
+  // Map skill name keys to GitHub language identifiers
+  const skillToGithubLanguage: Record<string, string> = {
+    skillCSharpName: "C#",
+    skillGoName: "Go",
+    skillTypeScriptName: "TypeScript",
+    skillSwiftUIName: "Swift",
+  }
+
   // Helper functions for translation
   function getSkillName(skill: Skill) {
     return t(skill.nameKey)
@@ -137,6 +146,10 @@ export default function Skills() {
   }
   function getSkillDescription(skill: Skill) {
     return t(skill.descriptionKey)
+  }
+
+  function getGithubLanguage(skill: Skill): string | null {
+    return skillToGithubLanguage[skill.nameKey] || null
   }
 
   // Handle skill click with auto-scroll for both mobile and desktop
@@ -155,9 +168,11 @@ export default function Skills() {
     }
   }
 
+  // Fetch repos once and cache them
   useEffect(() => {
     const fetchRepos = async () => {
-      if (activeSkill && getSkillCategory(activeSkill) === t("skillCSharpCategory")) {
+      if (repos.length > 0) return
+      if (activeSkill && getGithubLanguage(activeSkill)) {
         setIsLoading(true)
         try {
           const response = await fetch(`https://api.github.com/users/vinirossado/repos?sort=updated&per_page=100`)
@@ -169,14 +184,15 @@ export default function Skills() {
         } finally {
           setIsLoading(false)
         }
-      } else {
-        setRepos([])
       }
     }
     fetchRepos()
   }, [activeSkill])
 
-  const filteredRepos = repos.filter((repo) => repo.language === (activeSkill ? getSkillName(activeSkill) : undefined))
+  const githubLang = activeSkill ? getGithubLanguage(activeSkill) : null
+  const filteredRepos = githubLang
+    ? repos.filter((repo) => repo.language === githubLang)
+    : []
 
   // Agrupar habilidades por categoria
   const categories = skills.reduce(
@@ -346,7 +362,7 @@ export default function Skills() {
                   <p className="text-sm text-slate-700 dark:text-slate-300">{getSkillDescription(activeSkill)}</p>
                 </div>
 
-                {getSkillCategory(activeSkill) === t("skillCSharpCategory") && (
+                {getGithubLanguage(activeSkill) && (
                   <div className="mt-4">
                     <h5 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 flex items-center justify-between">
                       <span>
@@ -354,7 +370,7 @@ export default function Skills() {
                       </span>
                       {filteredRepos.length > 0 && (
                         <a
-                          href={`https://github.com/vinirossado?tab=repositories&q=&language=${getSkillName(activeSkill)}`}
+                          href={`https://github.com/vinirossado?tab=repositories&q=&language=${getGithubLanguage(activeSkill)}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-xs text-orange-500 hover:underline flex items-center"
@@ -432,7 +448,7 @@ export default function Skills() {
 
                         {filteredRepos.length > 5 && (
                           <a
-                            href={`https://github.com/vinirossado?tab=repositories&q=&language=${getSkillName(activeSkill)}`}
+                            href={`https://github.com/vinirossado?tab=repositories&q=&language=${getGithubLanguage(activeSkill)}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="block text-center text-xs text-blue-600 hover:text-blue-800 dark:text-orange-400 dark:hover:text-orange-300 py-2 bg-blue-50 dark:bg-slate-800 rounded-md border border-blue-100 dark:border-orange-700/30 hover:bg-blue-100 dark:hover:bg-slate-700 transition-colors"
