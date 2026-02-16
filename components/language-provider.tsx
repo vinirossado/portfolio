@@ -234,7 +234,7 @@ const translations = {
     aboutServiceBackend: "Building robust and scalable APIs with Node.js, Express and TypeScript.",
     aboutServiceDatabase: "Modeling and optimizing SQL and NoSQL databases.",
     aboutServiceFullWebApps: "Full-stack development of end-to-end web applications.",
-    aboutIntro1: "Hello! I'm a FullStack developer passionate about creating elegant and functional web solutions.",
+    aboutIntro1: "Hello! I'm a Senior Software Engineer passionate about creating elegant and functional web solutions.",
     aboutIntro2: "Hi, I'm Vinicius. Currently working with Stencil and .NET Core at a financial company. One of my favorite things to do on my free time (besides playing the guitar) is to build new architectures in order to challenge myself with new development patterns. Besides, one of my hobbies includes learning new stacks, for instance, right now I'm quite interested in Golang.",
     aboutIntro3: "For the past few years I've also been interested in learning new languages and cultures, especially the nordic ones. You can reach me at my e-mail, if you want to see my personal projects, check out projects section.",
     projects: "Recent Projects",
@@ -877,4 +877,3 @@ export function useLanguage() {
   }
   return context
 }
-
