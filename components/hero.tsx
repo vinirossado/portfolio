@@ -11,7 +11,7 @@ interface HeroProps {
   yearsOfExperience?: number
 }
 
-export default function Hero({ name, title, photoUrl, yearsOfExperience = 7 }: HeroProps) {
+export default function Hero({ name, title, photoUrl, yearsOfExperience = 8 }: HeroProps) {
   const { t } = useLanguage()
 
   const codeLines = [
@@ -242,4 +242,3 @@ export default function Hero({ name, title, photoUrl, yearsOfExperience = 7 }: H
     </section>
   )
 }
-
