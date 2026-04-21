@@ -43,8 +43,8 @@ const projects = [
     id: crypto.randomUUID(),
     titleKey: "projectIdentityKitTitle",
     descriptionKey: "projectIdentityKitDescription",
-    image: "/projects/identitykit-architecture.png",
-    screenshots: ["/projects/identitykit-architecture.png"],
+    image: "/projects/identitykit-demo.png",
+    screenshots: ["/projects/identitykit-demo.png"],
     tags: [
       "Swift",
       "UIKit",
