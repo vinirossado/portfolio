@@ -1,37 +1,67 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useInView } from "framer-motion"
-import { useRef, useState } from "react"
-import { ExternalLink, Github, Code, Database } from "lucide-react"
-import { Server } from "lucide-react"
-import { useLanguage } from "@/components/language-provider"
-import ProjectMedia from "@/components/project-media"
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import { ExternalLink, Github, Code, Database } from "lucide-react";
+import { Server } from "lucide-react";
+import { useLanguage } from "@/components/language-provider";
+import { ImageIcon } from "lucide-react";
+import ProjectMedia, { ScreenshotGallery } from "@/components/project-media";
+import BuyMeACoffeeButton from "@/components/buy-me-a-coffee";
 
 const projects = [
   {
     id: crypto.randomUUID(),
     titleKey: "projectTravelAppTitle",
     descriptionKey: "projectTravelAppDescription",
-    image: "/placeholder.svg?height=600&width=800",
-    demoGif: "https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif", // Travel/mobile app GIF
-    demoVideo: "https://www.youtube.com/watch?v=LXb3EKWsInQ", // Travel app demo
-    liveDemo: "https://apps.apple.com/app/travel-planner/example", // App store example
-    screenshots: [
-      "https://picsum.photos/400/800?random=21",
-      "https://picsum.photos/400/800?random=22",
-      "https://picsum.photos/400/800?random=23",
-      "https://picsum.photos/400/800?random=24"
+    image: "/projects/TripDetails.png",
+    // demoGif: "", // Add a working GIF URL when available
+    // demoVideo: "https://www.youtube.com/watch?v=LXb3EKWsInQ", // Travel app demo
+    // liveDemo: "https://apps.apple.com/app/travel-planner/example", // Uncomment when app is on the store
+    screenshots: ["/projects/TripDetails.png", "/projects/TripView.png"],
+    tags: [
+      "Swift",
+      "SwiftUI",
+      "Alamofire",
+      "iOS",
+      "Swift Data",
+      ".Net",
+      "PostgreSQL",
     ],
-    tags: ["Swift", "SwiftUI", "Alamofire", "iOS", "Swift Data", ".Net", "PostgreSQL"],
-    liveUrl: "#",
-    githubUrl: "https://github.com/vinirossado/travel-app",
+    liveUrl: "tripfinity.eu",
+    // githubUrl: "https://github.com/vinirossado/travel-app",
     featureKeys: [
       "projectTravelAppFeature1",
       "projectTravelAppFeature2",
       "projectTravelAppFeature3",
       "projectTravelAppFeature4",
       "projectTravelAppFeature5",
+    ],
+  },
+  {
+    id: crypto.randomUUID(),
+    titleKey: "projectIdentityKitTitle",
+    descriptionKey: "projectIdentityKitDescription",
+    image: "/projects/identitykit-architecture.png",
+    screenshots: ["/projects/identitykit-architecture.png"],
+    tags: [
+      "Swift",
+      "UIKit",
+      "AVFoundation",
+      "Vision",
+      "SPM",
+      "XCTest",
+      "Fastlane",
+    ],
+    liveUrl: "https://vinirossado.github.io/Swift-KYC/documentation/identitykitcore",
+    githubUrl: "https://github.com/vinirossado/Swift-KYC",
+    featureKeys: [
+      "projectIdentityKitFeature1",
+      "projectIdentityKitFeature2",
+      "projectIdentityKitFeature3",
+      "projectIdentityKitFeature4",
+      "projectIdentityKitFeature5",
     ],
   },
   {
@@ -46,9 +76,18 @@ const projects = [
       "https://picsum.photos/400/800?random=25",
       "https://picsum.photos/400/800?random=26",
       "https://picsum.photos/400/800?random=27",
-      "https://picsum.photos/400/800?random=28"
+      "https://picsum.photos/400/800?random=28",
     ],
-    tags: ["Swift", "SwiftUI", "iOS", "iPad", "Alamofire", "Swift Data", ".Net", "PostgreSQL"],
+    tags: [
+      "Swift",
+      "SwiftUI",
+      "iOS",
+      "iPad",
+      "Alamofire",
+      "Swift Data",
+      ".Net",
+      "PostgreSQL",
+    ],
     liveUrl: "#",
     githubUrl: "https://github.com/vinirossado/spark-tracker",
     featureKeys: [
@@ -71,9 +110,17 @@ const projects = [
       "https://picsum.photos/400/800?random=29",
       "https://picsum.photos/400/800?random=30",
       "https://picsum.photos/400/800?random=31",
-      "https://picsum.photos/400/800?random=32"
+      "https://picsum.photos/400/800?random=32",
     ],
-    tags: ["Swift", "SwiftUI", "Alamofire", "iOS", "Swift Data", ".Net", "PostgreSQL"],
+    tags: [
+      "Swift",
+      "SwiftUI",
+      "Alamofire",
+      "iOS",
+      "Swift Data",
+      ".Net",
+      "PostgreSQL",
+    ],
     liveUrl: "#",
     githubUrl: "https://github.com/vinirossado/cookbook-pro",
     featureKeys: [
@@ -82,7 +129,7 @@ const projects = [
       "projectCookbookProFeature3",
       "projectCookbookProFeature4",
       "projectCookbookProFeature5",
-      "projectCookbookProFeature6"
+      "projectCookbookProFeature6",
     ],
   },
   {
@@ -96,7 +143,7 @@ const projects = [
     screenshots: [
       "https://picsum.photos/800/600?random=1",
       "https://picsum.photos/800/600?random=2",
-      "https://picsum.photos/800/600?random=3"
+      "https://picsum.photos/800/600?random=3",
     ],
     tags: ["C#", ".Net", "CosmosDB", "Azure", "Bicep", "PostgreSQL"],
     liveUrl: "#",
@@ -119,7 +166,7 @@ const projects = [
     screenshots: [
       "https://picsum.photos/800/600?random=4",
       "https://picsum.photos/800/600?random=5",
-      "https://picsum.photos/800/600?random=6"
+      "https://picsum.photos/800/600?random=6",
     ],
     tags: ["Golang", "PostgreSQL", "Mustache", "Cobra", "Gorm", "Docker"],
     liveUrl: "#",
@@ -144,7 +191,7 @@ const projects = [
       "https://picsum.photos/400/800?random=7",
       "https://picsum.photos/400/800?random=8",
       "https://picsum.photos/400/800?random=9",
-      "https://picsum.photos/400/800?random=10"
+      "https://picsum.photos/400/800?random=10",
     ],
     tags: ["SwiftUI", "Swift", "PostgreSQL", ".Net"],
     liveUrl: "#",
@@ -167,7 +214,7 @@ const projects = [
       "https://picsum.photos/800/600?random=14",
       "https://picsum.photos/800/600?random=15",
       "https://picsum.photos/800/600?random=16",
-      "https://picsum.photos/800/600?random=17"
+      "https://picsum.photos/800/600?random=17",
     ],
     tags: ["Go", "Gorm", "Zap", "Swagger", "JWT", "Docker"],
     liveUrl: "#",
@@ -189,8 +236,8 @@ const projects = [
     liveDemo: "https://vinirossado.vercel.app", // Current portfolio
     screenshots: [
       "https://picsum.photos/800/600?random=18",
-      "https://picsum.photos/800/600?random=19", 
-      "https://picsum.photos/800/600?random=20"
+      "https://picsum.photos/800/600?random=19",
+      "https://picsum.photos/800/600?random=20",
     ],
     tags: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
     liveUrl: "https://vinirossado.vercel.app",
@@ -202,16 +249,22 @@ const projects = [
       "projectPortfolioWebsiteFeature4",
     ],
   },
-]
+];
 
 export default function Projects() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, amount: 0.1 })
-  const [activeProject, setActiveProject] = useState<number | null>(null)
-  const { t } = useLanguage()
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
+  const [activeProject, setActiveProject] = useState<number | null>(null);
+  const [screenshotProject, setScreenshotProject] = useState<number | null>(
+    null,
+  );
+  const { t } = useLanguage();
 
   return (
-    <section id="projects" className="py-20 px-4 md:px-8 bg-gradient-to-b from-white dark:from-slate-900 to-blue-50 dark:to-slate-800 relative">
+    <section
+      id="projects"
+      className="py-20 px-4 md:px-8 bg-gradient-to-b from-white dark:from-slate-900 to-blue-50 dark:to-slate-800 relative"
+    >
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.h2
           className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mb-4 text-center"
@@ -239,7 +292,7 @@ export default function Projects() {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 * index }}
-              className="bg-white dark:bg-slate-800 rounded-xl 
+              className="bg-white dark:bg-slate-800 rounded-xl
                overflow-hidden shadow-lg hover:shadow-xl transition-all
                duration-300
                border border-slate-100 dark:border-slate-700
@@ -249,9 +302,11 @@ export default function Projects() {
             >
               <div className="relative h-56 overflow-hidden">
                 {/* Only show overlay for fallback images, not for media content */}
-                {!project.demoGif && !project.demoVideo && !project.screenshots?.length && (
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                )}
+                {!project.demoGif &&
+                  !project.demoVideo &&
+                  !project.screenshots?.length && (
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  )}
 
                 {/* Use ProjectMedia component for better project showcases */}
                 <ProjectMedia
@@ -263,13 +318,15 @@ export default function Projects() {
                 />
 
                 {/* Fallback to static image if no media */}
-                {!project.demoGif && !project.demoVideo && !project.screenshots?.length && (
-                  <img
-                    src={project.image || "/placeholder.svg"}
-                    alt={t(project.titleKey)}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                )}
+                {!project.demoGif &&
+                  !project.demoVideo &&
+                  !project.screenshots?.length && (
+                    <img
+                      src={project.image || "/placeholder.svg"}
+                      alt={t(project.titleKey)}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
 
                 {/* Overlay tech icons */}
                 <div className="absolute top-4 right-4 z-20">
@@ -277,7 +334,9 @@ export default function Projects() {
                     {project.tags.includes("React") && (
                       <motion.div
                         initial={{ opacity: 0, y: -10 }}
-                        animate={activeProject === index ? { opacity: 1, y: 0 } : {}}
+                        animate={
+                          activeProject === index ? { opacity: 1, y: 0 } : {}
+                        }
                         transition={{ duration: 0.3, delay: 0.1 }}
                         className="w-8 h-8 rounded-full bg-blue-600/80 backdrop-blur-sm flex items-center justify-center text-white"
                       >
@@ -287,7 +346,9 @@ export default function Projects() {
                     {project.tags.includes("Node.js") && (
                       <motion.div
                         initial={{ opacity: 0, y: -10 }}
-                        animate={activeProject === index ? { opacity: 1, y: 0 } : {}}
+                        animate={
+                          activeProject === index ? { opacity: 1, y: 0 } : {}
+                        }
                         transition={{ duration: 0.3, delay: 0.2 }}
                         className="w-8 h-8 rounded-full bg-green-600/80 backdrop-blur-sm flex items-center justify-center text-white"
                       >
@@ -297,7 +358,9 @@ export default function Projects() {
                     {project.tags.includes("MongoDB") && (
                       <motion.div
                         initial={{ opacity: 0, y: -10 }}
-                        animate={activeProject === index ? { opacity: 1, y: 0 } : {}}
+                        animate={
+                          activeProject === index ? { opacity: 1, y: 0 } : {}
+                        }
                         transition={{ duration: 0.3, delay: 0.3 }}
                         className="w-8 h-8 rounded-full bg-green-700/80 backdrop-blur-sm flex items-center justify-center text-white"
                       >
@@ -307,29 +370,36 @@ export default function Projects() {
                   </div>
                 </div>
 
-                {/* Project links - only show GitHub, demo handled by ProjectMedia */}
-                <div className="absolute bottom-4 left-0 right-0 z-20 flex justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">
-                  <a
-                    href={project.githubUrl}
-                    className="flex items-center gap-1 text-sm text-white bg-slate-800/90 hover:bg-slate-800 px-3 py-1.5 rounded-full backdrop-blur-sm"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Github size={14} />
-                    <span>{t("viewOnGithub")}</span>
-                  </a>
-                </div>
+                {/* Project links - only show GitHub when URL exists */}
+                {project.githubUrl && (
+                  <div className="absolute bottom-4 left-0 right-0 z-20 flex justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">
+                    <a
+                      href={project.githubUrl}
+                      className="flex items-center gap-1 text-sm text-white bg-slate-800/90 hover:bg-slate-800 px-3 py-1.5 rounded-full backdrop-blur-sm"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Github size={14} />
+                      <span>{t("viewOnGithub")}</span>
+                    </a>
+                  </div>
+                )}
               </div>
 
               <div className="p-6 flex-1 flex flex-col">
                 <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-orange-500 transition-colors">
                   {t(project.titleKey)}
                 </h3>
-                <p className="text-slate-600 dark:text-slate-200 mb-4 text-sm flex-shrink-0">{t(project.descriptionKey)}</p>
+                <p className="text-slate-600 dark:text-slate-200 mb-4 text-sm flex-shrink-0">
+                  {t(project.descriptionKey)}
+                </p>
 
                 <div className="flex flex-wrap gap-2 mb-4 flex-shrink-0">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="px-3 py-1 bg-blue-100 dark:bg-slate-700 text-blue-700 dark:text-orange-400 text-xs rounded-full">
+                    <span
+                      key={tag}
+                      className="px-3 py-1 bg-blue-100 dark:bg-slate-700 text-blue-700 dark:text-orange-400 text-xs rounded-full"
+                    >
                       {tag}
                     </span>
                   ))}
@@ -337,10 +407,15 @@ export default function Projects() {
 
                 {/* Features list */}
                 <div className="mt-auto space-y-2">
-                  <h4 className="text-sm font-medium text-slate-700 dark:text-slate-100">{t("mainFeatures")}</h4>
+                  <h4 className="text-sm font-medium text-slate-700 dark:text-slate-100">
+                    {t("mainFeatures")}
+                  </h4>
                   <ul className="grid grid-cols-2 gap-x-2 gap-y-1 mb-4">
                     {project.featureKeys.map((featureKey, i) => (
-                      <li key={i} className="text-xs text-slate-600 dark:text-slate-300 flex items-center gap-1">
+                      <li
+                        key={i}
+                        className="text-xs text-slate-600 dark:text-slate-300 flex items-center gap-1"
+                      >
                         <div className="w-1.5 h-1.5 rounded-full bg-blue-500 dark:bg-orange-500 shrink-0"></div>
                         <span>{t(featureKey)}</span>
                       </li>
@@ -349,27 +424,75 @@ export default function Projects() {
 
                   {/* Media action buttons */}
                   <div className="flex flex-wrap gap-2">
-                    {project.liveDemo && (
+                    {project.liveUrl && project.liveUrl !== "#" && (
                       <a
-                        href={project.liveDemo}
+                        href={
+                          project.liveUrl.startsWith("http")
+                            ? project.liveUrl
+                            : `https://${project.liveUrl}`
+                        }
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 dark:bg-orange-600 dark:hover:bg-orange-700 text-white text-xs rounded-lg font-medium transition-colors"
                       >
                         <ExternalLink className="w-3 h-3" />
+                        {t("visitWebsite")}
+                      </a>
+                    )}
+                    {project.liveDemo && (
+                      <a
+                        href={project.liveDemo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-xs rounded-lg font-medium transition-colors"
+                      >
+                        <ExternalLink className="w-3 h-3" />
                         {t("liveDemo")}
                       </a>
                     )}
-                    
+
                     {project.demoVideo && (
                       <button className="inline-flex items-center gap-1 px-3 py-1.5 bg-slate-600 hover:bg-slate-700 text-white text-xs rounded-lg font-medium transition-colors">
-                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                        <svg
+                          className="w-3 h-3"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                            clipRule="evenodd"
+                          />
                         </svg>
                         {t("watchVideo")}
                       </button>
                     )}
+                    {project.screenshots && project.screenshots.length > 0 && (
+                      <button
+                        onClick={() =>
+                          setScreenshotProject(
+                            screenshotProject === index ? null : index,
+                          )
+                        }
+                        className="inline-flex items-center gap-1 px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white text-xs rounded-lg font-medium transition-colors"
+                      >
+                        <ImageIcon className="w-3 h-3" />
+                        {t("viewScreenshots")} ({project.screenshots.length})
+                      </button>
+                    )}
                   </div>
+
+                  {/* Screenshot Gallery */}
+                  {screenshotProject === index &&
+                    project.screenshots &&
+                    project.screenshots.length > 0 && (
+                      <div className="mt-3">
+                        <ScreenshotGallery
+                          screenshots={project.screenshots}
+                          title={t(project.titleKey)}
+                        />
+                      </div>
+                    )}
                 </div>
               </div>
             </motion.div>
@@ -392,9 +515,9 @@ export default function Projects() {
             <Github size={18} />
             <span>{t("seeMoreGithub")}</span>
           </a>
+          <BuyMeACoffeeButton variant="cta" />
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
-
