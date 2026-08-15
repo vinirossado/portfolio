@@ -12,6 +12,9 @@ interface LanguageContextType {
 
 const translations = {
   pt: {
+    nowUpdated: "Atualizado em agosto de 2026",
+    nowNextBody: "Entro no time PELM da The LEGO Group em Billund em setembro, construindo os servicos por tras do processo de desenvolvimento de produto.",
+    nowNext: "A seguir",
     currentRole: "Atual",
 
     // ---- LEGO (RASCUNHO — escopo do cargo, nao realizacoes) ----
@@ -345,13 +348,14 @@ const translations = {
     contactError: "Nao consegui enviar. Me escreva direto:",
     // ---- Secao Agora (EDITE ESTES TRES TEXTOS) ----
     now: "Agora",
-    nowSubtitle: "No que estou trabalhando, estudando e lendo neste momento.",
+    nowSubtitle:
+      "O que estou construindo, estudando e para onde vou agora.",
     nowBuilding: "Construindo",
-    nowBuildingBody: "Tripfinity — planejador de viagens para iOS em SwiftUI sobre um backend .NET/PostgreSQL.",
+    nowBuildingBody:
+      "Tripfinity, um planejador de viagens para iOS em SwiftUI sobre backend .NET, e o IdentityKit — SDK de KYC open-source com captura de documento e liveness.",
     nowLearning: "Estudando",
-    nowLearningBody: "Swift Concurrency e arquitetura offline-first para apps moveis.",
-    nowReading: "Lendo",
-    nowReadingBody: "Designing Data-Intensive Applications, de Martin Kleppmann.",
+    nowLearningBody:
+      "AWS e modelagem semantica / knowledge graphs. Passei anos em Azure; a vaga nova pede o outro lado, entao estou cobrindo essa distancia agora.",
     // ---- Escrita / Medium ----
     writing: "Escrevendo",
     seeAllOnMedium: "Ver tudo no Medium",
@@ -366,6 +370,9 @@ const translations = {
     ghLastPush: "Ultimo push em",
   },
   en: {
+    nowUpdated: "Updated August 2026",
+    nowNextBody: "Joining The LEGO Group PELM team in Billund in September, building the services behind their product development process.",
+    nowNext: "Next",
     currentRole: "Current",
 
     exp0Title: "Senior Software Engineer",
@@ -692,13 +699,14 @@ const translations = {
     locationValue: "Denmark",
     contactError: "Could not send. Reach me directly at:",
     now: "Now",
-    nowSubtitle: "What I am building, learning and reading at the moment.",
+    nowSubtitle:
+      "What I am building, learning, and heading towards right now.",
     nowBuilding: "Building",
-    nowBuildingBody: "Tripfinity — an iOS travel planner in SwiftUI on a .NET/PostgreSQL backend.",
+    nowBuildingBody:
+      "Tripfinity, an iOS travel planner in SwiftUI on a .NET backend, and IdentityKit — an open-source KYC SDK with document capture and liveness.",
     nowLearning: "Learning",
-    nowLearningBody: "Swift Concurrency and offline-first architecture for mobile apps.",
-    nowReading: "Reading",
-    nowReadingBody: "Designing Data-Intensive Applications, by Martin Kleppmann.",
+    nowLearningBody:
+      "AWS, and semantic modelling / knowledge graphs. I spent years on Azure; the new role leans the other way, so I am closing that gap now.",
     writing: "Writing",
     seeAllOnMedium: "See all on Medium",
     writingFallback: "I write about .NET, Go and iOS development on Medium.",
@@ -711,6 +719,9 @@ const translations = {
     ghLastPush: "Last push on",
   },
   ru: {
+    nowUpdated: "Обновлено в августе 2026",
+    nowNextBody: "В сентябре присоединяюсь к команде PELM в The LEGO Group в Биллунне — сервисы для процесса разработки продуктов.",
+    nowNext: "Дальше",
     currentRole: "Tekushchaya",
 
     exp0Title: "Starshiy inzhener-programmist",
@@ -1034,13 +1045,14 @@ const translations = {
     locationValue: "Dania",
     contactError: "Ne udalos otpravit. Napishite mne napryamuyu:",
     now: "Seychas",
-    nowSubtitle: "Nad chem ya rabotayu, chto izuchayu i chitayu sechas.",
+    nowSubtitle:
+      "Что я сейчас строю, изучаю и куда двигаюсь.",
     nowBuilding: "Razrabatyvayu",
-    nowBuildingBody: "Tripfinity — planirovshchik puteshestviy dlya iOS na SwiftUI s backend .NET/PostgreSQL.",
+    nowBuildingBody:
+      "Tripfinity — планировщик путешествий для iOS на SwiftUI с .NET бэкендом, и IdentityKit — открытый KYC SDK со сканированием документов и проверкой живости.",
     nowLearning: "Izuchayu",
-    nowLearningBody: "Swift Concurrency i offline-first arkhitekturu dlya mobilnykh prilozheniy.",
-    nowReading: "Chitayu",
-    nowReadingBody: "Designing Data-Intensive Applications, Martin Kleppmann.",
+    nowLearningBody:
+      "AWS и семантическое моделирование / графы знаний. Годы работал с Azure; новая роль тянет в другую сторону, поэтому закрываю этот пробел.",
     writing: "Pishu",
     seeAllOnMedium: "Smotret vse na Medium",
     writingFallback: "Ya pishu o .NET, Go i razrabotke pod iOS na Medium.",
@@ -1053,6 +1065,9 @@ const translations = {
     ghLastPush: "Posledniy push",
   },
   et: {
+    nowUpdated: "Uuendatud august 2026",
+    nowNextBody: "Septembris liitun The LEGO Groupi PELM tiimiga Billundis, ehitades teenuseid nende tootearendusprotsessi taga.",
+    nowNext: "Jargmisena",
     currentRole: "Praegune",
 
     exp0Title: "Vanem tarkvarainsener",
@@ -1381,13 +1396,14 @@ const translations = {
     locationValue: "Taani",
     contactError: "Saatmine ebaonnestus. Kirjuta mulle otse:",
     now: "Praegu",
-    nowSubtitle: "Millega ma praegu tegelen, mida opin ja loen.",
+    nowSubtitle:
+      "Mida ma praegu ehitan, opin ja kuhu liigun.",
     nowBuilding: "Ehitan",
-    nowBuildingBody: "Tripfinity — iOS reisiplaneerija SwiftUI-s .NET/PostgreSQL backendiga.",
+    nowBuildingBody:
+      "Tripfinity — iOS reisiplaneerija SwiftUIs .NET backendiga, ja IdentityKit — avatud lahtekoodiga KYC SDK dokumendi skaneerimise ja elususe kontrolliga.",
     nowLearning: "Opin",
-    nowLearningBody: "Swift Concurrency ja offline-first arhitektuur mobiilirakendustele.",
-    nowReading: "Loen",
-    nowReadingBody: "Designing Data-Intensive Applications, Martin Kleppmann.",
+    nowLearningBody:
+      "AWS ning semantiline modelleerimine / teadmusgraafid. Veetsin aastaid Azureis; uus roll kaldub teisele poole, nii et katan selle vahe praegu.",
     writing: "Kirjutan",
     seeAllOnMedium: "Vaata koiki Mediumis",
     writingFallback: "Kirjutan Mediumis .NET-ist, Go-st ja iOS arendusest.",

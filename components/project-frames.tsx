@@ -20,7 +20,7 @@ export interface PreviewMedia {
  * CSS grid os cards da mesma linha esticam ate o mais alto, entao o texto de
  * um card ficaria fora de registro com o do vizinho. A moldura muda; a caixa nao.
  */
-const ALTURA = "h-80"
+const ALTURA = "h-[26rem]"
 
 /* ------------------------------------------------------------------ */
 /* Midia: video com hover-to-play, GIF, ou imagem estatica             */
@@ -101,7 +101,50 @@ const temMidia = (m: PreviewMedia) =>
 /* ------------------------------------------------------------------ */
 /* iOS — moldura de iPhone, vertical                                    */
 /* ------------------------------------------------------------------ */
+/** Um aparelho. `src` nulo mostra o estado vazio. */
+function Aparelho({
+  media,
+  src,
+  title,
+  className = "",
+}: {
+  media?: PreviewMedia
+  src?: string
+  title: string
+  className?: string
+}) {
+  return (
+    <div
+      className={`relative h-[24rem] aspect-[9/19.5] rounded-[2rem] p-[3px]
+        bg-slate-800 dark:bg-slate-950
+        shadow-2xl ring-1 ring-slate-900/10 dark:ring-white/10
+        transition-transform duration-300 ${className}`}
+    >
+      <div className="relative w-full h-full rounded-[1.8rem] overflow-hidden bg-slate-900">
+        {src ? (
+          <img src={src} alt={title} loading="lazy" decoding="async" className="w-full h-full object-cover object-top" />
+        ) : media && temMidia(media) ? (
+          <Media media={media} alt={title} />
+        ) : (
+          <VazioInterno />
+        )}
+        {/* dynamic island */}
+        <div className="absolute top-[6px] left-1/2 -translate-x-1/2 w-[34%] h-[9px] rounded-full bg-black" />
+      </div>
+    </div>
+  )
+}
+
 function PhoneFrame({ media, title }: { media: PreviewMedia; title: string }) {
+  // Com o grid em 2 colunas o card tem largura de sobra. Se o projeto tem
+  // mais de um screenshot, vale mostrar dois aparelhos em vez de deixar
+  // espaco vazio dos dois lados. So vale quando NAO ha video/GIF — animar
+  // dois ao mesmo tempo seria ruido.
+  const segundo =
+    !media.demoVideo && !media.demoGif && media.screenshots && media.screenshots.length >= 2
+      ? media.screenshots[1]
+      : null
+
   return (
     <div
       className={`relative ${ALTURA} w-full flex items-center justify-center overflow-hidden
@@ -109,24 +152,24 @@ function PhoneFrame({ media, title }: { media: PreviewMedia; title: string }) {
         dark:from-slate-900 dark:to-slate-800`}
     >
       {/* brilho suave atras do aparelho */}
-      <div className="absolute w-40 h-40 rounded-full blur-3xl bg-blue-400/20 dark:bg-orange-500/15" />
+      <div className="absolute w-56 h-56 rounded-full blur-3xl bg-blue-400/20 dark:bg-orange-500/15" />
 
-      <div
-        className="relative h-[19rem] aspect-[9/19.5] rounded-[2rem] p-[3px]
-          bg-slate-800 dark:bg-slate-950
-          shadow-2xl ring-1 ring-slate-900/10 dark:ring-white/10
-          transition-transform duration-300 group-hover:-translate-y-1"
-      >
-        <div className="relative w-full h-full rounded-[1.8rem] overflow-hidden bg-slate-900">
-          {temMidia(media) ? (
-            <Media media={media} alt={title} />
-          ) : (
-            <VazioInterno />
-          )}
-          {/* dynamic island */}
-          <div className="absolute top-[6px] left-1/2 -translate-x-1/2 w-[34%] h-[9px] rounded-full bg-black" />
+      {segundo ? (
+        <div className="relative flex items-center justify-center">
+          <Aparelho
+            src={segundo}
+            title={`${title} 2`}
+            className="-mr-10 rotate-[-5deg] opacity-90 scale-[0.94] group-hover:-translate-y-1 group-hover:rotate-[-7deg]"
+          />
+          <Aparelho
+            media={media}
+            title={title}
+            className="z-10 rotate-[3deg] group-hover:-translate-y-1.5 group-hover:rotate-[5deg]"
+          />
         </div>
-      </div>
+      ) : (
+        <Aparelho media={media} title={title} className="group-hover:-translate-y-1" />
+      )}
     </div>
   )
 }

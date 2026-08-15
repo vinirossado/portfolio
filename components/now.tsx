@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
-import { BookOpen, Hammer, Sprout, ExternalLink, ArrowUpRight } from "lucide-react"
+import { Compass, Hammer, Sprout, ExternalLink, ArrowUpRight } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
 import type { MediumPost } from "@/lib/medium"
 
@@ -13,10 +13,16 @@ export default function Now({ posts }: { posts: MediumPost[] }) {
   const isInView = useInView(ref, { once: true, amount: 0.1, margin: "0px 0px 15% 0px" })
   const { t } = useLanguage()
 
+  /*
+    O terceiro card era "Lendo", com um livro que eu tinha inventado. Trocado
+    por "A seguir", que se sustenta em fato verificavel — a mudanca para a LEGO.
+    Os tres agora saem de coisas que existem: projetos publicados, o stack da
+    vaga nova, e a data de entrada.
+  */
   const cards = [
     { icon: <Hammer className="w-5 h-5" />, titleKey: "nowBuilding", bodyKey: "nowBuildingBody" },
     { icon: <Sprout className="w-5 h-5" />, titleKey: "nowLearning", bodyKey: "nowLearningBody" },
-    { icon: <BookOpen className="w-5 h-5" />, titleKey: "nowReading", bodyKey: "nowReadingBody" },
+    { icon: <Compass className="w-5 h-5" />, titleKey: "nowNext", bodyKey: "nowNextBody" },
   ]
 
   return (
@@ -32,13 +38,18 @@ export default function Now({ posts }: { posts: MediumPost[] }) {
           {t("now")}
         </motion.h2>
         <motion.p
-          className="text-slate-600 dark:text-slate-300 text-center max-w-2xl mx-auto mb-12"
+          className="text-slate-600 dark:text-slate-300 text-center max-w-2xl mx-auto mb-2"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
           {t("nowSubtitle")}
         </motion.p>
+        {/* Data escrita a mao de proposito: derivar do build diria "atualizado
+            hoje" mesmo com o conteudo velho. Atualize junto com os textos. */}
+        <p className="text-center text-xs text-slate-500 dark:text-slate-400 mb-12">
+          {t("nowUpdated")}
+        </p>
 
         <div className="grid md:grid-cols-3 gap-6 mb-16">
           {cards.map((card, index) => (
