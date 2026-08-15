@@ -112,9 +112,9 @@ export default function About() {
             </div>
 
             <div className="pt-4 flex flex-wrap gap-4">
-              {/* Reativado: a secao #contact agora existe de fato na pagina. */}
+              {/* Secao #contact escondida por enquanto — mailto em vez de ancora morta. */}
               <a
-                href="#contact"
+                href="mailto:vinirossado@gmail.com"
                 className="px-6 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-orange-500 dark:hover:bg-orange-600 text-white rounded-lg font-medium transition-all shadow-lg shadow-blue-500/20 dark:shadow-orange-500/20 hover:shadow-blue-500/40 dark:hover:shadow-orange-500/40"
               >
                 {t("contactMe")}

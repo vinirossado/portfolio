@@ -30,9 +30,17 @@ export default async function Home() {
       <Experience />
       <GithubStats />
       <Now posts={posts} />
-      {/* <Contact /> era importado mas nunca renderizado — o site nao tinha
-          secao de contato, e o link "#contact" do About nao levava a lugar nenhum. */}
-      <Contact />
+      {/*
+        Contato escondido por enquanto (sem backend para receber o envio).
+        O componente continua pronto: basta descomentar e, se quiser o envio
+        de verdade, definir NEXT_PUBLIC_CONTACT_ENDPOINT (Formspree/Web3Forms).
+        Sem essa variavel ele ja cai para mailto, que funciona sem servidor.
+
+        IMPORTANTE: enquanto isto estiver comentado, os CTAs do Hero e do About
+        NAO podem apontar para "#contact" — a ancora nao existe e o clique nao
+        faz nada. Eles estao em mailto: ate o contato voltar.
+      */}
+      {/* <Contact /> */}
       <Footer />
       <EasterEggs />
     </main>

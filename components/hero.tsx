@@ -192,10 +192,10 @@ export default function Hero({ name, title, photoUrl, yearsOfExperience = anosDe
             >
               {t("viewWork")}
             </a>
-            {/* Apontava para o LinkedIn porque a secao de contato nao existia
-                na pagina. Agora existe — o CTA fica no proprio site. */}
+            {/* Secao #contact esta escondida no page.tsx (sem backend), entao
+                aponta para mailto — nao para uma ancora que nao existe. */}
             <a
-              href="#contact"
+              href="mailto:vinirossado@gmail.com"
               className="px-4 sm:px-6 py-2.5 sm:py-3 bg-blue-600/90 hover:bg-blue-600 dark:bg-orange-500/90 dark:hover:bg-orange-500 text-white rounded-full font-medium transition-all shadow-lg shadow-blue-500/20 dark:shadow-orange-500/20 hover:shadow-blue-500/40 dark:hover:shadow-orange-500/40 text-sm sm:text-base text-center"
             >
               {t("contactMe")}
