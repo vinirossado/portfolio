@@ -152,12 +152,12 @@ export function VideoPlayer({
 }
 
 // Screenshot Gallery Component
-export function ScreenshotGallery({ 
-  screenshots, 
-  title 
-}: { 
+export function ScreenshotGallery({
+  screenshots,
+  title
+}: {
   screenshots: string[]
-  title: string 
+  title: string
 }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -171,15 +171,25 @@ export function ScreenshotGallery({
     setCurrentIndex((prev) => (prev - 1 + screenshots.length) % screenshots.length)
   }
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [isModalOpen])
+
   if (screenshots.length === 0) return null
 
   return (
     <>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-        {screenshots.slice(0, 6).map((screenshot, index) => (
+      <div className="flex gap-3 justify-center py-2">
+        {screenshots.slice(0, 4).map((screenshot, index) => (
           <div
             key={index}
-            className="relative aspect-video bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden cursor-pointer group hover:opacity-80 transition-opacity"
+            className="relative w-24 h-44 bg-slate-900 rounded-2xl overflow-hidden cursor-pointer ring-2 ring-slate-600 hover:ring-blue-500 dark:hover:ring-orange-500 transition-all duration-200 shadow-xl"
             onClick={() => {
               setCurrentIndex(index)
               setIsModalOpen(true)
@@ -188,21 +198,8 @@ export function ScreenshotGallery({
             <img
               src={screenshot}
               alt={`${title} screenshot ${index + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-top"
             />
-            
-            {/* Expand icon */}
-            <div className="absolute top-2 right-2 bg-black/50 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity">
-              <Maximize2 className="w-4 h-4 text-white" />
-            </div>
-            
-            {index === 5 && screenshots.length > 6 && (
-              <div className="absolute inset-0 bg-black/70 flex items-center justify-center">
-                <span className="text-white text-lg font-semibold">
-                  +{screenshots.length - 6}
-                </span>
-              </div>
-            )}
           </div>
         ))}
       </div>
@@ -214,20 +211,21 @@ export function ScreenshotGallery({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-4"
             onClick={() => setIsModalOpen(false)}
           >
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
-              className="relative max-w-7xl max-h-full"
+              className="relative flex items-center justify-center"
+              style={{ maxHeight: '90vh', maxWidth: '90vw' }}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close button */}
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors"
+                className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors z-10"
               >
                 <X className="w-8 h-8" />
               </button>
@@ -237,28 +235,33 @@ export function ScreenshotGallery({
                 <>
                   <button
                     onClick={previousImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-black/50 rounded-full p-2"
+                    className="absolute -left-14 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-white/10 hover:bg-white/20 rounded-full p-3 z-10"
                   >
                     <ChevronLeft className="w-6 h-6" />
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-black/50 rounded-full p-2"
+                    className="absolute -right-14 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-white/10 hover:bg-white/20 rounded-full p-3 z-10"
                   >
                     <ChevronRight className="w-6 h-6" />
                   </button>
                 </>
               )}
 
-              {/* Image */}
-              <img
-                src={screenshots[currentIndex]}
-                alt={`${title} screenshot ${currentIndex + 1}`}
-                className="max-w-full max-h-full object-contain rounded-lg"
-              />
+              {/* Phone frame */}
+              <div className="bg-slate-800 rounded-[2.5rem] p-2 shadow-2xl border border-slate-600">
+                <div className="rounded-[2rem] overflow-hidden">
+                  <img
+                    src={screenshots[currentIndex]}
+                    alt={`${title} screenshot ${currentIndex + 1}`}
+                    className="object-contain rounded-[2rem]"
+                    style={{ maxHeight: '80vh', maxWidth: '400px' }}
+                  />
+                </div>
+              </div>
 
               {/* Image counter */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+              <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-white/10 text-white px-4 py-1.5 rounded-full text-sm">
                 {t("imageOf")
                   .replace("{current}", String(currentIndex + 1))
                   .replace("{total}", String(screenshots.length))}
@@ -292,26 +295,45 @@ export default function ProjectMedia({
     
     if (screenshots.length > 0) {
       return (
-        <div className="relative w-full h-full">
-          {!imageLoaded && (
-            <div className="absolute inset-0 bg-slate-200 dark:bg-slate-700 animate-pulse flex items-center justify-center">
-              <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+        <div className="relative w-full h-full bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 flex items-center justify-center overflow-hidden">
+          {screenshots.length >= 2 ? (
+            // Two screenshots: overlapping phone mockup style
+            <div className="relative w-full h-full flex items-center justify-center">
+              <div
+                className="absolute rounded-2xl overflow-hidden shadow-2xl border-2 border-slate-700"
+                style={{ width: '35%', left: '15%', top: '8%', bottom: '8%', transform: 'rotate(-6deg)' }}
+              >
+                <img
+                  src={screenshots[1]}
+                  alt={`${title} screenshot 2`}
+                  className="w-full h-full object-cover object-top"
+                  loading="lazy"
+                />
+              </div>
+              <div
+                className="absolute rounded-2xl overflow-hidden shadow-2xl border-2 border-slate-600 z-10"
+                style={{ width: '35%', right: '15%', top: '5%', bottom: '5%', transform: 'rotate(3deg)' }}
+              >
+                <img
+                  src={screenshots[0]}
+                  alt={`${title} screenshot 1`}
+                  className="w-full h-full object-cover object-top"
+                  loading="lazy"
+                />
+              </div>
             </div>
-          )}
-          <img
-            src={screenshots[0]}
-            alt={`${title} screenshot`}
-            className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-110 ${
-              imageLoaded ? 'opacity-100' : 'opacity-0'
-            }`}
-            onLoad={() => setImageLoaded(true)}
-            onError={() => setImageLoaded(true)}
-            loading="lazy" // Lazy load for screenshots below the fold
-            decoding="async"
-          />
-          {screenshots.length > 1 && imageLoaded && (
-            <div className="absolute top-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded-full">
-              +{screenshots.length - 1}
+          ) : (
+            // Single screenshot: centered phone mockup
+            <div
+              className="absolute rounded-2xl overflow-hidden shadow-2xl border-2 border-slate-600"
+              style={{ width: '40%', top: '5%', bottom: '5%' }}
+            >
+              <img
+                src={screenshots[0]}
+                alt={`${title} screenshot`}
+                className="w-full h-full object-cover object-top"
+                loading="lazy"
+              />
             </div>
           )}
         </div>

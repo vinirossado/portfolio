@@ -2,6 +2,7 @@
 
 import { Github, Linkedin, Twitter, Instagram } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
+import BuyMeACoffeeButton from "@/components/buy-me-a-coffee"
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -16,7 +17,8 @@ export default function Footer() {
             <p className="text-slate-600 dark:text-slate-200 mt-1">{t("fullstackDev")}</p>
           </div>
 
-          <div className="flex gap-4">
+          <div className="flex gap-4 items-center">
+            <BuyMeACoffeeButton variant="footer" />
             <a
               target="_blank"
               href="https://www.github.com/vinirossado"
