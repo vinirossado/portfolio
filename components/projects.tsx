@@ -17,11 +17,11 @@ const projects = [
     kind: "ios" as const,
     titleKey: "projectTravelAppTitle",
     descriptionKey: "projectTravelAppDescription",
-    image: "/projects/TripDetails.png",
+    image: "/projects/TripDetails.webp",
     // demoGif: "", // Add a working GIF URL when available
     // demoVideo: "https://www.youtube.com/watch?v=LXb3EKWsInQ", // Travel app demo
     // liveDemo: "https://apps.apple.com/app/travel-planner/example", // Uncomment when app is on the store
-    screenshots: ["/projects/TripDetails.png", "/projects/TripView.png"],
+    screenshots: ["/projects/TripDetails.webp", "/projects/TripView.webp"],
     tags: [
       "Swift",
       "SwiftUI",
@@ -46,15 +46,15 @@ const projects = [
     kind: "ios" as const,
     titleKey: "projectIdentityKitTitle",
     descriptionKey: "projectIdentityKitDescription",
-    image: "/projects/identitykit-demo.png",
+    image: "/projects/identitykit-demo.webp",
     screenshots: [
-      "/projects/identitykit-demo.png",
-      "/projects/01_intro_light.png",
-      "/projects/02_intro_dark.png",
-      "/projects/03_document_capture.png",
-      "/projects/04_liveness_check.png",
-      "/projects/05_review.png",
-      "/projects/06_review_dark.png",
+      "/projects/identitykit-demo.webp",
+      "/projects/01_intro_light.webp",
+      "/projects/02_intro_dark.webp",
+      "/projects/03_document_capture.webp",
+      "/projects/04_liveness_check.webp",
+      "/projects/05_review.webp",
+      "/projects/06_review_dark.webp",
     ],
     tags: [
       "Swift",
@@ -80,8 +80,8 @@ const projects = [
     kind: "ios" as const,
     titleKey: "projectSparkTrackerTitle",
     descriptionKey: "projectSparkTrackerDescription",
-    image: "/SparkTracker.gif",
-    demoGif: "/SparkTracker.gif", // SparkTracker project demo GIF
+    image: "/SparkTracker.webp",
+    demoGif: "/SparkTracker.webp", // SparkTracker project demo GIF
     tags: [
       "Swift",
       "SwiftUI",
