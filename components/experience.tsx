@@ -7,6 +7,22 @@ import { useLanguage } from "@/components/language-provider"
 
 const experiences = [
   {
+    // RASCUNHO — escrito a partir da job description, nao de trabalho entregue.
+    // As responsabilidades sao o ESCOPO DO CARGO, nao realizacoes. Revisar
+    // depois dos primeiros meses e trocar por o que voce de fato fez.
+    id: 0,
+    titleKey: "exp0Title",
+    companyKey: "exp0Company",
+    companyUrlKey: "exp0CompanyUrl",
+    locationKey: "exp0Location",
+    periodKey: "exp0Period",
+    descriptionKey: "exp0Description",
+    responsibilityKeys: ["exp0Resp1", "exp0Resp2", "exp0Resp3", "exp0Resp4"],
+    featured: true,
+    current: true,
+    technologies: ["C#", ".NET", "AWS", "Kubernetes", "Event-Driven", "CI/CD"],
+  },
+  {
     id: 1,
     titleKey: "exp1Title",
     companyKey: "exp1Company",
@@ -105,8 +121,12 @@ const technologyTypes: Record<string, "language" | "framework" | "tool" | "datab
 
 export default function Experience() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, amount: 0.1 })
-  const [expandedExperience, setExpandedExperience] = useState<number | null>(null)
+  const isInView = useInView(ref, { once: true, amount: 0.1, margin: "0px 0px 15% 0px" })
+  // Abre o cargo atual por padrao. As responsabilidades sao a substancia da
+  // secao — deixar as 8 fechadas escondia tudo atras de um clique.
+  const [expandedExperience, setExpandedExperience] = useState<number | null>(
+    experiences[0]?.id ?? null,
+  )
   const { t } = useLanguage()
 
   const toggleExperience = (id: number) => {
@@ -117,23 +137,27 @@ export default function Experience() {
     }
   }
 
+  /*
+    Antes isso lia `document.documentElement.classList.contains("dark")` DURANTE
+    o render. Dois problemas: no servidor `window` e undefined, entao o HTML
+    saia sempre com as cores claras (mismatch de hidratacao); e como nao era
+    estado, as cores nao mudavam ao alternar o tema.
+    Classes `dark:` do Tailwind resolvem os dois — quem decide e o CSS.
+  */
   const getTechnologyColor = (tech: string) => {
-    const type = technologyTypes[tech] || "framework"
-    const isDark = typeof window !== "undefined" && document.documentElement.classList.contains("dark")
-
-    switch (type) {
+    switch (technologyTypes[tech] || "framework") {
       case "language":
-        return isDark ? "bg-blue-900/40 text-blue-300" : "bg-blue-100 text-blue-700"
+        return "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300"
       case "framework":
-        return isDark ? "bg-purple-900/40 text-purple-300" : "bg-purple-100 text-purple-700"
+        return "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300"
       case "tool":
-        return isDark ? "bg-amber-900/40 text-amber-300" : "bg-amber-100 text-amber-700"
+        return "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300"
       case "database":
-        return isDark ? "bg-green-900/40 text-green-300" : "bg-green-100 text-green-700"
+        return "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300"
       case "cloud":
-        return isDark ? "bg-cyan-900/40 text-cyan-300" : "bg-cyan-100 text-cyan-700"
+        return "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300"
       default:
-        return isDark ? "bg-slate-700 text-slate-300" : "bg-slate-100 text-slate-700"
+        return "bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-300"
     }
   }
 
@@ -168,15 +192,55 @@ export default function Experience() {
           <p className="mt-4 text-slate-600 dark:text-slate-200 max-w-2xl mx-auto">{t("experienceDescription")}</p>
         </motion.div>
 
-        <div className="space-y-8">
+        {/* Timeline: uma linha continua ligando os cargos, em vez de 8 cards soltos */}
+        <div className="relative md:pl-16">
+          <div
+            aria-hidden
+            className="hidden md:block absolute left-[26px] top-3 bottom-3 w-px
+              bg-gradient-to-b from-blue-400 via-blue-200 to-transparent
+              dark:from-orange-500 dark:via-orange-900/50 dark:to-transparent"
+          />
+
+          <div className="space-y-8">
           {experiences.map((exp, index) => (
             <motion.div
               key={exp.id}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 * index }}
-              className={`bg-white dark:bg-slate-800/95 rounded-xl shadow-md overflow-hidden border ${exp.featured ? "border-blue-200 dark:border-orange-900/50" : "border-slate-200 dark:border-slate-700"}`}
+              // Antes: 0.2 * index. Com 8 cargos o ultimo so aparecia 1,6s
+              // depois — a secao lia como quebrada durante o scroll.
+              transition={{ duration: 0.45, delay: Math.min(0.07 * index, 0.35) }}
+              className="relative"
             >
+              {/* marcador na linha do tempo */}
+              <div
+                aria-hidden
+                className={`hidden md:flex absolute -left-16 top-6 w-[53px] items-center justify-start`}
+              >
+                <span
+                  className={`relative w-[13px] h-[13px] rounded-full border-2 ${
+                    exp.current
+                      ? "bg-blue-600 border-blue-200 dark:bg-orange-500 dark:border-orange-900"
+                      : exp.featured
+                        ? "bg-blue-400 border-blue-100 dark:bg-orange-700 dark:border-slate-800"
+                        : "bg-slate-300 border-slate-100 dark:bg-slate-600 dark:border-slate-800"
+                  }`}
+                >
+                  {exp.current && (
+                    <span className="absolute inset-0 rounded-full bg-blue-500 dark:bg-orange-500 animate-ping opacity-60" />
+                  )}
+                </span>
+              </div>
+
+              <div
+                className={`bg-white dark:bg-slate-800/95 rounded-xl shadow-md overflow-hidden border transition-shadow hover:shadow-lg ${
+                  exp.current
+                    ? "border-blue-300 dark:border-orange-700/70 ring-1 ring-blue-200/60 dark:ring-orange-900/40"
+                    : exp.featured
+                      ? "border-blue-200 dark:border-orange-900/50"
+                      : "border-slate-200 dark:border-slate-700"
+                }`}
+              >
               {/* Experience header */}
               <div className={`p-6 ${exp.featured ? "bg-gradient-to-r from-blue-50 to-white dark:from-slate-800 dark:to-slate-800" : ""}`}>
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -190,7 +254,15 @@ export default function Experience() {
                       <Briefcase className="w-6 h-6" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-slate-800 dark:text-white">{t(exp.titleKey)}</h3>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h3 className="text-xl font-bold text-slate-800 dark:text-white">{t(exp.titleKey)}</h3>
+                        {exp.current && (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-blue-100 text-blue-700 dark:bg-orange-900/50 dark:text-orange-400">
+                            <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-orange-500" />
+                            {t("currentRole")}
+                          </span>
+                        )}
+                      </div>
                       <div className="flex items-center mt-1">
                         {exp.companyUrlKey ? (
                           <a
@@ -279,8 +351,10 @@ export default function Experience() {
                   </div>
                 </motion.div>
               )}
+              </div>
             </motion.div>
           ))}
+          </div>
         </div>
       </div>
     </section>

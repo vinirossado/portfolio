@@ -1,4 +1,6 @@
 "use client"
+import { Fragment } from "react"
+import { anosDeExperiencia } from "@/lib/career"
 import { motion } from "framer-motion"
 import { useLanguage } from "@/components/language-provider"
 import { Code, Award, Briefcase, CheckCircle2, Layers, Smartphone } from "lucide-react"
@@ -11,8 +13,9 @@ interface HeroProps {
   yearsOfExperience?: number
 }
 
-export default function Hero({ name, title, photoUrl, yearsOfExperience = 8 }: HeroProps) {
+export default function Hero({ name, title, photoUrl, yearsOfExperience = anosDeExperiencia() }: HeroProps) {
   const { t } = useLanguage()
+  const nameWords = name.split(" ")
 
   const codeLines = [
     "using System;",
@@ -26,7 +29,7 @@ export default function Hero({ name, title, photoUrl, yearsOfExperience = 8 }: H
     "    {",
     `        public string Name { get; } = "${name}";`,
     `        public string Role { get; } = "${title}";`,
-    `        public int YearsOfExperience { get; } = ${yearsOfExperience + 1};`,
+    `        public int YearsOfExperience { get; } = ${yearsOfExperience};`,
     "        public List<string> Skills { get; } = new List<string>",
     "        {",
     '            "Architecture",',
@@ -108,22 +111,33 @@ export default function Hero({ name, title, photoUrl, yearsOfExperience = 8 }: H
             </div>
           </motion.div>
 
+          {/*
+            Antes cada letra era um <span inline-block> pr\u00F3prio, ent\u00E3o o browser
+            podia quebrar entre QUAISQUER dois caracteres \u2014 o nome renderizava
+            como "Vinicius Rossad / o" em 1440px. E com delay de 0.1s por letra
+            o nome levava ~1,6s para aparecer inteiro.
+            Agora anima por palavra: a quebra s\u00F3 acontece entre palavras.
+          */}
           <motion.h1
             className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 tracking-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
-            {name.split("").map((char, index) => (
-              <motion.span
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 * index + 0.3 }}
-                className="inline-block"
-              >
-                {char === " " ? "\u00A0" : char}
-              </motion.span>
+            {nameWords.map((word, index) => (
+              <Fragment key={word + index}>
+                <motion.span
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.12 * index + 0.3 }}
+                  className="inline-block"
+                >
+                  {word}
+                </motion.span>
+                {/* espaco normal FORA do span: unico ponto de quebra permitido.
+                    Nao usar \u00A0 aqui \u2014 deixaria o nome inteiro inquebravel. */}
+                {index < nameWords.length - 1 ? " " : null}
+              </Fragment>
             ))}
           </motion.h1>
 
@@ -178,10 +192,10 @@ export default function Hero({ name, title, photoUrl, yearsOfExperience = 8 }: H
             >
               {t("viewWork")}
             </a>
+            {/* Apontava para o LinkedIn porque a secao de contato nao existia
+                na pagina. Agora existe — o CTA fica no proprio site. */}
             <a
-              href="https://www.linkedin.com/in/viniciusrossado/"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#contact"
               className="px-4 sm:px-6 py-2.5 sm:py-3 bg-blue-600/90 hover:bg-blue-600 dark:bg-orange-500/90 dark:hover:bg-orange-500 text-white rounded-full font-medium transition-all shadow-lg shadow-blue-500/20 dark:shadow-orange-500/20 hover:shadow-blue-500/40 dark:hover:shadow-orange-500/40 text-sm sm:text-base text-center"
             >
               {t("contactMe")}

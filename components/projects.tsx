@@ -7,12 +7,14 @@ import { ExternalLink, Github, Code, Database } from "lucide-react";
 import { Server } from "lucide-react";
 import { useLanguage } from "@/components/language-provider";
 import { ImageIcon } from "lucide-react";
-import ProjectMedia, { ScreenshotGallery } from "@/components/project-media";
+import { ScreenshotGallery } from "@/components/project-media";
+import ProjectPreview from "@/components/project-frames";
 import BuyMeACoffeeButton from "@/components/buy-me-a-coffee";
 
 const projects = [
   {
-    id: crypto.randomUUID(),
+    id: "travelapp",
+    kind: "ios" as const,
     titleKey: "projectTravelAppTitle",
     descriptionKey: "projectTravelAppDescription",
     image: "/projects/TripDetails.png",
@@ -29,7 +31,7 @@ const projects = [
       ".Net",
       "PostgreSQL",
     ],
-    liveUrl: "tripfinity.eu",
+    liveUrl: "https://tripfinity.eu",
     // githubUrl: "https://github.com/vinirossado/travel-app",
     featureKeys: [
       "projectTravelAppFeature1",
@@ -40,11 +42,20 @@ const projects = [
     ],
   },
   {
-    id: crypto.randomUUID(),
+    id: "identitykit",
+    kind: "ios" as const,
     titleKey: "projectIdentityKitTitle",
     descriptionKey: "projectIdentityKitDescription",
     image: "/projects/identitykit-demo.png",
-    screenshots: ["/projects/identitykit-demo.png"],
+    screenshots: [
+      "/projects/identitykit-demo.png",
+      "/projects/01_intro_light.png",
+      "/projects/02_intro_dark.png",
+      "/projects/03_document_capture.png",
+      "/projects/04_liveness_check.png",
+      "/projects/05_review.png",
+      "/projects/06_review_dark.png",
+    ],
     tags: [
       "Swift",
       "UIKit",
@@ -65,19 +76,12 @@ const projects = [
     ],
   },
   {
-    id: crypto.randomUUID(),
+    id: "sparktracker",
+    kind: "ios" as const,
     titleKey: "projectSparkTrackerTitle",
     descriptionKey: "projectSparkTrackerDescription",
     image: "/SparkTracker.gif",
     demoGif: "/SparkTracker.gif", // SparkTracker project demo GIF
-    demoVideo: "https://www.youtube.com/watch?v=ZixVqmt2KaU", // MTG app demo
-    liveDemo: "https://apps.apple.covbm/app/mtg-life-counter/example", // Life counter app example
-    screenshots: [
-      "https://picsum.photos/400/800?random=25",
-      "https://picsum.photos/400/800?random=26",
-      "https://picsum.photos/400/800?random=27",
-      "https://picsum.photos/400/800?random=28",
-    ],
     tags: [
       "Swift",
       "SwiftUI",
@@ -99,19 +103,11 @@ const projects = [
     ],
   },
   {
-    id: crypto.randomUUID(),
+    id: "cookbookpro",
+    kind: "ios" as const,
     titleKey: "projectCookbookProTitle",
     descriptionKey: "projectCookbookProDescription",
     image: "/placeholder.svg?height=600&width=800",
-    demoGif: "https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif", // Cooking/recipe app GIF
-    demoVideo: "https://www.youtube.com/watch?v=LXb3EKWsInQ", // Recipe app demo
-    liveDemo: "https://apps.apple.com/app/cookbook-recipes/example", // Recipe app example
-    screenshots: [
-      "https://picsum.photos/400/800?random=29",
-      "https://picsum.photos/400/800?random=30",
-      "https://picsum.photos/400/800?random=31",
-      "https://picsum.photos/400/800?random=32",
-    ],
     tags: [
       "Swift",
       "SwiftUI",
@@ -133,18 +129,19 @@ const projects = [
     ],
   },
   {
-    id: crypto.randomUUID(),
+    id: "urlshortener",
+    kind: "terminal" as const,
+    cmd: [
+      "$ curl -X POST api/shorten \\",
+      "    -d '{\"url\":\"https://...\"}'",
+      "",
+      "{ \"short\": \"/aX9k2\" }",
+      "",
+      "$ _",
+    ],
     titleKey: "projectUrlShortenerTitle",
     descriptionKey: "projectUrlShortenerDescription",
     image: "/placeholder.svg?height=600&width=800",
-    demoGif: "https://media.giphy.com/media/13HgwGsXF0aiGY/giphy.gif", // Typing/coding GIF
-    demoVideo: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", // Demo video
-    liveDemo: "https://bit.ly", // Live demo example
-    screenshots: [
-      "https://picsum.photos/800/600?random=1",
-      "https://picsum.photos/800/600?random=2",
-      "https://picsum.photos/800/600?random=3",
-    ],
     tags: ["C#", ".Net", "CosmosDB", "Azure", "Bicep", "PostgreSQL"],
     liveUrl: "#",
     githubUrl: "https://github.com/vinirossado/URL-Shortener",
@@ -156,18 +153,21 @@ const projects = [
     ],
   },
   {
-    id: crypto.randomUUID(),
+    id: "gcli",
+    kind: "terminal" as const,
+    cmd: [
+      "$ gcli new my-api --db postgres",
+      "",
+      "✓ scaffold criado",
+      "✓ docker-compose.yml",
+      "✓ migrations/",
+      "",
+      "$ _",
+    ],
     titleKey: "projectGcliTitle",
     descriptionKey: "projectGcliDescription",
     image: "/placeholder.svg?height=600&width=800",
-    demoGif: "https://media.giphy.com/media/L8K62iTDkzGX6/giphy.gif", // Terminal/command line GIF
-    demoVideo: "https://asciinema.org/a/335480", // Real Asciinema example
     liveDemo: "https://github.com/vinirossado/gcli#installation", // Installation guide
-    screenshots: [
-      "https://picsum.photos/800/600?random=4",
-      "https://picsum.photos/800/600?random=5",
-      "https://picsum.photos/800/600?random=6",
-    ],
     tags: ["Golang", "PostgreSQL", "Mustache", "Cobra", "Gorm", "Docker"],
     liveUrl: "#",
     githubUrl: "https://github.com/vinirossado/gcli",
@@ -180,19 +180,11 @@ const projects = [
     ],
   },
   {
-    id: crypto.randomUUID(),
+    id: "mtgcardinventory",
+    kind: "ios" as const,
     titleKey: "projectMtgCardInventoryTitle",
     descriptionKey: "projectMtgCardInventoryDescription",
     image: "/placeholder.svg?height=600&width=800",
-    demoGif: "https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif", // Mobile app interaction GIF
-    demoVideo: "https://www.youtube.com/watch?v=LXb3EKWsInQ", // iOS app demo video
-    liveDemo: "https://apps.apple.com/app/magic-the-gathering/id1496227521", // MTG app example
-    screenshots: [
-      "https://picsum.photos/400/800?random=7",
-      "https://picsum.photos/400/800?random=8",
-      "https://picsum.photos/400/800?random=9",
-      "https://picsum.photos/400/800?random=10",
-    ],
     tags: ["SwiftUI", "Swift", "PostgreSQL", ".Net"],
     liveUrl: "#",
     githubUrl: "https://github.com/vinirossado/MTG-Card-Inventory",
@@ -203,19 +195,20 @@ const projects = [
     ],
   },
   {
-    id: crypto.randomUUID(),
+    id: "gcliadvancedtemplate",
+    kind: "terminal" as const,
+    cmd: [
+      "$ gcli init --template advanced",
+      "",
+      "✓ Gorm + Zap + Swagger",
+      "✓ JWT middleware",
+      "✓ Dockerfile multi-stage",
+      "",
+      "$ _",
+    ],
     titleKey: "projectGcliAdvancedTemplateTitle",
     descriptionKey: "projectGcliAdvancedTemplateDescription",
     image: "/placeholder.svg?height=600&width=800",
-    demoGif: "https://media.giphy.com/media/077i6AULCXc0FKTj9s/giphy.gif", // Developer workflow GIF
-    demoVideo: "https://www.youtube.com/watch?v=Uszj_k0DGsg", // Development tutorial
-    liveDemo: "https://github.com/vinirossado/gcli-advanced-template#usage", // Usage guide
-    screenshots: [
-      "https://picsum.photos/800/600?random=14",
-      "https://picsum.photos/800/600?random=15",
-      "https://picsum.photos/800/600?random=16",
-      "https://picsum.photos/800/600?random=17",
-    ],
     tags: ["Go", "Gorm", "Zap", "Swagger", "JWT", "Docker"],
     liveUrl: "#",
     githubUrl: "https://github.com/vinirossado/gcli-advanced-template",
@@ -227,20 +220,13 @@ const projects = [
     ],
   },
   {
-    id: crypto.randomUUID(),
+    id: "portfoliowebsite",
+    kind: "web" as const,
     titleKey: "projectPortfolioWebsiteTitle",
     descriptionKey: "projectPortfolioWebsiteDescription",
     image: "/placeholder.svg?height=600&width=800",
-    demoGif: "https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif", // Web development GIF
-    demoVideo: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", // Example YouTube video
-    liveDemo: "https://vinirossado.vercel.app", // Current portfolio
-    screenshots: [
-      "https://picsum.photos/800/600?random=18",
-      "https://picsum.photos/800/600?random=19",
-      "https://picsum.photos/800/600?random=20",
-    ],
     tags: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    liveUrl: "https://vinirossado.vercel.app",
+    liveUrl: "https://vinirossado.dev",
     githubUrl: "https://github.com/vinirossado/melhorzin",
     featureKeys: [
       "projectPortfolioWebsiteFeature1",
@@ -253,7 +239,7 @@ const projects = [
 
 export default function Projects() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.1 });
+  const isInView = useInView(ref, { once: true, amount: 0.1, margin: "0px 0px 15% 0px" });
   const [activeProject, setActiveProject] = useState<number | null>(null);
   const [screenshotProject, setScreenshotProject] = useState<number | null>(
     null,
@@ -291,7 +277,7 @@ export default function Projects() {
               key={project.id}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 * index }}
+              transition={{ duration: 0.45, delay: Math.min(0.06 * index, 0.36) }}
               className="bg-white dark:bg-slate-800 rounded-xl
                overflow-hidden shadow-lg hover:shadow-xl transition-all
                duration-300
@@ -300,33 +286,27 @@ export default function Projects() {
               onMouseEnter={() => setActiveProject(index)}
               onMouseLeave={() => setActiveProject(null)}
             >
-              <div className="relative h-56 overflow-hidden">
-                {/* Only show overlay for fallback images, not for media content */}
-                {!project.demoGif &&
-                  !project.demoVideo &&
-                  !project.screenshots?.length && (
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  )}
-
-                {/* Use ProjectMedia component for better project showcases */}
-                <ProjectMedia
-                  demoGif={project.demoGif}
-                  demoVideo={project.demoVideo}
-                  liveDemo={project.liveDemo}
-                  screenshots={project.screenshots}
+              {/*
+                Antes: uma caixa h-56 fixa para 9 projetos de naturezas
+                diferentes — app iOS vertical, CLI em Go, site. Os mockups de
+                celular ficavam em 35% da largura numa caixa baixa e larga, e o
+                `object-cover object-top` cortava tudo.
+                Agora a moldura acompanha o tipo do projeto; so a altura da
+                caixa e que continua unica, para o grid nao desalinhar.
+              */}
+              <div className="relative overflow-hidden">
+                <ProjectPreview
+                  kind={project.kind}
                   title={t(project.titleKey)}
+                  url={project.liveUrl}
+                  cmd={project.cmd}
+                  media={{
+                    demoVideo: project.demoVideo,
+                    demoGif: project.demoGif,
+                    poster: project.image?.startsWith("/placeholder") ? undefined : project.image,
+                    screenshots: project.screenshots,
+                  }}
                 />
-
-                {/* Fallback to static image if no media */}
-                {!project.demoGif &&
-                  !project.demoVideo &&
-                  !project.screenshots?.length && (
-                    <img
-                      src={project.image || "/placeholder.svg"}
-                      alt={t(project.titleKey)}
-                      className="w-full h-full object-cover"
-                    />
-                  )}
 
                 {/* Overlay tech icons */}
                 <div className="absolute top-4 right-4 z-20">

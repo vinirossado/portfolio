@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react"
 import { Cloud, Code, Database, ExternalLink, Layers, Smartphone, Star } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
 import { GithubRepository } from "@/models/github-repository"
+import { anosDeExperiencia } from "@/lib/career"
 
 interface Skill {
   nameKey: string
@@ -15,7 +16,7 @@ interface Skill {
   descriptionKey: string
 }
 
-const yearsOfExperience = new Date().getFullYear() - 2017
+const yearsOfExperience = anosDeExperiencia()
 
 const skills: Skill[] = [
   {
@@ -118,10 +119,14 @@ const skills: Skill[] = [
   },
 ]
 
+// Maior valor real da lista — a barra e proporcional a isso, nao a uma
+// constante solta. Se um dia a skill mais antiga mudar, a escala acompanha.
+const maxYears = Math.max(...skills.map((s) => s.year))
+
 export default function Skills() {
   const ref = useRef(null)
   const detailsRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, amount: 0.2 })
+  const isInView = useInView(ref, { once: true, amount: 0.1, margin: "0px 0px 15% 0px" })
   const [activeSkill, setActiveSkill] = useState<Skill | null>(null)
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const [repos, setRepos] = useState<GithubRepository[]>([])
@@ -241,9 +246,12 @@ export default function Skills() {
               .map((skill, index) => (
                 <motion.div
                   key={skill.nameKey}
-                  initial={{ opacity: 0, scale: 0.8 }}
+                  // Antes: delay 0.1 * index. Com 14 skills o ultimo card so
+                  // aparecia 1,3s depois, entao a secao lia como "quebrada"
+                  // durante o scroll. Teto de 0.3s no stagger.
+                  initial={{ opacity: 0, scale: 0.94 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ duration: 0.1, delay: isLoaded ? 0 : 0.1 * index }}
+                  transition={{ duration: 0.28, delay: isLoaded ? 0 : Math.min(0.03 * index, 0.3) }}
                   whileHover={{
                     scale: 1.05,
                     boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
@@ -281,20 +289,38 @@ export default function Skills() {
               </div>
 
                     <div className="mt-auto pt-3 w-full">
+                      {/*
+                        A barra so tinha largura quando `isInView` era true E a
+                        animacao (delay 0.3 + 0.1*index) ja tinha rodado. Com 14
+                        skills o ultimo card so preenchia depois de 1,7s — e na
+                        pratica C# e TypeScript apareciam VAZIOS. Agora a largura
+                        e o estado base; a animacao so a acompanha.
+                      */}
+                      {/*
+                        SEM animacao de propósito. A barra ja falhou uma vez por
+                        depender de uma animacao para ficar visivel: com
+                        `initial={{width:0}}` + gate de isInView, C# e TypeScript
+                        apareciam VAZIOS. Trocar por scaleX(0) teria o mesmo
+                        modo de falha — se o rAF nao roda (aba em segundo plano,
+                        JS lento), a barra fica invisivel de novo.
+                        A largura e a informacao; ela nao pode depender de nada.
+                      */}
                       <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                        <motion.div
-                          className="h-full bg-gradient-to-r
+                        <div
+                          className="h-full rounded-full bg-gradient-to-r
                            from-blue-400 to-blue-600
                            dark:from-orange-400 dark:to-orange-600"
-                          initial={{ width: 0 }}
-                          animate={isInView ? { width: `${(skill.year / yearsOfExperience) * 100}%` } : {}}
-                          transition={{ duration: 1, delay: 0.3 + 0.1 * index }} />
+                          style={{ width: `${(skill.year / maxYears) * 100}%` }}
+                        />
                       </div>
 
-                      {/* Skill Years progress bar */}
-                      <div className="flex justify-between mt-1 text-xs text-slate-500 dark:text-slate-400">
-                        <span>{t("fromYear")}</span>
-                        <span>{yearsOfExperience} {t("untilYear")}</span>
+                      {/*
+                        Antes: {t("fromYear")} e {yearsOfExperience} — valores
+                        globais, entao TODOS os 14 cards liam "0 -> 9 Years",
+                        independente da skill. Agora mostra os anos da skill.
+                      */}
+                      <div className="mt-1 text-right text-xs font-medium text-blue-600 dark:text-orange-400">
+                        {skill.year} {t("years")}
                       </div>
 
                     </div>
@@ -345,16 +371,18 @@ export default function Skills() {
 
                 <div>
                   <div className="text-sm text-slate-600 dark:text-slate-400 mb-2">{t("proficiencyLevel")}</div>
+                  {/* mesma regra do card: a largura nao depende de animacao */}
                   <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                    <motion.div
-                      className="h-full bg-gradient-to-r
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r
                            from-blue-400 to-blue-600
                            dark:from-orange-400 dark:to-orange-600"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${(activeSkill.year / yearsOfExperience) * 100}%` }}
+                      style={{ width: `${(activeSkill.year / maxYears) * 100}%` }}
                     />
                   </div>
-                  <div className="text-right text-xs text-slate-500 dark:text-slate-400 mt-1">{activeSkill.year} {t('untilYear')}</div>
+                  <div className="text-right text-xs text-slate-500 dark:text-slate-400 mt-1">
+                    {activeSkill.year} {t("years")}
+                  </div>
                 </div>
 
                 <div>

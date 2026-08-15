@@ -8,7 +8,7 @@ import { useLanguage } from "@/components/language-provider"
 export default function About() {
   const { t } = useLanguage()
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, amount: 0.3 })
+  const isInView = useInView(ref, { once: true, amount: 0.1, margin: "0px 0px 15% 0px" })
 
   const services = [
     {
@@ -112,12 +112,13 @@ export default function About() {
             </div>
 
             <div className="pt-4 flex flex-wrap gap-4">
-              {/* <a
+              {/* Reativado: a secao #contact agora existe de fato na pagina. */}
+              <a
                 href="#contact"
-                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-all shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40"
+                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-orange-500 dark:hover:bg-orange-600 text-white rounded-lg font-medium transition-all shadow-lg shadow-blue-500/20 dark:shadow-orange-500/20 hover:shadow-blue-500/40 dark:hover:shadow-orange-500/40"
               >
                 {t("contactMe")}
-              </a> */}
+              </a>
               <a
                 href="#projects"
                 className="px-6 py-3 bg-slate-100 hover:bg-slate-200

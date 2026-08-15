@@ -12,6 +12,24 @@ interface LanguageContextType {
 
 const translations = {
   pt: {
+    currentRole: "Atual",
+
+    // ---- LEGO (RASCUNHO — escopo do cargo, nao realizacoes) ----
+    exp0Title: "Engenheiro de Software Senior",
+    exp0Company: "The LEGO Group",
+    exp0CompanyUrl: "https://www.lego.com",
+    exp0Location: "Billund, Dinamarca",
+    exp0Period: "Set 2026 - Presente",
+    exp0Description:
+      "Time PELM, dentro de Product Delivery Technology. Construo os servicos que sustentam o processo de desenvolvimento de produto da LEGO — consistencia, rastreabilidade e automacao entre os dominios envolvidos em cada mudanca.",
+    exp0Resp1:
+      "Propriedade ponta a ponta de features e servicos, do desenho a operacao em producao (you build it, you run it)",
+    exp0Resp2:
+      "Desenho de APIs escalaveis e sistemas distribuidos em nuvem, com foco em observabilidade, confiabilidade e seguranca",
+    exp0Resp3:
+      "Integracao de dados entre dominios de negocio com arquitetura orientada a eventos e estrategias de persistencia SQL/NoSQL",
+    exp0Resp4:
+      "Mentoria de engenheiros e elevacao dos padroes de codigo, testes e CI/CD do time",
     welcome: "Bem-vindo ao meu portfolio",
     about: "Sobre Mim",
     skills: "Minhas Habilidades",
@@ -21,7 +39,7 @@ const translations = {
     exp1Company: "Riverty",
     exp1CompanyUrl: "https://riverty.com",
     exp1Location: "Tallinn, Estônia",
-    exp1Period: "2022 - Presente",
+    exp1Period: "2022 - 2026",
     exp1Description:
       "Liderança da arquitetura frontend para produtos financeiros usando Web Components com StencilJS e microserviços .NET Core. Construindo o design system utilizado por múltiplos times.",
     exp1Resp1:
@@ -111,59 +129,59 @@ const translations = {
     skillCSharpName: "C#",
     skillCSharpCategory: "Linguagens",
     skillCSharpDescription:
-      "Minha linguagem principal para backend. De microserviços event-driven com Kafka a um URL shortener na Azure com CosmosDB — na Riverty eu arquiteto sistemas financeiros que processam pagamentos reais diariamente.",
+      "Nove anos depois, ainda é onde me sinto em casa. Quase tudo que coloquei em produção roda nela — os fluxos de pagamento na Riverty, os backends dos meus apps, os padrões sobre os quais escrevo no Medium. É a linguagem que eu escolho quando a coisa precisa aguentar de verdade.",
     skillGoName: "Go",
     skillGoCategory: "Linguagens",
     skillGoDescription:
-      "Criei o GCLI, uma ferramenta CLI open-source com 32 stars que gera projetos Go prontos para produção com múltiplos templates, geração de CRUD e hot-reload de migrations. Além disso, explorei gRPC, fundamentos de blockchain, redes neurais e até uma lib de mapeamento struct-to-struct — tudo em Go.",
+      "Peguei Go para o que C# torna pesado. Escrevi o GCLI para parar de refazer o mesmo esqueleto de projeto toda vez — ele gera um serviço com migrations e Docker já ligados. Binário pequeno, concorrência que dá para enxergar, deploy sem runtime junto.",
     skillTypeScriptName: "TypeScript",
     skillTypeScriptCategory: "Linguagens",
     skillTypeScriptDescription:
-      "De Web Components enterprise na plataforma fintech da Riverty até este portfólio com Next.js, TypeScript é minha ferramenta diária para qualquer coisa frontend. Também construí conversores de moeda com RxJS, ferramentas de aprendizado de estoniano e cursos completos de Angular para iniciantes.",
+      "A outra metade do meu dia, há quase tanto tempo quanto C#. A biblioteca de componentes da Riverty era TypeScript, e este site também é. Uso o sistema de tipos como ferramenta de design: quando os tipos ficam estranhos, normalmente é o desenho que está errado.",
     skillAngularName: "Angular",
     skillAngularCategory: "Frontend",
     skillAngularDescription:
-      "Passei anos construindo SPAs complexas com Angular em ambientes enterprise. Integrei Web Components, ensinei Angular através de cursos completos para iniciantes (com backends CRUD completos) e usei como base para apps mobile híbridos com Ionic.",
+      "Onde aprendi a construir coisas feitas para durar anos, não sprints. Painéis corporativos, portais internos e algumas migrações de AngularJS que ninguém pediu para fazer. Também ensinei — explicar change detection para iniciante é o jeito mais rápido de descobrir se você entende de verdade.",
     skillIonicName: "Ionic",
     skillIonicCategory: "Mobile",
     skillIonicDescription:
-      "Usei Ionic com Angular e Capacitor para entregar apps mobile cross-platform antes de migrar para desenvolvimento nativo com SwiftUI. Me deu uma base sólida em padrões de UX mobile, publicação em app stores e ponte entre tecnologias web e recursos nativos do dispositivo.",
+      "Como entrei em mobile antes de ir para nativo. Apps cross-platform com Angular e Capacitor, quando manter duas bases nativas não se pagava. Me deixou com traquejo de revisão de app store e com a noção de onde a web deixa de ser suficiente.",
     skillSwiftUIName: "SwiftUI",
     skillSwiftUICategory: "Mobile",
     skillSwiftUIDescription:
-      "Onde vai a maior parte da minha energia criativa atualmente. Já entreguei o Spark Tracker (contador de vida para MTG com suporte a iPad), um Travel App com itinerários inteligentes, Cookbook Pro com integração ao Apple Watch e um MTG Card Inventory — todos nativos em SwiftUI com Swift Data e backends .NET.",
+      "Onde está a maior parte da minha curiosidade ultimamente. Tripfinity, Spark Tracker e o fluxo de revisão do IdentityKit nasceram aqui. UI declarativa fez sentido mais rápido do que eu esperava, mas ainda encontro as bordas onde UIKit é a resposta honesta.",
     skillStencilJSName: "StencilJS",
     skillStencilJSCategory: "Frontend",
     skillStencilJSDescription:
-      "Na Riverty, construo os Web Components que alimentam os produtos financeiros da empresa. O Stencil me permite criar componentes de UI reutilizáveis e agnósticos de framework que são entregues como web components padrão — usados por múltiplos times e aplicações em produção.",
+      "Na Riverty eu construí a biblioteca de componentes que os outros times consumiam. Stencil compila para web components puros, então os apps Angular e os híbridos podiam usar os mesmos botões sem ninguém precisar concordar sobre framework antes.",
     skillMongoDBName: "MongoDB",
     skillMongoDBCategory: "Banco de Dados",
     skillMongoDBDescription:
-      "Usei MongoDB para armazenamento flexível baseado em documentos em projetos onde schemas relacionais seriam excessivos. Confortável com pipelines de agregação, estratégias de indexação e combinando com backends Go ou .NET para prototipagem rápida e workloads de produção.",
+      "Usei onde o dado era mesmo documento — catálogos com campos que variam, logs de evento que só crescem. Não como fuga de modelagem. Aprender quando não usar demorou mais do que aprender a linguagem de consulta.",
     skillSQLServerName: "SQLServer",
     skillSQLServerCategory: "Banco de Dados",
     skillSQLServerDescription:
-      "Trabalhei extensivamente com SQL Server em várias empresas no Brasil, escrevendo queries otimizadas, stored procedures e gerenciando migrações de dados. Foi a base da maioria dos projetos enterprise em que trabalhei no início da minha carreira.",
+      "A espinha dorsal de quase tudo que construí no Brasil. Modelagem, ajuste de índice e leitura de plano de execução quando um relatório começava a estourar o tempo. Boa parte dos meus instintos sobre dados vem desses anos.",
     skillOracleName: "Oracle",
     skillOracleCategory: "Banco de Dados",
     skillOracleDescription:
-      "Experiência prática com bancos Oracle em ambientes enterprise, trabalhando com PL/SQL para automação, operações com grandes volumes de dados e integração com backends .NET para sistemas financeiros legados.",
+      "Herdado, não escolhido. PL/SQL e integrações com ERPs corporativos dentro de sistemas financeiros. Me ensinou a trabalhar dentro de algo que você não tem permissão para redesenhar — o que acabou sendo mais útil do que eu imaginava.",
     skillDockerName: "Docker",
     skillDockerCategory: "DevOps",
     skillDockerDescription:
-      "Todo projeto que construo é containerizado. Dos templates do GCLI que já vêm com Dockerfiles prontos, ao URL shortener na Azure, até ambientes de desenvolvimento local — Docker faz parte do meu fluxo padrão para deploys consistentes e reproduzíveis.",
+      "Tudo que construo vira container, normalmente antes de fazer qualquer coisa útil. O GCLI já sai com Dockerfile. No fim é a vitória chata que importa: a coisa se comporta igual no meu notebook e no servidor.",
     skillKubernetesName: "Kubernetes",
     skillKubernetesCategory: "DevOps",
     skillKubernetesDescription:
-      "Trabalho com K8s para orquestrar serviços containerizados em produção na Riverty. Lido com escalabilidade de pods, rolling deployments e configurações de service mesh na arquitetura de microserviços da plataforma financeira.",
+      "Rodei os serviços da plataforma financeira nele na Riverty — escala, deploy gradual e descobrir por que um pod reiniciava sozinho. O suficiente para ser útil e para ficar de plantão, mas não vou dizer que é onde sou mais fundo.",
     skillBicepName: "Bicep",
     skillBicepCategory: "DevOps",
     skillBicepDescription:
-      "Usei Bicep para definir e implantar a infraestrutura Azure do projeto URL Shortener — CosmosDB, App Services e rede, tudo como código. Na Riverty, é o padrão para provisionar e gerenciar recursos cloud entre ambientes.",
+      "Escrevi nele a infraestrutura Azure do meu encurtador de URL — CosmosDB, App Service, rede, tudo revisável num pull request. Na Riverty era o padrão. Infra que dá para ler vale mais do que infra que alguém clicou.",
     skillTerraformName: "Terraform",
     skillTerraformCategory: "DevOps",
     skillTerraformDescription:
-      "Familiarizado com Terraform para provisionamento de infraestrutura multi-cloud e gerenciamento de estado. Uso junto com Bicep dependendo da estratégia cloud do projeto, me dando flexibilidade entre Azure, AWS e setups híbridos.",
+      "Usei junto com Bicep dependendo de onde a coisa precisava rodar. Mesma ideia, alcance maior. Ganhando mais da minha atenção agora que AWS entrou no horizonte.",
     projectUrlShortenerTitle: "URL-Shortener",
     projectUrlShortenerDescription:
       "Plataforma para encurtar URLS sendo capaz de suportar um grade volume de dados, tendo sido feito deploy na Azure.",
@@ -321,8 +339,50 @@ const translations = {
     nextImage: "Próxima Imagem",
     previousImage: "Imagem Anterior",
     imageOf: "Imagem {current} de {total}",
+
+    // ---- Localizacao / contato ----
+    locationValue: "Dinamarca",
+    contactError: "Nao consegui enviar. Me escreva direto:",
+    // ---- Secao Agora (EDITE ESTES TRES TEXTOS) ----
+    now: "Agora",
+    nowSubtitle: "No que estou trabalhando, estudando e lendo neste momento.",
+    nowBuilding: "Construindo",
+    nowBuildingBody: "Tripfinity — planejador de viagens para iOS em SwiftUI sobre um backend .NET/PostgreSQL.",
+    nowLearning: "Estudando",
+    nowLearningBody: "Swift Concurrency e arquitetura offline-first para apps moveis.",
+    nowReading: "Lendo",
+    nowReadingBody: "Designing Data-Intensive Applications, de Martin Kleppmann.",
+    // ---- Escrita / Medium ----
+    writing: "Escrevendo",
+    seeAllOnMedium: "Ver tudo no Medium",
+    writingFallback: "Escrevo sobre .NET, Go e desenvolvimento iOS no Medium.",
+    // ---- GitHub ----
+    githubActivity: "Atividade no GitHub",
+    githubActivitySubtitle: "Numeros reais, direto da API publica do GitHub.",
+    ghRepos: "Repositorios",
+    ghStars: "Estrelas",
+    ghForks: "Forks",
+    ghLanguages: "Linguagens por repositorio",
+    ghLastPush: "Ultimo push em",
   },
   en: {
+    currentRole: "Current",
+
+    exp0Title: "Senior Software Engineer",
+    exp0Company: "The LEGO Group",
+    exp0CompanyUrl: "https://www.lego.com",
+    exp0Location: "Billund, Denmark",
+    exp0Period: "Sep 2026 - Present",
+    exp0Description:
+      "PELM team, within Product Delivery Technology. Building the services behind the LEGO Development Process — consistency, traceability and automation across the domains involved in every product change.",
+    exp0Resp1:
+      "End-to-end ownership of features and services, from design through to running them in production (you build it, you run it)",
+    exp0Resp2:
+      "Designing scalable APIs and cloud-native distributed systems, with a focus on observability, reliability and security",
+    exp0Resp3:
+      "Integrating data across business domains using event-driven architecture and SQL/NoSQL persistence strategies",
+    exp0Resp4:
+      "Mentoring engineers and raising the team's standards for code, testing and CI/CD",
     welcome: "Welcome to my portfolio",
     about: "About Me",
     skills: "My Skills",
@@ -346,7 +406,7 @@ const translations = {
     exp1Company: "Riverty",
     exp1CompanyUrl: "https://riverty.com",
     exp1Location: "Tallinn, Estonia",
-    exp1Period: "2022 - Present",
+    exp1Period: "2022 - 2026",
     exp1Description:
       "Leading frontend architecture for financial products using StencilJS Web Components and .NET Core microservices. Building the design system used across multiple teams.",
     exp1Resp1:
@@ -434,59 +494,59 @@ const translations = {
     skillCSharpName: "C#",
     skillCSharpCategory: "Languages",
     skillCSharpDescription:
-      "My go-to for backend work. From event-driven microservices with Kafka to a URL shortener on Azure with CosmosDB — at Riverty I architect financial systems that process real payments daily.",
+      "Nine years in and it still feels like home. Most of what I have shipped runs on it — the payment flows at Riverty, the backends behind my own apps, the patterns I keep writing about on Medium. It is what I reach for when something actually has to hold up in production.",
     skillGoName: "Go",
     skillGoCategory: "Languages",
     skillGoDescription:
-      "Built GCLI, an open-source CLI tool with 32 stars that scaffolds production-ready Go projects with multiple templates, CRUD generation, and hot-reload migrations. Beyond that, I've explored gRPC, blockchain fundamentals, neural networks, and even a struct-to-struct mapper library — all in Go.",
+      "I picked up Go for the things C# makes heavy. Wrote GCLI so I would stop rebuilding the same project skeleton every time — it scaffolds a service with migrations and Docker already wired up. Small binaries, concurrency you can see, deploys that carry no runtime.",
     skillTypeScriptName: "TypeScript",
     skillTypeScriptCategory: "Languages",
     skillTypeScriptDescription:
-      "From building enterprise Web Components at Riverty's fintech platform to crafting this portfolio with Next.js, TypeScript is my daily driver for anything frontend. I've also built RxJS-based currency converters, Estonian language learning tools, and full Angular courses for beginners.",
+      "The other half of my day, for about as long as C#. The shared component library at Riverty was TypeScript, and so is this site. I treat the type system as a design tool: when the types get awkward, usually the design is what is wrong.",
     skillAngularName: "Angular",
     skillAngularCategory: "Frontend",
     skillAngularDescription:
-      "Spent years building complex SPAs with Angular in enterprise environments. I've integrated Web Components, taught Angular through complete courses for beginners (with full CRUD backends), and used it as the foundation for hybrid mobile apps with Ionic.",
+      "Where I learned to build things meant to last years rather than sprints. Enterprise dashboards, internal portals, and a couple of AngularJS migrations nobody volunteered for. I also taught it — explaining change detection to a beginner is the fastest way to find out whether you actually understand it.",
     skillIonicName: "Ionic",
     skillIonicCategory: "Mobile",
     skillIonicDescription:
-      "Used Ionic with Angular and Capacitor to ship cross-platform mobile apps before transitioning to native SwiftUI development. Gave me a solid understanding of mobile UX patterns, app store publishing, and bridging web technologies with native device capabilities.",
+      "How I got into mobile before going native. Cross-platform apps with Angular and Capacitor, back when two native codebases were not worth the cost. It left me with a feel for app store review and for the point where web tech stops being enough.",
     skillSwiftUIName: "SwiftUI",
     skillSwiftUICategory: "Mobile",
     skillSwiftUIDescription:
-      "Currently where most of my creative energy goes. I've shipped Spark Tracker (an MTG life counter with iPad support), a Travel App with smart itineraries, Cookbook Pro with Apple Watch integration, and an MTG Card Inventory — all native SwiftUI with Swift Data and .NET backends.",
+      "Where most of my curiosity goes lately. Tripfinity, Spark Tracker and the review flow in IdentityKit were all built here. Declarative UI clicked faster than I expected, though I keep finding the edges where UIKit is still the honest answer.",
     skillStencilJSName: "StencilJS",
     skillStencilJSCategory: "Frontend",
     skillStencilJSDescription:
-      "At Riverty, I build the Web Components that power the company's financial products. Stencil lets me create framework-agnostic, reusable UI components that ship as standard web components — used across multiple teams and applications in production.",
+      "At Riverty I built the component library the other teams consumed. Stencil compiles to plain web components, which meant the Angular apps and the hybrid apps could share the same buttons without anyone having to agree on a framework first.",
     skillMongoDBName: "MongoDB",
     skillMongoDBCategory: "Database",
     skillMongoDBDescription:
-      "Used MongoDB for flexible, document-based storage in several projects where relational schemas would be overkill. Comfortable with aggregation pipelines, indexing strategies, and pairing it with Go or .NET backends for rapid prototyping and production workloads.",
+      "Used where the data genuinely was documents — catalogs with fields that vary, event logs that only ever get appended. Not as an escape from modeling. Learning when not to reach for it took me longer than learning the query language.",
     skillSQLServerName: "SQLServer",
     skillSQLServerCategory: "Database",
     skillSQLServerDescription:
-      "Worked extensively with SQL Server across multiple companies in Brazil, writing optimized queries, stored procedures, and handling data migrations. It was the backbone of most enterprise projects I worked on early in my career.",
+      "The backbone of most of what I built in Brazil. Modeling, index tuning, and reading execution plans when a report suddenly started timing out. A lot of my instincts about data still come from those years.",
     skillOracleName: "Oracle",
     skillOracleCategory: "Database",
     skillOracleDescription:
-      "Hands-on experience with Oracle databases in enterprise settings, working with PL/SQL for automation, handling large-scale data operations, and integrating with .NET backends for legacy financial systems.",
+      "Inherited rather than chosen. PL/SQL and integrations with corporate ERPs inside financial systems. It taught me how to work within something you are not allowed to redesign, which turned out to be more useful than I expected.",
     skillDockerName: "Docker",
     skillDockerCategory: "DevOps",
     skillDockerDescription:
-      "Every project I build gets containerized. From the GCLI templates that ship with Dockerfiles out of the box, to the URL shortener on Azure, to local development environments — Docker is part of my standard workflow for consistent, reproducible deployments.",
+      "Everything I build gets containerized, usually before it does anything useful. GCLI ships Dockerfiles by default. Mostly it buys the boring win: the thing behaves the same on my laptop and on the server.",
     skillKubernetesName: "Kubernetes",
     skillKubernetesCategory: "DevOps",
     skillKubernetesDescription:
-      "Working with K8s for orchestrating containerized services in production at Riverty. Handling pod scaling, rolling deployments, and service mesh configurations for the financial platform's microservices architecture.",
+      "Ran the financial platform services on it at Riverty — scaling, rolling deploys, and working out why a pod kept restarting. Enough to be useful and to be on call for it, though I would not claim it is where I am deepest.",
     skillBicepName: "Bicep",
     skillBicepCategory: "DevOps",
     skillBicepDescription:
-      "Used Bicep to define and deploy the Azure infrastructure for the URL Shortener project — CosmosDB, App Services, and networking, all as code. At Riverty, it's the standard for provisioning and managing cloud resources across environments.",
+      "Wrote the Azure infrastructure for my URL shortener in it — CosmosDB, App Service, networking, all reviewable in a pull request. At Riverty it was the standard. Infrastructure you can read beats infrastructure somebody clicked together.",
     skillTerraformName: "Terraform",
     skillTerraformCategory: "DevOps",
     skillTerraformDescription:
-      "Familiar with Terraform for multi-cloud infrastructure provisioning and state management. Used alongside Bicep depending on the project's cloud strategy, giving me flexibility across Azure, AWS, and hybrid setups.",
+      "Used alongside Bicep depending on where things had to run. Same idea, wider reach. Getting more of my attention now that AWS is on the horizon.",
     projectUrlShortenerTitle: "URL-Shortener",
     projectUrlShortenerDescription:
       "Platform for shortening URLs, capable of supporting a large volume of data, deployed on Azure.",
@@ -628,8 +688,46 @@ const translations = {
     nextImage: "Next Image",
     previousImage: "Previous Image",
     imageOf: "Image {current} of {total}",
+
+    locationValue: "Denmark",
+    contactError: "Could not send. Reach me directly at:",
+    now: "Now",
+    nowSubtitle: "What I am building, learning and reading at the moment.",
+    nowBuilding: "Building",
+    nowBuildingBody: "Tripfinity — an iOS travel planner in SwiftUI on a .NET/PostgreSQL backend.",
+    nowLearning: "Learning",
+    nowLearningBody: "Swift Concurrency and offline-first architecture for mobile apps.",
+    nowReading: "Reading",
+    nowReadingBody: "Designing Data-Intensive Applications, by Martin Kleppmann.",
+    writing: "Writing",
+    seeAllOnMedium: "See all on Medium",
+    writingFallback: "I write about .NET, Go and iOS development on Medium.",
+    githubActivity: "GitHub activity",
+    githubActivitySubtitle: "Real numbers, straight from the public GitHub API.",
+    ghRepos: "Repositories",
+    ghStars: "Stars",
+    ghForks: "Forks",
+    ghLanguages: "Languages by repository",
+    ghLastPush: "Last push on",
   },
   ru: {
+    currentRole: "Tekushchaya",
+
+    exp0Title: "Starshiy inzhener-programmist",
+    exp0Company: "The LEGO Group",
+    exp0CompanyUrl: "https://www.lego.com",
+    exp0Location: "Billund, Dania",
+    exp0Period: "Sen 2026 - Nastoyashchee vremya",
+    exp0Description:
+      "Komanda PELM v Product Delivery Technology. Razrabotka servisov dlya protsessa razrabotki produktov LEGO — soglasovannost, prozrachnost i avtomatizatsiya mezhdu domenami.",
+    exp0Resp1:
+      "Polnaya otvetstvennost za funktsii i servisy — ot proektirovaniya do raboty v produktive (you build it, you run it)",
+    exp0Resp2:
+      "Proektirovanie masshtabiruemykh API i oblachnykh raspredelennykh sistem s fokusom na nablyudaemost, nadezhnost i bezopasnost",
+    exp0Resp3:
+      "Integratsiya dannykh mezhdu biznes-domenami cherez sobytiynuyu arkhitekturu i strategii khraneniya SQL/NoSQL",
+    exp0Resp4:
+      "Nastavnichestvo inzhenerov i povyshenie standartov koda, testirovaniya i CI/CD v komande",
     welcome: "Добро пожаловать в мое портфолио",
     about: "Обо мне",
     seeAllRepos: "Посмотреть все репозитории",
@@ -703,7 +801,7 @@ const translations = {
     exp1Company: "Riverty",
     exp1CompanyUrl: "https://riverty.com",
     exp1Location: "Таллин, Эстония",
-    exp1Period: "2022 - Настоящее время",
+    exp1Period: "2022 - 2026",
     exp1Description:
       "Руководство фронтенд-архитектурой финансовых продуктов с использованием Web Components на StencilJS и микросервисов .NET Core. Создание дизайн-системы, используемой несколькими командами.",
     exp1Resp1:
@@ -790,59 +888,59 @@ const translations = {
     skillCSharpName: "C#",
     skillCSharpCategory: "Языки",
     skillCSharpDescription:
-      "Мой основной язык для бэкенда. От event-driven микросервисов с Kafka до сокращателя URL в Azure с CosmosDB — в Riverty проектирую финансовые системы, обрабатывающие реальные платежи ежедневно.",
+      "Девять лет спустя это всё ещё язык, на котором мне комфортнее всего. Почти всё, что я вывел в продакшн, работает на нём — платёжные потоки в Riverty, бэкенды моих приложений, паттерны, о которых я пишу на Medium. Беру его, когда система действительно должна выдержать нагрузку.",
     skillGoName: "Go",
     skillGoCategory: "Языки",
     skillGoDescription:
-      "Создал GCLI — open-source CLI с 32 звёздами, который генерирует production-ready Go-проекты с несколькими шаблонами, генерацией CRUD и hot-reload миграций. Помимо этого, исследовал gRPC, основы блокчейна, нейронные сети и даже библиотеку маппинга struct-to-struct — всё на Go.",
+      "Взял Go для того, что на C# получается тяжеловесно. Написал GCLI, чтобы не собирать один и тот же каркас проекта заново — он создаёт сервис с миграциями и Docker сразу из коробки. Маленькие бинарники, видимая конкурентность, деплой без рантайма.",
     skillTypeScriptName: "TypeScript",
     skillTypeScriptCategory: "Языки",
     skillTypeScriptDescription:
-      "От корпоративных Web Components на финтех-платформе Riverty до этого портфолио на Next.js — TypeScript мой ежедневный инструмент для всего фронтенда. Также создавал конвертеры валют на RxJS, инструменты для изучения эстонского и полные курсы Angular для новичков.",
+      "Вторая половина моего дня, почти столько же лет, сколько и C#. Библиотека компонентов в Riverty была на TypeScript, и этот сайт тоже. Отношусь к системе типов как к инструменту проектирования: если типы получаются неуклюжими, обычно проблема в самом дизайне.",
     skillAngularName: "Angular",
     skillAngularCategory: "Фронтенд",
     skillAngularDescription:
-      "Годами строил сложные SPA на Angular в корпоративных средах. Интегрировал Web Components, преподавал Angular через полные курсы для новичков (с CRUD-бэкендами) и использовал как основу для гибридных мобильных приложений с Ionic.",
+      "Здесь я научился строить то, что живёт годами, а не спринтами. Корпоративные панели, внутренние порталы и пара миграций с AngularJS, за которые никто не вызывался добровольцем. Ещё и преподавал — объяснить change detection новичку это самый быстрый способ понять, разбираешься ли ты сам.",
     skillIonicName: "Ionic",
     skillIonicCategory: "Мобильные",
     skillIonicDescription:
-      "Использовал Ionic с Angular и Capacitor для выпуска кроссплатформенных мобильных приложений, прежде чем перейти на нативную разработку SwiftUI. Это дало мне прочную базу в паттернах мобильного UX, публикации в магазинах приложений и связи веб-технологий с нативными возможностями устройств.",
+      "Так я попал в мобильную разработку до перехода на нативную. Кроссплатформенные приложения на Angular и Capacitor, когда две нативные кодовые базы не окупались. Остались навык прохождения ревью в сторах и понимание, где веб-технологии перестают справляться.",
     skillSwiftUIName: "SwiftUI",
     skillSwiftUICategory: "Мобильные",
     skillSwiftUIDescription:
-      "Сюда сейчас уходит большая часть моей творческой энергии. Выпустил Spark Tracker (счётчик жизней для MTG с поддержкой iPad), Travel App с умными маршрутами, Cookbook Pro с интеграцией Apple Watch и MTG Card Inventory — все нативные SwiftUI с Swift Data и бэкендами на .NET.",
+      "Туда сейчас уходит большая часть моего любопытства. Tripfinity, Spark Tracker и экран проверки в IdentityKit сделаны здесь. Декларативный UI зашёл быстрее, чем я ожидал, хотя я до сих пор нахожу места, где UIKit остаётся честным ответом.",
     skillStencilJSName: "StencilJS",
     skillStencilJSCategory: "Фронтенд",
     skillStencilJSDescription:
-      "В Riverty создаю Web Components, на которых работают финансовые продукты компании. Stencil позволяет создавать переиспользуемые, фреймворк-агностичные UI-компоненты, которые поставляются как стандартные веб-компоненты — используются несколькими командами и приложениями в продакшне.",
+      "В Riverty я делал библиотеку компонентов, которой пользовались другие команды. Stencil компилируется в обычные веб-компоненты, поэтому Angular-приложения и гибридные могли использовать одни и те же кнопки, не договариваясь сначала о фреймворке.",
     skillMongoDBName: "MongoDB",
     skillMongoDBCategory: "Базы данных",
     skillMongoDBDescription:
-      "Использовал MongoDB для гибкого документного хранения в проектах, где реляционные схемы были бы избыточны. Уверенно работаю с пайплайнами агрегации, стратегиями индексирования и комбинирую с бэкендами на Go или .NET для быстрого прототипирования и продакшн-нагрузок.",
+      "Использовал там, где данные действительно были документами — каталоги с плавающими полями, журналы событий, которые только дополняются. Не как побег от моделирования. Понять, когда его брать не стоит, заняло больше времени, чем выучить язык запросов.",
     skillSQLServerName: "SQLServer",
     skillSQLServerCategory: "Базы данных",
     skillSQLServerDescription:
-      "Плотно работал с SQL Server в нескольких компаниях в Бразилии, писал оптимизированные запросы, хранимые процедуры и управлял миграциями данных. Это была основа большинства корпоративных проектов в начале моей карьеры.",
+      "Основа почти всего, что я делал в Бразилии. Моделирование, настройка индексов и чтение планов выполнения, когда отчёт вдруг переставал укладываться в таймаут. Многие мои интуиции о данных родом из тех лет.",
     skillOracleName: "Oracle",
     skillOracleCategory: "Базы данных",
     skillOracleDescription:
-      "Практический опыт работы с Oracle в корпоративных средах: PL/SQL для автоматизации, операции с большими объёмами данных и интеграция с бэкендами на .NET для устаревших финансовых систем.",
+      "Достался по наследству, а не по выбору. PL/SQL и интеграции с корпоративными ERP внутри финансовых систем. Научил работать внутри того, что тебе не дают переделать — оказалось полезнее, чем я думал.",
     skillDockerName: "Docker",
     skillDockerCategory: "DevOps",
     skillDockerDescription:
-      "Каждый мой проект контейнеризирован. От шаблонов GCLI, которые идут с Dockerfile из коробки, до URL-сокращателя в Azure и локальных сред разработки — Docker является частью моего стандартного рабочего процесса для консистентных и воспроизводимых деплоев.",
+      "Всё, что я делаю, попадает в контейнер, обычно ещё до того, как начнёт приносить пользу. GCLI сразу отдаёт Dockerfile. По сути это скучная, но важная победа: оно ведёт себя одинаково на ноутбуке и на сервере.",
     skillKubernetesName: "Kubernetes",
     skillKubernetesCategory: "DevOps",
     skillKubernetesDescription:
-      "Работаю с K8s для оркестрации контейнеризированных сервисов в продакшне Riverty. Управляю масштабированием подов, rolling-деплоями и конфигурациями service mesh в микросервисной архитектуре финансовой платформы.",
+      "Запускал на нём сервисы финансовой платформы в Riverty — масштабирование, постепенные выкатки и выяснение, почему под перезапускается сам. Достаточно, чтобы приносить пользу и дежурить, но не стану утверждать, что это моя самая сильная область.",
     skillBicepName: "Bicep",
     skillBicepCategory: "DevOps",
     skillBicepDescription:
-      "Использовал Bicep для описания и развёртывания Azure-инфраструктуры проекта URL Shortener — CosmosDB, App Services и сеть, всё как код. В Riverty это стандарт для провизионирования и управления облачными ресурсами между средами.",
+      "На нём описал инфраструктуру Azure для своего сокращателя ссылок — CosmosDB, App Service, сеть, всё это ревьюится в пул-реквесте. В Riverty это был стандарт. Инфраструктура, которую можно прочитать, лучше той, которую кто-то накликал.",
     skillTerraformName: "Terraform",
     skillTerraformCategory: "DevOps",
     skillTerraformDescription:
-      "Знаком с Terraform для провизионирования мультиоблачной инфраструктуры и управления состоянием. Использую наряду с Bicep в зависимости от облачной стратегии проекта, что даёт гибкость между Azure, AWS и гибридными конфигурациями.",
+      "Использовал вместе с Bicep в зависимости от того, где всё должно работать. Та же идея, но шире охват. Получает больше моего внимания теперь, когда на горизонте AWS.",
     // Projects
     projectUrlShortenerTitle: "URL-Shortener",
     projectUrlShortenerDescription:
@@ -932,8 +1030,46 @@ const translations = {
     nextImage: "Следующее изображение",
     previousImage: "Предыдущее изображение",
     imageOf: "Изображение {current} из {total}",
+
+    locationValue: "Dania",
+    contactError: "Ne udalos otpravit. Napishite mne napryamuyu:",
+    now: "Seychas",
+    nowSubtitle: "Nad chem ya rabotayu, chto izuchayu i chitayu sechas.",
+    nowBuilding: "Razrabatyvayu",
+    nowBuildingBody: "Tripfinity — planirovshchik puteshestviy dlya iOS na SwiftUI s backend .NET/PostgreSQL.",
+    nowLearning: "Izuchayu",
+    nowLearningBody: "Swift Concurrency i offline-first arkhitekturu dlya mobilnykh prilozheniy.",
+    nowReading: "Chitayu",
+    nowReadingBody: "Designing Data-Intensive Applications, Martin Kleppmann.",
+    writing: "Pishu",
+    seeAllOnMedium: "Smotret vse na Medium",
+    writingFallback: "Ya pishu o .NET, Go i razrabotke pod iOS na Medium.",
+    githubActivity: "Aktivnost na GitHub",
+    githubActivitySubtitle: "Realnye dannye iz publichnogo API GitHub.",
+    ghRepos: "Repozitorii",
+    ghStars: "Zvezdy",
+    ghForks: "Forki",
+    ghLanguages: "Yazyki po repozitoriyam",
+    ghLastPush: "Posledniy push",
   },
   et: {
+    currentRole: "Praegune",
+
+    exp0Title: "Vanem tarkvarainsener",
+    exp0Company: "The LEGO Group",
+    exp0CompanyUrl: "https://www.lego.com",
+    exp0Location: "Billund, Taani",
+    exp0Period: "Sept 2026 - Praegu",
+    exp0Description:
+      "PELM tiim Product Delivery Technology all. Ehitan teenuseid LEGO tootearendusprotsessi taga — jarjepidevus, jalgitavus ja automatiseerimine domeenide vahel.",
+    exp0Resp1:
+      "Taielik omanikustaatus funktsioonide ja teenuste ule, disainist kuni tootmises haldamiseni (you build it, you run it)",
+    exp0Resp2:
+      "Skaleeritavate APIde ja pilvepohiste hajussusteemide disain, keskendudes jalgitavusele, usaldusvaarsusele ja turvalisusele",
+    exp0Resp3:
+      "Andmete integreerimine ariidomeenide vahel sundmusepohise arhitektuuri ja SQL/NoSQL strateegiatega",
+    exp0Resp4:
+      "Inseneride mentorlus ning tiimi koodi-, testimis- ja CI/CD standardite tostmine",
     welcome: "Tere tulemast minu portfooliosse",
     about: "Minust",
     skills: "Minu oskused",
@@ -1009,7 +1145,7 @@ const translations = {
     exp1Company: "Riverty",
     exp1CompanyUrl: "https://riverty.com",
     exp1Location: "Tallinn, Eesti",
-    exp1Period: "2022 - Praegu",
+    exp1Period: "2022 - 2026",
     exp1Description:
       "Frontendi arhitektuuri juhtimine finantstoodete jaoks StencilJS veebikomponentide ja .NET Core mikroteenustega. Mitme meeskonna poolt kasutatava disainisüsteemi loomine.",
     exp1Resp1:
@@ -1099,59 +1235,59 @@ const translations = {
     skillCSharpName: "C#",
     skillCSharpCategory: "Keeled",
     skillCSharpDescription:
-      "Minu peamine keel backendi tööks. Event-driven mikroteenustest Kafkaga kuni URL-i lühendajani Azure'is CosmosDB-ga — Rivertys projekteerin finantssüsteeme, mis töötlevad reaalseid makseid iga päev.",
+      "Üheksa aastat hiljem tundub see endiselt koduna. Peaaegu kõik, mis olen tootmisse viinud, töötab sellel — maksevood Rivertys, minu enda rakenduste backendid, mustrid, millest Mediumis kirjutan. Selle poole pöördun, kui asi peab päriselt vastu pidama.",
     skillGoName: "Go",
     skillGoCategory: "Keeled",
     skillGoDescription:
-      "Lõin GCLI — avatud lähtekoodiga CLI 32 tähega, mis genereerib tootmisvalmis Go projekte mitme malliga, CRUD genereerimise ja hot-reload migratsioonidega. Lisaks olen uurinud gRPC-d, plokiahela aluseid, närvivõrke ja isegi struct-to-struct mappimise teeki — kõik Go-s.",
+      "Võtsin Go kasutusele selle jaoks, mis C#-s liiga raskeks läheb. Kirjutasin GCLI, et mitte iga kord sama projekti skeletti uuesti ehitada — see loob teenuse, kus migratsioonid ja Docker on juba ühendatud. Väikesed binaarid, nähtav samaaegsus, deploy ilma runtime'ita.",
     skillTypeScriptName: "TypeScript",
     skillTypeScriptCategory: "Keeled",
     skillTypeScriptDescription:
-      "Riverty fintech-platvormi ettevõtte veebikomponentidest kuni selle portfoolioni Next.js-iga — TypeScript on minu igapäevane tööriist kõigeks, mis puudutab frontendi. Olen ehitanud ka RxJS-põhiseid valuutakonvertereid, eesti keele õppimise tööriistu ja täielikke Angulari kursusi algajatele.",
+      "Minu päeva teine pool, peaaegu sama kaua kui C#. Riverty jagatud komponenditeek oli TypeScriptis, nagu ka see sait. Kasutan tüübisüsteemi disainivahendina: kui tüübid lähevad kohmakaks, on tavaliselt viga disainis endas.",
     skillAngularName: "Angular",
     skillAngularCategory: "Frontend",
     skillAngularDescription:
-      "Aastaid ehitasin keerulisi SPA-sid Angulariga ettevõttekeskkondades. Integreerisin veebikomponente, õpetasin Angulari täielike kursuste kaudu algajatele (koos CRUD backendidega) ja kasutasin seda alusena hübriidsetele mobiilirakendustele Ionicuga.",
+      "Siin õppisin ehitama asju, mis peavad vastu aastaid, mitte sprinte. Ettevõtte töölauad, sisemised portaalid ja paar AngularJS migratsiooni, mida keegi vabatahtlikult ette ei võtnud. Ka õpetasin seda — change detectioni algajale selgitamine on kiireim viis teada saada, kas sa ise aru saad.",
     skillIonicName: "Ionic",
     skillIonicCategory: "Mobiil",
     skillIonicDescription:
-      "Kasutasin Ionicut Angulari ja Capacitoriga platvormideüleste mobiilirakenduste tarnimiseks enne natiivse SwiftUI arenduse juurde üleminekut. See andis mulle tugeva aluse mobiilse UX mustrites, äpipoodides avaldamises ja veebitehnoloogiate sidumises seadme natiivsete võimalustega.",
+      "Nii jõudsin mobiiliarendusse enne natiivsele üleminekut. Platvormiülesed rakendused Angulari ja Capacitoriga, ajal mil kaks natiivset koodibaasi end ära ei tasunud. Jäi oskus app store'i ülevaatust läbida ja arusaam, kus veebitehnoloogia enam ei piisa.",
     skillSwiftUIName: "SwiftUI",
     skillSwiftUICategory: "Mobiil",
     skillSwiftUIDescription:
-      "Siia läheb praegu suurem osa minu loomingulisest energiast. Olen tarninud Spark Trackeri (MTG eluloendur iPadi toega), Travel Appi nutikate marsruutidega, Cookbook Pro Apple Watchi integratsiooniga ja MTG Card Inventory — kõik natiivne SwiftUI koos Swift Data ja .NET backendidega.",
+      "Sinna läheb viimasel ajal suurem osa mu uudishimust. Tripfinity, Spark Tracker ja IdentityKiti ülevaatusvoog on kõik siin tehtud. Deklaratiivne UI klappis kiiremini kui ootasin, kuigi leian ikka kohti, kus UIKit on aus vastus.",
     skillStencilJSName: "StencilJS",
     skillStencilJSCategory: "Frontend",
     skillStencilJSDescription:
-      "Rivertys ehitan veebikomponente, mis toidavad ettevõtte finantstooteid. Stencil võimaldab mul luua raamistiku-agnostilisi, taaskasutatavaid UI komponente, mis tarnitakse standardsete veebikomponentidena — kasutusel mitme meeskonna ja rakenduse poolt tootmises.",
+      "Rivertys ehitasin komponenditeegi, mida teised tiimid kasutasid. Stencil kompileerib tavalisteks veebikomponentideks, nii said Angulari ja hübriidrakendused kasutada samu nuppe, ilma et keegi peaks enne raamistikus kokku leppima.",
     skillMongoDBName: "MongoDB",
     skillMongoDBCategory: "Andmebaasid",
     skillMongoDBDescription:
-      "Kasutasin MongoDB-d paindlikuks dokumendipõhiseks salvestuseks projektides, kus relatsioonilised skeemid oleksid üleliigsed. Tunnen end hästi agregatsioonitorustikega, indekseerimisstrateegiate ja Go või .NET backendidega sidumisega kiireks prototüüpimiseks ja tootmiskoormusteks.",
+      "Kasutasin seal, kus andmed olid päriselt dokumendid — kataloogid muutuvate väljadega, sündmuselogid, mida ainult juurde kirjutatakse. Mitte modelleerimise eest põgenemiseks. Aru saada, millal seda mitte võtta, võttis kauem kui päringukeele õppimine.",
     skillSQLServerName: "SQLServer",
     skillSQLServerCategory: "Andmebaasid",
     skillSQLServerDescription:
-      "Töötasin ulatuslikult SQL Serveriga mitmes ettevõttes Brasiilias, kirjutades optimeeritud päringuid, salvestatud protseduure ja hallates andmemigratsioone. See oli enamiku ettevõtteprojektide alustala minu karjääri alguses.",
+      "Selgroog peaaegu kõigele, mida Brasiilias ehitasin. Modelleerimine, indeksite häälestamine ja täitmisplaanide lugemine, kui mõni aruanne järsku aegus. Suur osa mu andmetaju pärineb neist aastatest.",
     skillOracleName: "Oracle",
     skillOracleCategory: "Andmebaasid",
     skillOracleDescription:
-      "Praktiline kogemus Oracle'i andmebaasidega ettevõttekeskkondades: PL/SQL automatiseerimiseks, suuremahulised andmeoperatsioonid ja integratsioon .NET backendidega pärandsüsteemide jaoks.",
+      "Päritud, mitte valitud. PL/SQL ja integratsioonid ettevõtte ERPidega finantssüsteemide sees. Õpetas töötama millegi sees, mida sul ümber kujundada ei lubata — osutus kasulikumaks kui arvasin.",
     skillDockerName: "Docker",
     skillDockerCategory: "DevOps",
     skillDockerDescription:
-      "Iga minu projekt on konteineriseeritud. GCLI mallidest, millega tulevad Dockerfile'id kaasa, kuni URL-i lühendajani Azure'is ja kohalike arenduskeskkondadeni — Docker on osa minu standardsest töövoost järjepidevate ja reprodutseeritavate juurutuste jaoks.",
+      "Kõik, mida ehitan, satub konteinerisse, tavaliselt enne kui see midagi kasulikku teeb. GCLI väljastab Dockerfile'i vaikimisi. Sisuliselt on see igav, aga oluline võit: asi käitub sülearvutis ja serveris ühtemoodi.",
     skillKubernetesName: "Kubernetes",
     skillKubernetesCategory: "DevOps",
     skillKubernetesDescription:
-      "Töötan K8s-iga konteineriseeritud teenuste orkestreerimiseks tootmises Rivertys. Haldan podide skaleerimist, rolling-juurutusi ja service mesh konfiguratsioone finantsplatvormi mikroteenuste arhitektuuris.",
+      "Jooksutasin sellel Riverty finantsplatvormi teenuseid — skaleerimine, järkjärgulised deploy'd ja väljaselgitamine, miks üks pod end pidevalt taaskäivitas. Piisavalt, et kasulik olla ja valves seista, aga ei väida, et see oleks mu kõige sügavam ala.",
     skillBicepName: "Bicep",
     skillBicepCategory: "DevOps",
     skillBicepDescription:
-      "Kasutasin Bicepit URL Shortener projekti Azure taristu defineerimiseks ja juurutamiseks — CosmosDB, App Services ja võrgustik, kõik koodina. Rivertys on see standard pilvressursside ettevalmistamiseks ja haldamiseks keskkondade vahel.",
+      "Kirjutasin sellega oma URL-lühendaja Azure infrastruktuuri — CosmosDB, App Service, võrk, kõik pull requestis üle vaadatav. Rivertys oli see standard. Infrastruktuur, mida saab lugeda, on parem kui see, mille keegi kokku klikkis.",
     skillTerraformName: "Terraform",
     skillTerraformCategory: "DevOps",
     skillTerraformDescription:
-      "Tuttav Terraformiga mitme pilve taristu ettevalmistamiseks ja olekuhalduseks. Kasutan koos Bicepiga olenevalt projekti pilvestrateegiast, mis annab paindlikkuse Azure'i, AWS-i ja hübriidseadistuste vahel.",
+      "Kasutasin Bicepi kõrval sõltuvalt sellest, kus asi pidi jooksma. Sama mõte, laiem ulatus. Saab nüüd rohkem tähelepanu, kui AWS on silmapiiril.",
     // Projects
     projectUrlShortenerTitle: "URL-Shortener",
     projectUrlShortenerDescription:
@@ -1241,6 +1377,27 @@ const translations = {
     nextImage: "Järgmine pilt",
     previousImage: "Eelmine pilt",
     imageOf: "Pilt {current} / {total}",
+
+    locationValue: "Taani",
+    contactError: "Saatmine ebaonnestus. Kirjuta mulle otse:",
+    now: "Praegu",
+    nowSubtitle: "Millega ma praegu tegelen, mida opin ja loen.",
+    nowBuilding: "Ehitan",
+    nowBuildingBody: "Tripfinity — iOS reisiplaneerija SwiftUI-s .NET/PostgreSQL backendiga.",
+    nowLearning: "Opin",
+    nowLearningBody: "Swift Concurrency ja offline-first arhitektuur mobiilirakendustele.",
+    nowReading: "Loen",
+    nowReadingBody: "Designing Data-Intensive Applications, Martin Kleppmann.",
+    writing: "Kirjutan",
+    seeAllOnMedium: "Vaata koiki Mediumis",
+    writingFallback: "Kirjutan Mediumis .NET-ist, Go-st ja iOS arendusest.",
+    githubActivity: "GitHubi aktiivsus",
+    githubActivitySubtitle: "Paris numbrid otse GitHubi avalikust APIst.",
+    ghRepos: "Repositooriumid",
+    ghStars: "Tahed",
+    ghForks: "Forgid",
+    ghLanguages: "Keeled repositooriumite kaupa",
+    ghLastPush: "Viimane push",
   },
 };
 
