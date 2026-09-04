@@ -14,7 +14,17 @@ interface Skill {
   icon: React.ReactNode
   categoryKey: string
   descriptionKey: string
+  /*
+    Skill que comecei agora. Sem isso o card leria "0 anos" ao lado de uma
+    barra vazia — que parece bug, nao honestidade. Com a flag, o lugar dos
+    anos mostra "Aprendendo" e a barra ganha uma largura simbolica listrada,
+    que nao afirma proficiencia nenhuma.
+  */
+  learning?: boolean
 }
+
+/** Largura da barra para uma skill em aprendizado: presente, mas sem alegar nivel. */
+const LARGURA_APRENDENDO = 10
 
 const yearsOfExperience = anosDeExperiencia()
 
@@ -25,6 +35,14 @@ const skills: Skill[] = [
     icon: <Code className="w-6 h-6" />,
     categoryKey: "skillCSharpCategory",
     descriptionKey: "skillCSharpDescription",
+  },
+  {
+    nameKey: "skillFSharpName",
+    year: 0,
+    learning: true,
+    icon: <Code className="w-6 h-6" />,
+    categoryKey: "skillFSharpCategory",
+    descriptionKey: "skillFSharpDescription",
   },
   {
     nameKey: "skillGoName",
@@ -269,7 +287,7 @@ export default function Skills() {
                       from-blue-400 to-blue-600
                       dark:from-orange-400 dark:to-orange-600
                      rounded-t-xl"
-                    style={{ opacity: skill.year / yearsOfExperience }}
+                    style={{ opacity: skill.learning ? 0.3 : skill.year / yearsOfExperience }}
                   ></div>
 
                   <div className="flex flex-col items-center text-center h-full">
@@ -307,10 +325,16 @@ export default function Skills() {
                       */}
                       <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                         <div
-                          className="h-full rounded-full bg-gradient-to-r
-                           from-blue-400 to-blue-600
-                           dark:from-orange-400 dark:to-orange-600"
-                          style={{ width: `${(skill.year / maxYears) * 100}%` }}
+                          className={`h-full rounded-full ${
+                            skill.learning
+                              ? "bg-blue-300/70 dark:bg-orange-700/70"
+                              : "bg-gradient-to-r from-blue-400 to-blue-600 dark:from-orange-400 dark:to-orange-600"
+                          }`}
+                          style={{
+                            width: skill.learning
+                              ? `${LARGURA_APRENDENDO}%`
+                              : `${(skill.year / maxYears) * 100}%`,
+                          }}
                         />
                       </div>
 
@@ -320,7 +344,7 @@ export default function Skills() {
                         independente da skill. Agora mostra os anos da skill.
                       */}
                       <div className="mt-1 text-right text-xs font-medium text-blue-600 dark:text-orange-400">
-                        {skill.year} {t("years")}
+                        {skill.learning ? t("skillLearning") : `${skill.year} ${t("years")}`}
                       </div>
 
                     </div>
@@ -374,14 +398,20 @@ export default function Skills() {
                   {/* mesma regra do card: a largura nao depende de animacao */}
                   <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r
-                           from-blue-400 to-blue-600
-                           dark:from-orange-400 dark:to-orange-600"
-                      style={{ width: `${(activeSkill.year / maxYears) * 100}%` }}
+                      className={`h-full rounded-full ${
+                        activeSkill.learning
+                          ? "bg-blue-300/70 dark:bg-orange-700/70"
+                          : "bg-gradient-to-r from-blue-400 to-blue-600 dark:from-orange-400 dark:to-orange-600"
+                      }`}
+                      style={{
+                        width: activeSkill.learning
+                          ? `${LARGURA_APRENDENDO}%`
+                          : `${(activeSkill.year / maxYears) * 100}%`,
+                      }}
                     />
                   </div>
                   <div className="text-right text-xs text-slate-500 dark:text-slate-400 mt-1">
-                    {activeSkill.year} {t("years")}
+                    {activeSkill.learning ? t("skillLearning") : `${activeSkill.year} ${t("years")}`}
                   </div>
                 </div>
 
@@ -531,8 +561,11 @@ export default function Skills() {
                       <span className="text-sm text-slate-700 dark:text-slate-300">{getSkillName(skill)}</span>
                     </div>
                     
+                    {/* Terceiro lugar que renderiza os anos. Os outros dois
+                        (card e painel de detalhes) ja tratavam `learning`;
+                        este ficou para tras e mostrava "F# 0 anos". */}
                     <span className="text-xs font-medium px-2 py-1 bg-blue-100 dark:bg-slate-700 text-blue-700 dark:text-orange-400 rounded-full">
-                      {skill.year} {t("years")}
+                      {skill.learning ? t("skillLearning") : `${skill.year} ${t("years")}`}
                     </span>
                   </div>
                 ))}

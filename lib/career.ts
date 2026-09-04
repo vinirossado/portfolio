@@ -9,3 +9,14 @@
 export const CARREIRA_INICIO = 2017
 
 export const anosDeExperiencia = () => new Date().getFullYear() - CARREIRA_INICIO
+
+/**
+ * Empresa atual. Fica aqui pela mesma razao dos anos de experiencia: o nome
+ * aparece no Hero, no /now e na timeline de experiencia — tres lugares que
+ * antes so ficavam em sincronia por disciplina. O texto traduzido continua
+ * no language-provider; aqui fica so o que nao se traduz (nome e URL).
+ */
+export const EMPRESA_ATUAL = {
+  nome: "The LEGO Group",
+  url: "https://www.lego.com",
+} as const

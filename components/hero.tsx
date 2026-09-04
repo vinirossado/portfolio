@@ -1,9 +1,9 @@
 "use client"
 import { Fragment } from "react"
-import { anosDeExperiencia } from "@/lib/career"
+import { anosDeExperiencia, EMPRESA_ATUAL } from "@/lib/career"
 import { motion } from "framer-motion"
 import { useLanguage } from "@/components/language-provider"
-import { Code, Award, Briefcase, CheckCircle2, Layers, Smartphone } from "lucide-react"
+import { Code, Award, Briefcase, CheckCircle2, Building2, Database, Radio } from "lucide-react"
 import CodeTerminal from "./code-terminal"
 
 interface HeroProps {
@@ -29,14 +29,15 @@ export default function Hero({ name, title, photoUrl, yearsOfExperience = anosDe
     "    {",
     `        public string Name { get; } = "${name}";`,
     `        public string Role { get; } = "${title}";`,
+    `        public string Company { get; } = "${EMPRESA_ATUAL.nome}";`,
     `        public int YearsOfExperience { get; } = ${yearsOfExperience};`,
     "        public List<string> Skills { get; } = new List<string>",
     "        {",
+    '            "Event Sourcing",',
+    '            "Ontology / RDF",',
+    '            "Distributed Systems",',
     '            "Architecture",',
-    '            "Leadership",',
-    '            "Mentoring",',
-    '            "Problem Solving",',
-    '            "Teamwork"',
+    '            "Mentoring"',
     "        };",
     "\n",
     "        public IEnumerable<Solution> SolveComplexProblems()",
@@ -151,6 +152,20 @@ export default function Hero({ name, title, photoUrl, yearsOfExperience = anosDe
               <span className="text-blue-300 dark:text-orange-400">&lt;</span> {title}{" "}
               <span className="text-blue-300 dark:text-orange-400">/&gt;</span>
             </h2>
+
+            {/* Onde eu trabalho hoje. O hero mostrava cargo e anos de casa mas
+                nunca a empresa — quem chegava pelo LinkedIn nao tinha ancora
+                nenhuma. Nome e URL vem de lib/career.ts; so o rotulo traduz. */}
+            <a
+              href={EMPRESA_ATUAL.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/25 dark:border-orange-400/30 bg-white/10 dark:bg-orange-500/10 px-3 py-1.5 text-sm text-blue-50 dark:text-orange-100 backdrop-blur-sm transition-colors hover:bg-white/20 dark:hover:bg-orange-500/20"
+            >
+              <Building2 className="h-4 w-4 flex-shrink-0 text-blue-200 dark:text-orange-300" />
+              <span className="text-blue-200/80 dark:text-orange-200/80">{t("currentlyAt")}</span>
+              <span className="font-medium">{EMPRESA_ATUAL.nome}</span>
+            </a>
           </motion.div>
 
           {/* Key achievements */}
@@ -217,11 +232,11 @@ export default function Hero({ name, title, photoUrl, yearsOfExperience = anosDe
           className="flex flex-wrap justify-center gap-1 sm:gap-3 max-w-xs sm:max-w-lg px-2"
         >
           {[
+            { icon: <Code className="w-3 h-3 sm:w-4 sm:h-4" />, text: "F#" },
             { icon: <Code className="w-3 h-3 sm:w-4 sm:h-4" />, text: "C#" },
             { icon: <Code className="w-3 h-3 sm:w-4 sm:h-4" />, text: "TypeScript" },
-            { icon: <Code className="w-3 h-3 sm:w-4 sm:h-4" />, text: "Go" },
-            { icon: <Layers className="w-3 h-3 sm:w-4 sm:h-4" />, text: "Angular" },
-            { icon: <Smartphone className="w-3 h-3 sm:w-4 sm:h-4" />, text: "SwiftUI" },
+            { icon: <Database className="w-3 h-3 sm:w-4 sm:h-4" />, text: "RDF / SPARQL" },
+            { icon: <Radio className="w-3 h-3 sm:w-4 sm:h-4" />, text: "Pulsar" },
           ].map((tech, index) => (
             <motion.div
               key={index}

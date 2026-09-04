@@ -12,27 +12,27 @@ interface LanguageContextType {
 
 const translations = {
   pt: {
-    nowUpdated: "Atualizado em agosto de 2026",
-    nowNextBody: "Entro no time PELM da The LEGO Group em Billund em setembro, construindo os servicos por tras do processo de desenvolvimento de produto.",
+    nowUpdated: "Atualizado em setembro de 2026",
+    nowNextBody: "Recem-chegado ao time PELM da The LEGO Group em Billund. Os proximos meses sao sobre entrar fundo em ontologia e no lado funcional do event sourcing.",
     nowNext: "A seguir",
     currentRole: "Atual",
 
-    // ---- LEGO (RASCUNHO — escopo do cargo, nao realizacoes) ----
     exp0Title: "Engenheiro de Software Senior",
     exp0Company: "The LEGO Group",
     exp0CompanyUrl: "https://www.lego.com",
     exp0Location: "Billund, Dinamarca",
     exp0Period: "Set 2026 - Presente",
     exp0Description:
-      "Time PELM, dentro de Product Delivery Technology. Construo os servicos que sustentam o processo de desenvolvimento de produto da LEGO — consistencia, rastreabilidade e automacao entre os dominios envolvidos em cada mudanca.",
+      "Time PELM, dentro de Product Delivery Technology. Construo os servicos que sustentam o processo de desenvolvimento de produto da LEGO: sistemas event-sourced, consumo massivo de dados entre dominios e uma ontologia que da um significado comum a tudo isso.",
     exp0Resp1:
-      "Propriedade ponta a ponta de features e servicos, do desenho a operacao em producao (you build it, you run it)",
+      "Servicos event-sourced em F# e C#, com Apache Pulsar como espinha dorsal de eventos e Postgres como store",
     exp0Resp2:
-      "Desenho de APIs escalaveis e sistemas distribuidos em nuvem, com foco em observabilidade, confiabilidade e seguranca",
+      "Pipelines de consumo massivo de dados entre dominios de produto, com foco em throughput, idempotencia e reprocessamento",
     exp0Resp3:
-      "Integracao de dados entre dominios de negocio com arquitetura orientada a eventos e estrategias de persistencia SQL/NoSQL",
+      "Modelagem de ontologia em RDF/Turtle e consultas SPARQL, dando um vocabulario comum aos dados de produto",
     exp0Resp4:
-      "Mentoria de engenheiros e elevacao dos padroes de codigo, testes e CI/CD do time",
+      "Propriedade ponta a ponta: do desenho ao container Docker rodando em producao (you build it, you run it)",
+    currentlyAt: "Atualmente na",
     welcome: "Bem-vindo ao meu portfolio",
     about: "Sobre Mim",
     skills: "Minhas Habilidades",
@@ -133,6 +133,11 @@ const translations = {
     skillCSharpCategory: "Linguagens",
     skillCSharpDescription:
       "Nove anos depois, ainda é onde me sinto em casa. Quase tudo que coloquei em produção roda nela — os fluxos de pagamento na Riverty, os backends dos meus apps, os padrões sobre os quais escrevo no Medium. É a linguagem que eu escolho quando a coisa precisa aguentar de verdade.",
+    skillFSharpName: "F#",
+    skillFSharpCategory: "Linguagens",
+    skillFSharpDescription:
+      "Comecei em setembro de 2026, na LEGO — entao ainda sou novo nela, e prefiro dizer isso a fingir o contrario. Escrevo servicos event-sourced em F# ao lado de C#. Vindo de anos de C# orientado a objetos, a parte dificil nao e a sintaxe: e parar de modelar com classes e comecar a modelar com tipos. E a linguagem que mais me interessa hoje.",
+    skillLearning: "Aprendendo",
     skillGoName: "Go",
     skillGoCategory: "Linguagens",
     skillGoDescription:
@@ -355,7 +360,7 @@ const translations = {
       "Tripfinity, um planejador de viagens para iOS em SwiftUI sobre backend .NET, e o IdentityKit — SDK de KYC open-source com captura de documento e liveness.",
     nowLearning: "Estudando",
     nowLearningBody:
-      "AWS e modelagem semantica / knowledge graphs. Passei anos em Azure; a vaga nova pede o outro lado, entao estou cobrindo essa distancia agora.",
+      "F# e modelagem semantica: RDF, Turtle e SPARQL. Vim de anos de C# orientado a objetos; o trabalho novo pede o lado funcional e o lado dos knowledge graphs, entao estou cobrindo essa distancia agora.",
     // ---- Escrita / Medium ----
     writing: "Escrevendo",
     seeAllOnMedium: "Ver tudo no Medium",
@@ -370,8 +375,8 @@ const translations = {
     ghLastPush: "Ultimo push em",
   },
   en: {
-    nowUpdated: "Updated August 2026",
-    nowNextBody: "Joining The LEGO Group PELM team in Billund in September, building the services behind their product development process.",
+    nowUpdated: "Updated September 2026",
+    nowNextBody: "Newly joined The LEGO Group PELM team in Billund. The next few months are about going deep on ontology and the functional side of event sourcing.",
     nowNext: "Next",
     currentRole: "Current",
 
@@ -381,15 +386,16 @@ const translations = {
     exp0Location: "Billund, Denmark",
     exp0Period: "Sep 2026 - Present",
     exp0Description:
-      "PELM team, within Product Delivery Technology. Building the services behind the LEGO Development Process — consistency, traceability and automation across the domains involved in every product change.",
+      "PELM team, within Product Delivery Technology. Building the services behind the LEGO Development Process: event-sourced systems, high-volume data consumption across domains, and an ontology that gives all of it a shared meaning.",
     exp0Resp1:
-      "End-to-end ownership of features and services, from design through to running them in production (you build it, you run it)",
+      "Event-sourced services in F# and C#, with Apache Pulsar as the event backbone and Postgres as the store",
     exp0Resp2:
-      "Designing scalable APIs and cloud-native distributed systems, with a focus on observability, reliability and security",
+      "High-volume data pipelines across product domains, focused on throughput, idempotency and replay",
     exp0Resp3:
-      "Integrating data across business domains using event-driven architecture and SQL/NoSQL persistence strategies",
+      "Ontology modelling in RDF/Turtle and SPARQL querying, giving product data a shared vocabulary",
     exp0Resp4:
-      "Mentoring engineers and raising the team's standards for code, testing and CI/CD",
+      "End-to-end ownership: from design to the Docker container running in production (you build it, you run it)",
+    currentlyAt: "Currently at",
     welcome: "Welcome to my portfolio",
     about: "About Me",
     skills: "My Skills",
@@ -502,6 +508,11 @@ const translations = {
     skillCSharpCategory: "Languages",
     skillCSharpDescription:
       "Nine years in and it still feels like home. Most of what I have shipped runs on it — the payment flows at Riverty, the backends behind my own apps, the patterns I keep writing about on Medium. It is what I reach for when something actually has to hold up in production.",
+    skillFSharpName: "F#",
+    skillFSharpCategory: "Languages",
+    skillFSharpDescription:
+      "Started in September 2026, at LEGO — so I am genuinely new to it, and I would rather say so than pretend otherwise. I write event-sourced services in F# alongside C#. Coming from years of object-oriented C#, the hard part is not the syntax: it is unlearning classes and starting to model with types. It is the language I am most interested in right now.",
+    skillLearning: "Learning",
     skillGoName: "Go",
     skillGoCategory: "Languages",
     skillGoDescription:
@@ -706,7 +717,7 @@ const translations = {
       "Tripfinity, an iOS travel planner in SwiftUI on a .NET backend, and IdentityKit — an open-source KYC SDK with document capture and liveness.",
     nowLearning: "Learning",
     nowLearningBody:
-      "AWS, and semantic modelling / knowledge graphs. I spent years on Azure; the new role leans the other way, so I am closing that gap now.",
+      "F#, and semantic modelling: RDF, Turtle and SPARQL. I came from years of object-oriented C#; the new work leans functional and graph-shaped, so I am closing that gap now.",
     writing: "Writing",
     seeAllOnMedium: "See all on Medium",
     writingFallback: "I write about .NET, Go and iOS development on Medium.",
@@ -719,26 +730,27 @@ const translations = {
     ghLastPush: "Last push on",
   },
   ru: {
-    nowUpdated: "Обновлено в августе 2026",
-    nowNextBody: "В сентябре присоединяюсь к команде PELM в The LEGO Group в Биллунне — сервисы для процесса разработки продуктов.",
+    nowUpdated: "Обновлено в сентябре 2026",
+    nowNextBody: "Недавно присоединился к команде PELM в The LEGO Group в Биллунне. Ближайшие месяцы — глубокое погружение в онтологию и функциональную сторону event sourcing.",
     nowNext: "Дальше",
     currentRole: "Tekushchaya",
 
-    exp0Title: "Starshiy inzhener-programmist",
+    exp0Title: "Старший инженер-программист",
     exp0Company: "The LEGO Group",
     exp0CompanyUrl: "https://www.lego.com",
-    exp0Location: "Billund, Dania",
-    exp0Period: "Sen 2026 - Nastoyashchee vremya",
+    exp0Location: "Биллунн, Дания",
+    exp0Period: "Сен 2026 - настоящее время",
     exp0Description:
-      "Komanda PELM v Product Delivery Technology. Razrabotka servisov dlya protsessa razrabotki produktov LEGO — soglasovannost, prozrachnost i avtomatizatsiya mezhdu domenami.",
+      "Команда PELM в Product Delivery Technology. Разрабатываю сервисы для процесса разработки продуктов LEGO: event sourcing, обработка больших объёмов данных и онтология, задающая всему этому общий смысл.",
     exp0Resp1:
-      "Polnaya otvetstvennost za funktsii i servisy — ot proektirovaniya do raboty v produktive (you build it, you run it)",
+      "Event-sourced сервисы на F# и C#: Apache Pulsar как шина событий и Postgres в качестве хранилища",
     exp0Resp2:
-      "Proektirovanie masshtabiruemykh API i oblachnykh raspredelennykh sistem s fokusom na nablyudaemost, nadezhnost i bezopasnost",
+      "Конвейеры массовой обработки данных между продуктовыми доменами: пропускная способность, идемпотентность и переобработка",
     exp0Resp3:
-      "Integratsiya dannykh mezhdu biznes-domenami cherez sobytiynuyu arkhitekturu i strategii khraneniya SQL/NoSQL",
+      "Моделирование онтологии в RDF/Turtle и SPARQL-запросы — общий словарь для продуктовых данных",
     exp0Resp4:
-      "Nastavnichestvo inzhenerov i povyshenie standartov koda, testirovaniya i CI/CD v komande",
+      "Полная ответственность: от проектирования до Docker-контейнера в продуктиве (you build it, you run it)",
+    currentlyAt: "Сейчас в",
     welcome: "Добро пожаловать в мое портфолио",
     about: "Обо мне",
     seeAllRepos: "Посмотреть все репозитории",
@@ -900,6 +912,11 @@ const translations = {
     skillCSharpCategory: "Языки",
     skillCSharpDescription:
       "Девять лет спустя это всё ещё язык, на котором мне комфортнее всего. Почти всё, что я вывел в продакшн, работает на нём — платёжные потоки в Riverty, бэкенды моих приложений, паттерны, о которых я пишу на Medium. Беру его, когда система действительно должна выдержать нагрузку.",
+    skillFSharpName: "F#",
+    skillFSharpCategory: "Языки",
+    skillFSharpDescription:
+      "Начал в сентябре 2026 года в LEGO — так что я в нём действительно новичок, и предпочитаю сказать это прямо. Пишу event-sourced сервисы на F# вместе с C#. После многих лет объектного C# сложность не в синтаксисе: сложно перестать мыслить классами и начать мыслить типами. Сейчас это язык, который интересует меня больше всего.",
+    skillLearning: "Изучаю",
     skillGoName: "Go",
     skillGoCategory: "Языки",
     skillGoDescription:
@@ -1052,7 +1069,7 @@ const translations = {
       "Tripfinity — планировщик путешествий для iOS на SwiftUI с .NET бэкендом, и IdentityKit — открытый KYC SDK со сканированием документов и проверкой живости.",
     nowLearning: "Izuchayu",
     nowLearningBody:
-      "AWS и семантическое моделирование / графы знаний. Годы работал с Azure; новая роль тянет в другую сторону, поэтому закрываю этот пробел.",
+      "F# и семантическое моделирование: RDF, Turtle и SPARQL. За плечами годы объектного C#; новая работа тянет в функциональную сторону и в графы, поэтому закрываю этот пробел.",
     writing: "Pishu",
     seeAllOnMedium: "Smotret vse na Medium",
     writingFallback: "Ya pishu o .NET, Go i razrabotke pod iOS na Medium.",
@@ -1065,8 +1082,8 @@ const translations = {
     ghLastPush: "Posledniy push",
   },
   et: {
-    nowUpdated: "Uuendatud august 2026",
-    nowNextBody: "Septembris liitun The LEGO Groupi PELM tiimiga Billundis, ehitades teenuseid nende tootearendusprotsessi taga.",
+    nowUpdated: "Uuendatud september 2026",
+    nowNextBody: "Liitusin hiljuti The LEGO Groupi PELM tiimiga Billundis. Järgmised kuud lähevad ontoloogiale ja event sourcing’u funktsionaalsele poolele.",
     nowNext: "Jargmisena",
     currentRole: "Praegune",
 
@@ -1076,15 +1093,16 @@ const translations = {
     exp0Location: "Billund, Taani",
     exp0Period: "Sept 2026 - Praegu",
     exp0Description:
-      "PELM tiim Product Delivery Technology all. Ehitan teenuseid LEGO tootearendusprotsessi taga — jarjepidevus, jalgitavus ja automatiseerimine domeenide vahel.",
+      "PELM tiim Product Delivery Technology all. Ehitan teenuseid LEGO tootearendusprotsessi taga: event sourcing, suuremahuline andmetöötlus domeenide vahel ja ontoloogia, mis annab sellele kõigele ühise tähenduse.",
     exp0Resp1:
-      "Taielik omanikustaatus funktsioonide ja teenuste ule, disainist kuni tootmises haldamiseni (you build it, you run it)",
+      "Event-sourced teenused F# ja C# keeles, sündmuste selgrooks Apache Pulsar ja salvestuseks Postgres",
     exp0Resp2:
-      "Skaleeritavate APIde ja pilvepohiste hajussusteemide disain, keskendudes jalgitavusele, usaldusvaarsusele ja turvalisusele",
+      "Suuremahulised andmekonveierid tootedomeenide vahel — läbilaskevõime, idempotentsus ja taastöötlus",
     exp0Resp3:
-      "Andmete integreerimine ariidomeenide vahel sundmusepohise arhitektuuri ja SQL/NoSQL strateegiatega",
+      "Ontoloogia modelleerimine RDF/Turtle formaadis ja SPARQL-päringud, andes tooteandmetele ühise sõnavara",
     exp0Resp4:
-      "Inseneride mentorlus ning tiimi koodi-, testimis- ja CI/CD standardite tostmine",
+      "Täielik omanikustaatus: disainist kuni tootmises jooksva Docker-konteinerini (you build it, you run it)",
+    currentlyAt: "Praegu ettevõttes",
     welcome: "Tere tulemast minu portfooliosse",
     about: "Minust",
     skills: "Minu oskused",
@@ -1251,6 +1269,11 @@ const translations = {
     skillCSharpCategory: "Keeled",
     skillCSharpDescription:
       "Üheksa aastat hiljem tundub see endiselt koduna. Peaaegu kõik, mis olen tootmisse viinud, töötab sellel — maksevood Rivertys, minu enda rakenduste backendid, mustrid, millest Mediumis kirjutan. Selle poole pöördun, kui asi peab päriselt vastu pidama.",
+    skillFSharpName: "F#",
+    skillFSharpCategory: "Keeled",
+    skillFSharpDescription:
+      "Alustasin septembris 2026 LEGOs — nii et olen selles tõesti uus ja ütlen seda pigem otse. Kirjutan event-sourced teenuseid F# keeles C# kõrval. Pärast aastaid objektorienteeritud C# juures pole raske mitte süntaks, vaid klassidest loobumine ja tüüpidega modelleerima hakkamine. Praegu huvitab see keel mind kõige rohkem.",
+    skillLearning: "Õpin",
     skillGoName: "Go",
     skillGoCategory: "Keeled",
     skillGoDescription:
@@ -1403,7 +1426,7 @@ const translations = {
       "Tripfinity — iOS reisiplaneerija SwiftUIs .NET backendiga, ja IdentityKit — avatud lahtekoodiga KYC SDK dokumendi skaneerimise ja elususe kontrolliga.",
     nowLearning: "Opin",
     nowLearningBody:
-      "AWS ning semantiline modelleerimine / teadmusgraafid. Veetsin aastaid Azureis; uus roll kaldub teisele poole, nii et katan selle vahe praegu.",
+      "F# ning semantiline modelleerimine: RDF, Turtle ja SPARQL. Veetsin aastaid objektorienteeritud C# juures; uus töö kaldub funktsionaalsele ja graafipõhisele poolele, nii et katan selle vahe praegu.",
     writing: "Kirjutan",
     seeAllOnMedium: "Vaata koiki Mediumis",
     writingFallback: "Kirjutan Mediumis .NET-ist, Go-st ja iOS arendusest.",

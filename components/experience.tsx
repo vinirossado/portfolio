@@ -7,9 +7,6 @@ import { useLanguage } from "@/components/language-provider"
 
 const experiences = [
   {
-    // RASCUNHO — escrito a partir da job description, nao de trabalho entregue.
-    // As responsabilidades sao o ESCOPO DO CARGO, nao realizacoes. Revisar
-    // depois dos primeiros meses e trocar por o que voce de fato fez.
     id: 0,
     titleKey: "exp0Title",
     companyKey: "exp0Company",
@@ -20,7 +17,7 @@ const experiences = [
     responsibilityKeys: ["exp0Resp1", "exp0Resp2", "exp0Resp3", "exp0Resp4"],
     featured: true,
     current: true,
-    technologies: ["C#", ".NET", "AWS", "Kubernetes", "Event-Driven", "CI/CD"],
+    technologies: ["F#", "C#", "Event Sourcing", "RDF/SPARQL", "Apache Pulsar", "Postgres", "Docker"],
   },
   {
     id: 1,
@@ -112,9 +109,15 @@ const technologyTypes: Record<string, "language" | "framework" | "tool" | "datab
   Xamarin: "framework",
   "React Native": "framework",
   Angular: "framework",
+  "F#": "language",
+  "RDF/SPARQL": "language",
+  "Event Sourcing": "tool",
+  "Apache Pulsar": "tool",
+  Docker: "tool",
   "SQL Server": "database",
   Oracle: "database",
   MongoDB: "database",
+  Postgres: "database",
   Azure: "cloud",
   AWS: "cloud",
 }
