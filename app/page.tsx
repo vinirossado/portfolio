@@ -14,9 +14,17 @@ import EasterEggs from "@/components/easter-eggs"
 import { getMediumPosts } from "@/lib/medium"
 
 export default async function Home() {
-  // Server Component: com `output: 'export'` isso roda no build e os posts
-  // ficam embutidos no HTML. Se falhar, volta [] e a secao mostra so o link.
-  const posts = await getMediumPosts(3)
+  /*
+    Server Component: com `output: 'export'` isso roda no build e os posts
+    ficam embutidos no HTML. Se falhar, volta [] e a secao mostra so o link.
+
+    Quatro, nao tres: o feed do Medium tem quatro posts hoje e o limite de 3
+    escondia o mais antigo sem nenhum sinal de que havia mais. Quatro tambem
+    preenche exatamente uma linha da grade em telas grandes. Se um dia houver
+    mais, aparecem os 4 mais recentes — que e o que uma secao "/now" quer
+    dizer — e o link "ver todos no Medium" ao lado cobre o resto.
+  */
+  const posts = await getMediumPosts(4)
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">

@@ -89,7 +89,7 @@ export default function Now({ posts }: { posts: MediumPost[] }) {
           </div>
 
           {posts.length > 0 ? (
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {posts.map((post, index) => (
                 <motion.a
                   key={post.link}

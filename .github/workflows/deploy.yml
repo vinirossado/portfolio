@@ -1,0 +1,76 @@
+name: Deploy
+
+# Por que existe um cron aqui:
+# O site e `output: 'export'`. Os posts do Medium sao lidos do RSS DURANTE o
+# build (lib/medium.ts) e ficam congelados no HTML publicado. Sem uma execucao
+# periodica, um post novo — ou uma tag adicionada a um post antigo — so
+# apareceria no portfolio no dia em que alguem lembrasse de rodar um deploy a
+# mao. O cron faz o site acompanhar o Medium sozinho.
+on:
+  schedule:
+    # 05:00 UTC = 06:00 (inverno) / 07:00 (verao) em Billund.
+    - cron: "0 5 * * *"
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+# Se um push acontecer enquanto o cron esta rodando, cancela o mais antigo:
+# dois deploys simultaneos para o mesmo ambiente sobrescrevem um ao outro em
+# ordem indefinida.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      # ---------------------------------------------------------------------
+      # Portao de qualidade antes de publicar.
+      #
+      # getMediumPosts() tem `catch { return [] }` — de proposito, para que uma
+      # falha de rede nunca quebre o build. Isso e o certo para um deploy
+      # manual, onde uma pessoa ve o resultado antes de subir. Mas com um cron
+      # diario a mesma linha vira um risco: se o feed do Medium estiver fora do
+      # ar as 05:00, o build passa, a secao "Writing" cai para so o link do
+      # perfil, e esse site pior vai para producao sem ninguem perceber — e
+      # fica no ar ate o proximo cron.
+      #
+      # Entao: se o HTML gerado nao tiver nenhum link de post, falha o job e
+      # NAO faz deploy. O site que ja esta no ar continua, que e melhor do que
+      # substitui-lo por um incompleto.
+      # ---------------------------------------------------------------------
+      - name: Verify Medium posts made it into the build
+        run: |
+          count=$(grep -o 'medium\.com/@viniciusrossado/[a-z0-9-]*' out/index.html \
+            | sort -u | wc -l | tr -d ' ')
+          echo "Posts do Medium embutidos no HTML: $count"
+          if [ "$count" -eq 0 ]; then
+            echo "::error::Nenhum post do Medium no build. O feed provavelmente" \
+                 "falhou (getMediumPosts devolveu []). Deploy abortado para nao" \
+                 "publicar o site sem a secao Writing."
+            exit 1
+          fi
+
+      - name: Deploy to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: upload
+          # `out/` ja esta construido pelos passos acima; nao deixa o Oryx
+          # tentar adivinhar e construir de novo.
+          app_location: out
+          output_location: ""
+          skip_app_build: true
+          skip_api_build: true

@@ -229,7 +229,7 @@ export default function Hero({ name, title, photoUrl, yearsOfExperience = anosDe
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1 }}
-          className="flex flex-wrap justify-center gap-1 sm:gap-3 max-w-xs sm:max-w-lg px-2"
+          className="flex flex-wrap justify-center gap-1 sm:gap-3 max-w-xs sm:max-w-2xl px-2"
         >
           {[
             { icon: <Code className="w-3 h-3 sm:w-4 sm:h-4" />, text: "F#" },
