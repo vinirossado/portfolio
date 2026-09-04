@@ -12,6 +12,27 @@ interface LanguageContextType {
 
 const translations = {
   pt: {
+    // ---- Chaves que faltavam: t() devolve a propria chave quando nao acha,
+    // entao o rodape mostrava literalmente "footerRights" e as barras de
+    // skill diziam "9 years" mesmo em portugues. ----
+    footerRights: "Todos os direitos reservados.",
+    years: "anos",
+    // Tres formas: o russo pede 1 год / 2-4 года / 5+ лет. Nos outros
+    // idiomas "few" e igual ao plural comum.
+    yearOne: "ano",
+    yearsFew: "anos",
+    monthOne: "mês",
+    monthsFew: "meses",
+    months: "meses",
+    "Related Repos": "Repositórios relacionados",
+    noReposFound: "Nenhum repositório público nesta linguagem.",
+    switchToDark: "Mudar para o tema escuro",
+    switchToLight: "Mudar para o tema claro",
+    contactSuccess: "Mensagem enviada. Obrigado!",
+    English: "English",
+    Portuguese: "Português",
+    Russian: "Русский",
+    Estonian: "Eesti",
     nowUpdated: "Atualizado em setembro de 2026",
     nowNextBody: "Recem-chegado ao time PELM da The LEGO Group em Billund. Os proximos meses sao sobre entrar fundo em ontologia e no lado funcional do event sourcing.",
     nowNext: "A seguir",
@@ -375,6 +396,24 @@ const translations = {
     ghLastPush: "Ultimo push em",
   },
   en: {
+    footerRights: "All rights reserved.",
+    years: "years",
+    // Tres formas: o russo pede 1 год / 2-4 года / 5+ лет. Nos outros
+    // idiomas "few" e igual ao plural comum.
+    yearOne: "year",
+    yearsFew: "years",
+    monthOne: "month",
+    monthsFew: "months",
+    months: "months",
+    "Related Repos": "Related Repos",
+    noReposFound: "No public repositories in this language.",
+    switchToDark: "Switch to dark theme",
+    switchToLight: "Switch to light theme",
+    contactSuccess: "Message sent. Thank you!",
+    English: "English",
+    Portuguese: "Português",
+    Russian: "Русский",
+    Estonian: "Eesti",
     nowUpdated: "Updated September 2026",
     nowNextBody: "Newly joined The LEGO Group PELM team in Billund. The next few months are about going deep on ontology and the functional side of event sourcing.",
     nowNext: "Next",
@@ -730,6 +769,24 @@ const translations = {
     ghLastPush: "Last push on",
   },
   ru: {
+    footerRights: "Все права защищены.",
+    years: "лет",
+    // Tres formas: o russo pede 1 год / 2-4 года / 5+ лет. Nos outros
+    // idiomas "few" e igual ao plural comum.
+    yearOne: "год",
+    yearsFew: "года",
+    monthOne: "месяц",
+    monthsFew: "месяца",
+    months: "месяцев",
+    "Related Repos": "Связанные репозитории",
+    noReposFound: "Нет публичных репозиториев на этом языке.",
+    switchToDark: "Переключить на тёмную тему",
+    switchToLight: "Переключить на светлую тему",
+    contactSuccess: "Сообщение отправлено. Спасибо!",
+    English: "English",
+    Portuguese: "Português",
+    Russian: "Русский",
+    Estonian: "Eesti",
     nowUpdated: "Обновлено в сентябре 2026",
     nowNextBody: "Недавно присоединился к команде PELM в The LEGO Group в Биллунне. Ближайшие месяцы — глубокое погружение в онтологию и функциональную сторону event sourcing.",
     nowNext: "Дальше",
@@ -1082,6 +1139,24 @@ const translations = {
     ghLastPush: "Posledniy push",
   },
   et: {
+    footerRights: "Kõik õigused kaitstud.",
+    years: "aastat",
+    // Tres formas: o russo pede 1 год / 2-4 года / 5+ лет. Nos outros
+    // idiomas "few" e igual ao plural comum.
+    yearOne: "aasta",
+    yearsFew: "aastat",
+    monthOne: "kuu",
+    monthsFew: "kuud",
+    months: "kuud",
+    "Related Repos": "Seotud repositooriumid",
+    noReposFound: "Selles keeles pole avalikke repositooriume.",
+    switchToDark: "Lülitu tumedale teemale",
+    switchToLight: "Lülitu heledale teemale",
+    contactSuccess: "Sõnum saadetud. Aitäh!",
+    English: "English",
+    Portuguese: "Português",
+    Russian: "Русский",
+    Estonian: "Eesti",
     nowUpdated: "Uuendatud september 2026",
     nowNextBody: "Liitusin hiljuti The LEGO Groupi PELM tiimiga Billundis. Järgmised kuud lähevad ontoloogiale ja event sourcing’u funktsionaalsele poolele.",
     nowNext: "Jargmisena",

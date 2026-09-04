@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react"
 import { Cloud, Code, Database, ExternalLink, Layers, Smartphone, Star } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
 import { GithubRepository } from "@/models/github-repository"
-import { anosDeExperiencia } from "@/lib/career"
+import { anosDeExperiencia, anosDesde, EMPRESA_ATUAL } from "@/lib/career"
 
 interface Skill {
   nameKey: string
@@ -14,17 +14,60 @@ interface Skill {
   icon: React.ReactNode
   categoryKey: string
   descriptionKey: string
-  /*
-    Skill que comecei agora. Sem isso o card leria "0 anos" ao lado de uma
-    barra vazia — que parece bug, nao honestidade. Com a flag, o lugar dos
-    anos mostra "Aprendendo" e a barra ganha uma largura simbolica listrada,
-    que nao afirma proficiencia nenhuma.
-  */
-  learning?: boolean
 }
 
-/** Largura da barra para uma skill em aprendizado: presente, mas sem alegar nivel. */
-const LARGURA_APRENDENDO = 10
+/*
+  Forma plural do numeral.
+
+  O russo tem tres: 1 год, 2-4 года, 5+ лет — e a regra olha o ultimo digito,
+  com excecao para 11-14. Sem isso a secao mostrava "4 лет" e "2 лет", que um
+  leitor russo le como erro de gramatica. Nos outros tres idiomas so existem
+  singular e plural, entao "few" cai no mesmo lugar que "many".
+
+  Valores fracionarios (SwiftUI e Bicep tem 1.5) usam a forma "few" em russo,
+  que e o genitivo singular exigido depois de decimal, e o plural normal nos
+  demais.
+*/
+type FormaPlural = "one" | "few" | "many"
+
+function formaPlural(n: number, lang: string): FormaPlural {
+  if (!Number.isInteger(n)) return lang === "ru" ? "few" : "many"
+  if (lang === "ru") {
+    const ultimo = n % 10
+    const doisUltimos = n % 100
+    if (ultimo === 1 && doisUltimos !== 11) return "one"
+    if (ultimo >= 2 && ultimo <= 4 && (doisUltimos < 12 || doisUltimos > 14)) return "few"
+    return "many"
+  }
+  return n === 1 ? "one" : "many"
+}
+
+const CHAVES_DURACAO = {
+  ano: { one: "yearOne", few: "yearsFew", many: "years" },
+  mes: { one: "monthOne", few: "monthsFew", many: "months" },
+} as const
+
+/**
+ * Todo card mostra um numero na mesma unidade — nada de "Aprendendo" no meio
+ * de uma coluna de anos. Abaixo de um ano a unidade vira meses, com piso de 1:
+ * uma skill que comecei ha tres semanas e "1 mes", nunca "0".
+ */
+function formatarDuracao(anos: number, t: (k: string) => string, lang: string) {
+  if (anos < 1) {
+    const meses = Math.max(1, Math.round(anos * 12))
+    return `${meses} ${t(CHAVES_DURACAO.mes[formaPlural(meses, lang)])}`
+  }
+  return `${anos} ${t(CHAVES_DURACAO.ano[formaPlural(anos, lang)])}`
+}
+
+/*
+  Piso da barra. F# tem semanas contra os 9 anos de C#, entao a largura real
+  daria menos de 1% — invisivel, e uma barra vazia le como bug. 2% mostra que
+  existe sem alegar proficiencia.
+*/
+const LARGURA_MINIMA = 2
+const larguraDaBarra = (anos: number, max: number) =>
+  Math.max(LARGURA_MINIMA, (anos / max) * 100)
 
 const yearsOfExperience = anosDeExperiencia()
 
@@ -38,8 +81,8 @@ const skills: Skill[] = [
   },
   {
     nameKey: "skillFSharpName",
-    year: 0,
-    learning: true,
+    // Comecou junto com a LEGO; o numero se mantem sozinho.
+    year: Math.round(anosDesde(EMPRESA_ATUAL.inicio) * 100) / 100,
     icon: <Code className="w-6 h-6" />,
     categoryKey: "skillFSharpCategory",
     descriptionKey: "skillFSharpDescription",
@@ -150,7 +193,7 @@ export default function Skills() {
   const [repos, setRepos] = useState<GithubRepository[]>([])
   const [isLoading, setIsLoading] = useState(false)
 
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
 
   // Map skill name keys to GitHub language identifiers
   const skillToGithubLanguage: Record<string, string> = {
@@ -287,7 +330,7 @@ export default function Skills() {
                       from-blue-400 to-blue-600
                       dark:from-orange-400 dark:to-orange-600
                      rounded-t-xl"
-                    style={{ opacity: skill.learning ? 0.3 : skill.year / yearsOfExperience }}
+                    style={{ opacity: Math.max(0.25, skill.year / yearsOfExperience) }}
                   ></div>
 
                   <div className="flex flex-col items-center text-center h-full">
@@ -325,16 +368,10 @@ export default function Skills() {
                       */}
                       <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                         <div
-                          className={`h-full rounded-full ${
-                            skill.learning
-                              ? "bg-blue-300/70 dark:bg-orange-700/70"
-                              : "bg-gradient-to-r from-blue-400 to-blue-600 dark:from-orange-400 dark:to-orange-600"
-                          }`}
-                          style={{
-                            width: skill.learning
-                              ? `${LARGURA_APRENDENDO}%`
-                              : `${(skill.year / maxYears) * 100}%`,
-                          }}
+                          className="h-full rounded-full bg-gradient-to-r
+                           from-blue-400 to-blue-600
+                           dark:from-orange-400 dark:to-orange-600"
+                          style={{ width: `${larguraDaBarra(skill.year, maxYears)}%` }}
                         />
                       </div>
 
@@ -344,7 +381,7 @@ export default function Skills() {
                         independente da skill. Agora mostra os anos da skill.
                       */}
                       <div className="mt-1 text-right text-xs font-medium text-blue-600 dark:text-orange-400">
-                        {skill.learning ? t("skillLearning") : `${skill.year} ${t("years")}`}
+                        {formatarDuracao(skill.year, t, language)}
                       </div>
 
                     </div>
@@ -398,20 +435,14 @@ export default function Skills() {
                   {/* mesma regra do card: a largura nao depende de animacao */}
                   <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                     <div
-                      className={`h-full rounded-full ${
-                        activeSkill.learning
-                          ? "bg-blue-300/70 dark:bg-orange-700/70"
-                          : "bg-gradient-to-r from-blue-400 to-blue-600 dark:from-orange-400 dark:to-orange-600"
-                      }`}
-                      style={{
-                        width: activeSkill.learning
-                          ? `${LARGURA_APRENDENDO}%`
-                          : `${(activeSkill.year / maxYears) * 100}%`,
-                      }}
+                      className="h-full rounded-full bg-gradient-to-r
+                           from-blue-400 to-blue-600
+                           dark:from-orange-400 dark:to-orange-600"
+                      style={{ width: `${larguraDaBarra(activeSkill.year, maxYears)}%` }}
                     />
                   </div>
                   <div className="text-right text-xs text-slate-500 dark:text-slate-400 mt-1">
-                    {activeSkill.learning ? t("skillLearning") : `${activeSkill.year} ${t("years")}`}
+                    {formatarDuracao(activeSkill.year, t, language)}
                   </div>
                 </div>
 
@@ -561,11 +592,11 @@ export default function Skills() {
                       <span className="text-sm text-slate-700 dark:text-slate-300">{getSkillName(skill)}</span>
                     </div>
                     
-                    {/* Terceiro lugar que renderiza os anos. Os outros dois
-                        (card e painel de detalhes) ja tratavam `learning`;
-                        este ficou para tras e mostrava "F# 0 anos". */}
+                    {/* Terceiro lugar que renderiza a duracao — os outros dois
+                        sao o card e o painel de detalhes. Os tres passam pelo
+                        mesmo formatarDuracao para nao divergirem de novo. */}
                     <span className="text-xs font-medium px-2 py-1 bg-blue-100 dark:bg-slate-700 text-blue-700 dark:text-orange-400 rounded-full">
-                      {skill.learning ? t("skillLearning") : `${skill.year} ${t("years")}`}
+                      {formatarDuracao(skill.year, t, language)}
                     </span>
                   </div>
                 ))}

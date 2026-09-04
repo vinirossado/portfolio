@@ -1,8 +1,21 @@
 "use client"
 
-import { Github, Linkedin, Twitter, Instagram } from "lucide-react"
+import { Github, Linkedin, Instagram } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
 import BuyMeACoffeeButton from "@/components/buy-me-a-coffee"
+
+/*
+  O lucide-react nao tem icone do Medium (a biblioteca so mantem alguns poucos
+  logos de marca), entao vai o proprio logo — os tres circulos da wordmark.
+  `currentColor` para acompanhar o tema e o hover como os outros icones.
+*/
+function MediumIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12M20.96 12c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.51-6.42 3.38-6.42S20.96 8.46 20.96 12M24 12c0 3.17-.53 5.75-1.19 5.75s-1.19-2.58-1.19-5.75.53-5.75 1.19-5.75S24 8.83 24 12" />
+    </svg>
+  )
+}
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -37,6 +50,18 @@ export default function Footer() {
                transition-colors shadow-sm"              aria-label="LinkedIn"
             >
               <Linkedin size={20} />
+            </a>
+
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://medium.com/@viniciusrossado"
+              className="w-10 h-10 bg-white dark:bg-slate-700 rounded-full flex items-center justify-center text-slate-700
+              dark:text-slate-300 hover:text-blue-600 hover:bg-blue-50
+               transition-colors shadow-sm"
+              aria-label="Medium"
+            >
+              <MediumIcon size={20} />
             </a>
 
             <a
