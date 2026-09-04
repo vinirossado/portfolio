@@ -52,9 +52,30 @@ function classeDoToken(token: string) {
     return "text-blue-100 dark:text-orange-100"
 }
 
+/*
+  Extrai os literais de string INTEIROS antes de qualquer outra divisao.
+
+  Antes a linha era quebrada por espaco primeiro, e o teste de string era
+  /^"/ — que so bate no fragmento que comeca com aspas. Entao "Event Sourcing"
+  virava ["Event, ` `, Sourcing",] e so "Event ficava ambar; a segunda palavra
+  saia com a cor de texto comum. Valia para todo literal de mais de uma
+  palavra na tela: "Vinicius Rossado", "Senior Software Engineer",
+  "The LEGO Group".
+
+  O grupo de captura mantem os literais no array do split. A aspa final e
+  opcional (`"|$`) de proposito: o terminal revela um caractere por vez, entao
+  durante a digitacao existe um instante em que a string ainda esta aberta —
+  sem isso ela piscaria sem cor ate a aspa de fechamento aparecer.
+*/
+const LITERAL_DE_STRING = /("(?:[^"\\]|\\.)*(?:"|$))/
+
 function LinhaColorida({ line }: { line: string }) {
-    // separa mantendo os delimitadores, para preservar a indentacao
-    const partes = line.split(/(\s+|[(){};,])/)
+    const partes = line.split(LITERAL_DE_STRING).flatMap((parte) =>
+        parte.startsWith('"')
+            ? [parte] // string inteira: um token so, uma cor so
+            // separa mantendo os delimitadores, para preservar a indentacao
+            : parte.split(/(\s+|[(){};,])/),
+    )
     return (
         <>
             {partes.map((p, i) => (
