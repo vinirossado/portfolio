@@ -73,4 +73,8 @@ jobs:
           app_location: out
           output_location: ""
           skip_app_build: true
-          skip_api_build: true
+          # Nao existe `skip_api_build` nesta action — os inputs validos sao
+          # os de app/api/routes location e skip_app_build. Passa-lo so gera
+          # um warning e nao faz nada. Este site nao tem API, entao basta
+          # api_location vazio.
+          api_location: ""
