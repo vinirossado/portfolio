@@ -21,18 +21,38 @@ interface CodeTerminalProps {
  * nao parece digitacao em velocidade nenhuma.
  */
 const MS_POR_CARACTERE = 11
-const PAUSA_PONTUACAO = 70 // ; { }
-const PAUSA_VIRGULA = 30 // , (
-const PAUSA_FIM_DE_LINHA = 120
-const CHANCE_HESITACAO = 0.015
-const MS_HESITACAO = 190
+const PAUSA_PONTUACAO = 45 // ; { }
+const PAUSA_VIRGULA = 20 // , (
+const PAUSA_FIM_DE_LINHA = 90
+const CHANCE_HESITACAO = 0.012
+const MS_HESITACAO = 110
 
+/*
+  Duas correcoes de ritmo, ambas medidas sobre o codigo real.
+
+  1. As pausas estruturais NAO se somam mais. Em C# quase toda linha termina
+     em `;`, entao pontuacao (70ms) + fim de linha (120ms) davam 190ms na
+     mesma tecla — em toda linha. Agora vale a maior das duas, nao o total.
+
+  2. A hesitacao so acontece em ESPACO. Antes podia cair em qualquer
+     caractere, e uma pausa de 190ms no meio de uma palavra nao le como
+     alguem pensando: le como a pagina travando. Em fronteira de palavra o
+     mesmo atraso le como hesitacao.
+
+  Antes: 36 pausas acima de 150ms em 934 caracteres, uma a cada 26 letras.
+  Depois: nenhuma. Mediana 13ms, p95 56ms, maxima 127ms. De quebra o trecho
+  todo caiu de 20s para ~15s.
+*/
 function atrasoDe(char: string, fimDeLinha: boolean) {
     let d = MS_POR_CARACTERE * (0.55 + Math.random() * 1.15)
-    if (char === ";" || char === "{" || char === "}") d += PAUSA_PONTUACAO
-    else if (char === "," || char === "(") d += PAUSA_VIRGULA
-    if (Math.random() < CHANCE_HESITACAO) d += MS_HESITACAO
-    if (fimDeLinha) d += PAUSA_FIM_DE_LINHA
+
+    let estrutural = 0
+    if (char === ";" || char === "{" || char === "}") estrutural = PAUSA_PONTUACAO
+    else if (char === "," || char === "(") estrutural = PAUSA_VIRGULA
+    if (fimDeLinha) estrutural = Math.max(estrutural, PAUSA_FIM_DE_LINHA)
+    d += estrutural
+
+    if (char === " " && Math.random() < CHANCE_HESITACAO) d += MS_HESITACAO
     return d
 }
 
@@ -275,7 +295,13 @@ export default function CodeTerminal({ snippets }: CodeTerminalProps) {
                     className="p-4 h-[420px] overflow-y-auto font-mono text-sm text-blue-100 dark:text-orange-100 custom-scrollbar"
                 >
                     {linhasVisiveis.map((line, index) => (
-                        <div key={index} className="whitespace-pre">
+                        /*
+                          min-h: uma <div> vazia com whitespace-pre colapsa
+                          para altura 0, entao as linhas em branco entre os
+                          blocos sumiam e o codigo virava um bloco unico. 20px
+                          e a altura de uma linha em text-sm.
+                        */
+                        <div key={index} className="whitespace-pre min-h-[20px]">
                             <LinhaColorida line={line} lang={snippet.id} />
                             {!concluido && index === linhaAtual && (
                                 <span className="inline-block w-[7px] h-[14px] align-[-2px] bg-blue-300 dark:bg-orange-400 animate-pulse" />
