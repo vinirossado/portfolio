@@ -82,7 +82,8 @@ const skills: Skill[] = [
   {
     nameKey: "skillFSharpName",
     // Comecou junto com a LEGO; o numero se mantem sozinho.
-    year: Math.round(anosDesde(EMPRESA_ATUAL.inicio) * 100) / 100,
+    // Sem arredondar de novo: anosDesde ja devolve meses inteiros / 12.
+    year: anosDesde(EMPRESA_ATUAL.inicio),
     icon: <Code className="w-6 h-6" />,
     categoryKey: "skillFSharpCategory",
     descriptionKey: "skillFSharpDescription",
@@ -303,7 +304,14 @@ export default function Skills() {
         <div className="grid gap-8 lg:grid-cols-4">
           {/* Skill hexagon grid */}
           <div className="lg:col-span-3 grid grid-cols-2 md:grid-cols-3 gap-4 order-2 lg:order-1">
-            {skills.sort((a, b) => b.year - a.year)
+            {/*
+              Copia antes de ordenar. `Array.sort` ordena NO LUGAR, entao isto
+              reordenava o array de modulo que `categories` (acima) percorre —
+              o servidor reduzia sobre a ordem original e o cliente sobre a ja
+              ordenada, gerando erro de hidratacao. O React reclamou de
+              "TypeScript" no servidor contra "F#" no cliente.
+            */}
+            {[...skills].sort((a, b) => b.year - a.year)
               .map((skill, index) => (
                 <motion.div
                   key={skill.nameKey}

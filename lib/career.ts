@@ -31,6 +31,14 @@ export const EMPRESA_ATUAL = {
  * Fracionario de proposito: skills com menos de um ano existem (F# tem
  * semanas), e o formatador na secao de skills decide se mostra meses ou anos.
  * Um `Math.floor` aqui faria uma skill nova valer zero.
+ *
+ * Arredonda para MESES INTEIROS, e isso importa: o site e `output: 'export'`,
+ * entao o HTML e gerado no build e servido por dias, enquanto o cliente
+ * recalcula na hora de abrir. Um valor continuo divergiria entre os dois e
+ * quebraria a hidratacao (a largura da barra sairia diferente). Em meses
+ * inteiros o numero so muda uma vez por mes — e o rebuild diario cobre isso.
  */
+const MS_POR_MES = (365.25 / 12) * 24 * 60 * 60 * 1000
+
 export const anosDesde = (iso: string) =>
-  (Date.now() - new Date(iso).getTime()) / (365.25 * 24 * 60 * 60 * 1000)
+  Math.round((Date.now() - new Date(iso).getTime()) / MS_POR_MES) / 12

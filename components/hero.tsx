@@ -1,6 +1,7 @@
 "use client"
 import { Fragment } from "react"
 import { anosDeExperiencia, EMPRESA_ATUAL } from "@/lib/career"
+import { criarSnippets } from "@/lib/terminal-snippets"
 import { motion } from "framer-motion"
 import { useLanguage } from "@/components/language-provider"
 import { Code, Award, Briefcase, CheckCircle2, Building2, Database, Radio } from "lucide-react"
@@ -17,49 +18,14 @@ export default function Hero({ name, title, photoUrl, yearsOfExperience = anosDe
   const { t } = useLanguage()
   const nameWords = name.split(" ")
 
-  const codeLines = [
-    "using System;",
-    "using System.Linq;",
-    "using System.Collections.Generic;",
-    "\n",
-    "",
-    "namespace Portfolio",
-    "{",
-    "    public class SeniorDeveloper",
-    "    {",
-    `        public string Name { get; } = "${name}";`,
-    `        public string Role { get; } = "${title}";`,
-    `        public string Company { get; } = "${EMPRESA_ATUAL.nome}";`,
-    `        public int YearsOfExperience { get; } = ${yearsOfExperience};`,
-    "        public List<string> Skills { get; } = new List<string>",
-    "        {",
-    '            "Event Sourcing",',
-    '            "Ontology / RDF",',
-    '            "Distributed Systems",',
-    '            "Architecture",',
-    '            "Mentoring"',
-    "        };",
-    "\n",
-    "        public IEnumerable<Solution> SolveComplexProblems()",
-    "        {",
-    "            return _solutions",
-    "                .Where(s => s.IsScalable && s.IsEfficient)",
-    "                .OrderBy(s => s.Complexity);",
-    "        }",
-    "\n",
-    "        public IEnumerable<CodeReview> DeliverQualityCode()",
-    "        {",
-    "            return _codeBase.Select(c => new CodeReview",
-    "            {",
-    "                Code = c,",
-    "                IsTestable = true,",
-    "                IsReadable = true,",
-    "                IsOptimized = true",
-    "            });",
-    "        }",
-    "    }",
-    "}",
-  ]
+  // Os dois codigos vivem em lib/terminal-snippets.ts: o terminal precisa do
+  // nome do arquivo e do id da linguagem junto das linhas, nao so das linhas.
+  const snippets = criarSnippets({
+    nome: name,
+    cargo: title,
+    empresa: EMPRESA_ATUAL.nome,
+    anos: yearsOfExperience,
+  })
 
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
@@ -219,7 +185,7 @@ export default function Hero({ name, title, photoUrl, yearsOfExperience = anosDe
         </motion.div>
 
         {/* Right side - Terminal */}
-        <CodeTerminal codeLines={codeLines} name={name} title={title} yearsOfExperience={yearsOfExperience} />
+        <CodeTerminal snippets={snippets} />
       </div>
 
       {/* Tech stack badges */}

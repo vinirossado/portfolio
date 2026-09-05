@@ -2,12 +2,10 @@
 
 import { useState, useEffect, useRef, useMemo } from "react"
 import { motion, useReducedMotion } from "framer-motion"
+import type { LinguagemTerminal, SnippetTerminal } from "@/lib/terminal-snippets"
 
 interface CodeTerminalProps {
-    codeLines: string[]
-    name: string
-    title: string
-    yearsOfExperience: number
+    snippets: SnippetTerminal[]
 }
 
 /**
@@ -38,14 +36,40 @@ function atrasoDe(char: string, fimDeLinha: boolean) {
     return d
 }
 
+/*
+  Vocabulario por linguagem.
+
+  Antes as listas eram literais soltos dentro de classeDoToken, so com palavras
+  de C#. Com F# na tela isso pintaria `let`, `match` e `type` como texto comum
+  — ou seja, o F# sairia praticamente sem realce.
+
+  `operador` so existe no F#: `|>` e `->` sao a assinatura visual da linguagem,
+  e sem cor propria o pipeline, que e o que se quer mostrar, sairia cinza.
+*/
+const VOCABULARIO: Record<
+    LinguagemTerminal,
+    { chave: RegExp; tipo: RegExp; funcao: RegExp; operador?: RegExp }
+> = {
+    csharp: {
+        chave: /^(using|namespace|public|private|class|new|return|get;|set;|true|false)$/,
+        tipo: /^(string|int|bool|var|List|IEnumerable|Solution|CodeReview)$/,
+        funcao: /^(Where|OrderBy|Select|SolveComplexProblems|DeliverQualityCode)$/,
+    },
+    fsharp: {
+        chave: /^(let|module|namespace|type|member|match|with|open|fun|rec|and|when|if|then|else|mutable|of|in|do|private|public|true|false)$/,
+        tipo: /^(string|int|bool|list|seq|option|unit|Skill|Developer|Problem|List|EventSourcing|Ontology|DistributedSystems)$/,
+        funcao: /^(List\.filter|List\.sortBy|List\.fold|List\.map|describe|solve|replay)$/,
+        operador: /^(\|>|->|<-)$/,
+    },
+}
+
 /** Colore um token isolado, em vez de pintar a linha inteira de uma cor so. */
-function classeDoToken(token: string) {
-    if (/^(using|namespace|public|private|class|new|return|get;|set;|true|false)$/.test(token))
-        return "text-blue-300 dark:text-orange-300"
-    if (/^(string|int|bool|var|List|IEnumerable|Solution|CodeReview)$/.test(token))
-        return "text-teal-300 dark:text-green-400"
-    if (/^(Where|OrderBy|Select|SolveComplexProblems|DeliverQualityCode)$/.test(token))
-        return "text-purple-400 dark:text-yellow-400"
+function classeDoToken(token: string, lang: LinguagemTerminal) {
+    const v = VOCABULARIO[lang]
+    if (v.chave.test(token)) return "text-blue-300 dark:text-orange-300"
+    if (v.tipo.test(token)) return "text-teal-300 dark:text-green-400"
+    if (v.funcao.test(token)) return "text-purple-400 dark:text-yellow-400"
+    if (v.operador?.test(token)) return "text-pink-300 dark:text-pink-400"
     if (/^"/.test(token)) return "text-amber-200 dark:text-amber-300"
     if (/^\d+$/.test(token)) return "text-orange-300 dark:text-orange-400"
     if (/^\/\//.test(token)) return "text-slate-500 dark:text-slate-500"
@@ -69,7 +93,7 @@ function classeDoToken(token: string) {
 */
 const LITERAL_DE_STRING = /("(?:[^"\\]|\\.)*(?:"|$))/
 
-function LinhaColorida({ line }: { line: string }) {
+function LinhaColorida({ line, lang }: { line: string; lang: LinguagemTerminal }) {
     const partes = line.split(LITERAL_DE_STRING).flatMap((parte) =>
         parte.startsWith('"')
             ? [parte] // string inteira: um token so, uma cor so
@@ -79,7 +103,7 @@ function LinhaColorida({ line }: { line: string }) {
     return (
         <>
             {partes.map((p, i) => (
-                <span key={i} className={p.trim() ? classeDoToken(p) : undefined}>
+                <span key={i} className={p.trim() ? classeDoToken(p, lang) : undefined}>
                     {p}
                 </span>
             ))}
@@ -87,9 +111,24 @@ function LinhaColorida({ line }: { line: string }) {
     )
 }
 
-export default function CodeTerminal({ codeLines, name, title, yearsOfExperience }: CodeTerminalProps) {
+export default function CodeTerminal({ snippets }: CodeTerminalProps) {
     const prefersReduced = useReducedMotion()
     const terminalRef = useRef<HTMLDivElement>(null)
+
+    const [ativa, setAtiva] = useState(0)
+    /*
+      A maquina de escrever roda UMA vez, para a linguagem que estava aberta na
+      chegada. Depois que alguem troca de aba, as duas aparecem completas na
+      hora.
+
+      A animacao leva ~18s. Fazer quem clicou na aba F# esperar tudo de novo
+      puniria exatamente a curiosidade que a aba existe para provocar — e nos
+      primeiros segundos a aba pareceria vazia, como se estivesse quebrada.
+      O valor da animacao esta no primeiro contato, nao na repeticao.
+    */
+    const [jaTrocou, setJaTrocou] = useState(false)
+    const snippet = snippets[ativa] ?? snippets[0]
+    const codeLines = snippet.linhas
 
     // mapa plano de caracteres, sabendo onde cada linha termina
     const { flat, total } = useMemo(() => {
@@ -105,10 +144,17 @@ export default function CodeTerminal({ codeLines, name, title, yearsOfExperience
     }, [codeLines])
 
     const [revelados, setRevelados] = useState(() => (prefersReduced ? total : 0))
-    const concluido = revelados >= total
+    /*
+      Derivado, nao estado. Se dependesse de `revelados` ser atualizado pelo
+      efeito, haveria um frame com o texto da aba nova cortado no comprimento
+      da antiga — o efeito so roda depois da pintura.
+    */
+    const mostrarTudo = prefersReduced || jaTrocou
+    const revelacao = mostrarTudo ? total : revelados
+    const concluido = revelacao >= total
 
     useEffect(() => {
-        if (prefersReduced) {
+        if (mostrarTudo) {
             setRevelados(total)
             return
         }
@@ -132,25 +178,28 @@ export default function CodeTerminal({ codeLines, name, title, yearsOfExperience
             cancelado = true
             clearTimeout(timer)
         }
-    }, [flat, total, prefersReduced])
+    }, [flat, total, mostrarTudo])
 
     // texto visivel por linha, derivado de `revelados`
     const linhasVisiveis = useMemo(() => {
         const out: string[] = codeLines.map(() => "")
-        for (let i = 0; i < Math.min(revelados, total); i++) {
+        for (let i = 0; i < Math.min(revelacao, total); i++) {
             const c = flat[i]
             out[c.linha] += c.ch
         }
         return out
-    }, [revelados, flat, total, codeLines])
+    }, [revelacao, flat, total, codeLines])
 
-    const linhaAtual = flat[Math.min(revelados, total - 1)]?.linha ?? 0
+    const linhaAtual = flat[Math.min(revelacao, total - 1)]?.linha ?? 0
 
     useEffect(() => {
-        // acompanha a escrita sem arrastar a pagina junto
         const el = terminalRef.current
-        if (el) el.scrollTop = el.scrollHeight
-    }, [linhaAtual])
+        if (!el) return
+        // Digitando: acompanha a escrita, sem arrastar a pagina junto.
+        // Ja completo (troca de aba): volta ao topo — quem clicou na outra
+        // linguagem quer ler do inicio, nao cair no fim do arquivo.
+        el.scrollTop = mostrarTudo ? 0 : el.scrollHeight
+    }, [linhaAtual, mostrarTudo, ativa])
 
     return (
         <motion.div
@@ -166,7 +215,28 @@ export default function CodeTerminal({ codeLines, name, title, yearsOfExperience
                         <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                         <div className="w-3 h-3 rounded-full bg-green-500"></div>
                     </div>
-                    <div className="ml-4 text-xs font-mono text-slate-400 dark:text-orange-300/70">SeniorDeveloper.cs</div>
+                    {/* Abas de arquivo: o terminal ja imita um editor, entao
+                        trocar de linguagem usa o gesto nativo dali. */}
+                    <div role="tablist" aria-label="Linguagem" className="ml-4 flex items-center gap-1">
+                        {snippets.map((s, i) => (
+                            <button
+                                key={s.id}
+                                role="tab"
+                                aria-selected={i === ativa}
+                                onClick={() => {
+                                    setJaTrocou(true)
+                                    setAtiva(i)
+                                }}
+                                className={`px-2 py-0.5 rounded text-xs font-mono transition-colors ${
+                                    i === ativa
+                                        ? "bg-slate-700/70 dark:bg-orange-900/30 text-slate-200 dark:text-orange-200"
+                                        : "text-slate-500 dark:text-orange-300/40 hover:text-slate-300 dark:hover:text-orange-200/70"
+                                }`}
+                            >
+                                {s.arquivo}
+                            </button>
+                        ))}
+                    </div>
                     {!concluido && (
                         <button
                             onClick={() => setRevelados(total)}
@@ -182,7 +252,7 @@ export default function CodeTerminal({ codeLines, name, title, yearsOfExperience
                 >
                     {linhasVisiveis.map((line, index) => (
                         <div key={index} className="whitespace-pre">
-                            <LinhaColorida line={line} />
+                            <LinhaColorida line={line} lang={snippet.id} />
                             {!concluido && index === linhaAtual && (
                                 <span className="inline-block w-[7px] h-[14px] align-[-2px] bg-blue-300 dark:bg-orange-400 animate-pulse" />
                             )}
