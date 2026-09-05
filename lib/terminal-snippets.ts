@@ -44,7 +44,14 @@ export function criarSnippets({ nome, cargo, empresa, anos }: DadosPerfil): Snip
         // Solution e _solutions eram referenciados por SolveComplexProblems
         // sem existir em lugar nenhum — o trecho nao compilava se alguem
         // copiasse. Agora compila.
-        "    public record Solution(bool IsScalable, bool IsEfficient, int Complexity);",
+        //
+        // Os parametros ficam um por linha por causa da largura: em uma linha
+        // so isso daria 78 caracteres contra 65 da maior linha existente, e o
+        // painel do terminal passava a ter scroll horizontal.
+        "    public record Solution(",
+        "        bool IsScalable,",
+        "        bool IsEfficient,",
+        "        int Complexity);",
         "",
         "    public class SeniorDeveloper",
         "    {",
