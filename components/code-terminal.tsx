@@ -242,10 +242,33 @@ export default function CodeTerminal({ snippets }: CodeTerminalProps) {
             el.scrollTop = 0
             return
         }
-        // Digitando: acompanha a escrita, sem arrastar a pagina junto.
-        // Nao mexe no scroll ao CONCLUIR — isso daria um pulo para o topo
-        // no instante em que a digitacao termina.
-        if (!concluido) el.scrollTop = el.scrollHeight
+        // Nao mexe no scroll ao CONCLUIR — isso daria um pulo no instante em
+        // que a digitacao termina.
+        if (concluido) return
+
+        /*
+          Segue a LINHA ATUAL, nao o fim do container.
+
+          Rolar ate `scrollHeight` funcionava enquanto as linhas ainda nao
+          digitadas tinham altura zero. Desde que toda linha ganhou min-height
+          (para as linhas em branco aparecerem), `scrollHeight` passou a ser a
+          altura do arquivo INTEIRO desde o primeiro caractere — 732px contra
+          420px de janela. O resultado era o painel abrir ja rolado ate o fim,
+          com o cursor 173px acima da area visivel: nao dava para ver o que
+          estava sendo digitado.
+
+          So rola quando a linha corrente esta prestes a sair da vista, e para
+          exatamente o quanto for preciso.
+        */
+        const linha = el.children[linhaAtual] as HTMLElement | undefined
+        if (!linha) return
+        const margem = 24
+        const fundo = linha.offsetTop + linha.offsetHeight
+        if (fundo > el.scrollTop + el.clientHeight - margem) {
+            el.scrollTop = fundo - el.clientHeight + margem
+        } else if (linha.offsetTop < el.scrollTop) {
+            el.scrollTop = linha.offsetTop
+        }
     }, [linhaAtual, ativa, concluido])
 
     return (
@@ -292,7 +315,7 @@ export default function CodeTerminal({ snippets }: CodeTerminalProps) {
                 </div>
                 <div
                     ref={terminalRef}
-                    className="p-4 h-[420px] overflow-y-auto font-mono text-sm text-blue-100 dark:text-orange-100 custom-scrollbar"
+                    className="relative p-4 h-[420px] overflow-y-auto font-mono text-sm text-blue-100 dark:text-orange-100 custom-scrollbar"
                 >
                     {linhasVisiveis.map((line, index) => (
                         /*
