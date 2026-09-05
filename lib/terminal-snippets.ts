@@ -36,12 +36,16 @@ export function criarSnippets({ nome, cargo, empresa, anos }: DadosPerfil): Snip
       id: "csharp",
       arquivo: "SeniorDeveloper.cs",
       linhas: [
-        "using System;",
         "using System.Linq;",
         "using System.Collections.Generic;",
         "",
         "namespace Portfolio",
         "{",
+        // Solution e _solutions eram referenciados por SolveComplexProblems
+        // sem existir em lugar nenhum — o trecho nao compilava se alguem
+        // copiasse. Agora compila.
+        "    public record Solution(bool IsScalable, bool IsEfficient, int Complexity);",
+        "",
         "    public class SeniorDeveloper",
         "    {",
         `        public string Name { get; } = "${nome}";`,
@@ -56,6 +60,8 @@ export function criarSnippets({ nome, cargo, empresa, anos }: DadosPerfil): Snip
         '            "Architecture",',
         '            "Mentoring"',
         "        };",
+        "",
+        "        private readonly List<Solution> _solutions = new();",
         "",
         "        public IEnumerable<Solution> SolveComplexProblems()",
         "        {",

@@ -51,9 +51,9 @@ const VOCABULARIO: Record<
     { chave: RegExp; tipo: RegExp; funcao: RegExp; operador?: RegExp }
 > = {
     csharp: {
-        chave: /^(using|namespace|public|private|class|new|return|get;|set;|true|false)$/,
-        tipo: /^(string|int|bool|var|List|IEnumerable|Solution|CodeReview)$/,
-        funcao: /^(Where|OrderBy|Select|SolveComplexProblems|DeliverQualityCode)$/,
+        chave: /^(using|namespace|public|private|readonly|record|class|new|new\(\);|return|get;|set;|true|false)$/,
+        tipo: /^(string|int|bool|var|List|IEnumerable|Solution)$/,
+        funcao: /^(Where|OrderBy|Select|SolveComplexProblems)$/,
     },
     fsharp: {
         chave: /^(let|module|namespace|type|member|match|with|open|fun|rec|and|when|if|then|else|mutable|of|in|do|private|public|true|false)$/,
@@ -117,16 +117,19 @@ export default function CodeTerminal({ snippets }: CodeTerminalProps) {
 
     const [ativa, setAtiva] = useState(0)
     /*
-      A maquina de escrever roda UMA vez, para a linguagem que estava aberta na
-      chegada. Depois que alguem troca de aba, as duas aparecem completas na
-      hora.
+      Cada linguagem e digitada UMA vez.
 
-      A animacao leva ~18s. Fazer quem clicou na aba F# esperar tudo de novo
-      puniria exatamente a curiosidade que a aba existe para provocar — e nos
-      primeiros segundos a aba pareceria vazia, como se estivesse quebrada.
-      O valor da animacao esta no primeiro contato, nao na repeticao.
+      A primeira vez que alguem abre uma aba ela ganha a maquina de escrever;
+      da segunda em diante aparece pronta. O motivo dos dois lados: a animacao
+      e o que ha de bom aqui, e o F# nunca a recebia quando so a aba inicial
+      digitava — mas redigitar a cada troca (15-18s) tornaria impossivel
+      alternar para comparar as duas, que e justamente o uso do seletor.
+
+      Uma linguagem conta como vista quando termina de digitar, quando alguem
+      aperta "skip", OU quando se sai dela no meio: a chance de assistir ja
+      foi dada, e voltar para uma aba so para esperar de novo seria pior.
     */
-    const [jaTrocou, setJaTrocou] = useState(false)
+    const [jaDigitadas, setJaDigitadas] = useState<Set<LinguagemTerminal>>(() => new Set())
     const snippet = snippets[ativa] ?? snippets[0]
     const codeLines = snippet.linhas
 
@@ -149,7 +152,7 @@ export default function CodeTerminal({ snippets }: CodeTerminalProps) {
       efeito, haveria um frame com o texto da aba nova cortado no comprimento
       da antiga — o efeito so roda depois da pintura.
     */
-    const mostrarTudo = prefersReduced || jaTrocou
+    const mostrarTudo = prefersReduced || jaDigitadas.has(snippet.id)
     const revelacao = mostrarTudo ? total : revelados
     const concluido = revelacao >= total
 
@@ -180,6 +183,22 @@ export default function CodeTerminal({ snippets }: CodeTerminalProps) {
         }
     }, [flat, total, mostrarTudo])
 
+    useEffect(() => {
+        if (concluido && !jaDigitadas.has(snippet.id)) {
+            setJaDigitadas((s) => new Set(s).add(snippet.id))
+        }
+    }, [concluido, snippet.id, jaDigitadas])
+
+    const trocarPara = (i: number) => {
+        if (i === ativa) return
+        // marca a que esta saindo: a chance de ve-la digitar ja passou
+        setJaDigitadas((s) => new Set(s).add(snippet.id))
+        setAtiva(i)
+        // zera antes do efeito rodar, senao a aba nova pisca com o texto
+        // cortado no comprimento revelado da anterior
+        setRevelados(0)
+    }
+
     // texto visivel por linha, derivado de `revelados`
     const linhasVisiveis = useMemo(() => {
         const out: string[] = codeLines.map(() => "")
@@ -192,14 +211,22 @@ export default function CodeTerminal({ snippets }: CodeTerminalProps) {
 
     const linhaAtual = flat[Math.min(revelacao, total - 1)]?.linha ?? 0
 
+    const abaAnterior = useRef(ativa)
     useEffect(() => {
         const el = terminalRef.current
         if (!el) return
+        if (abaAnterior.current !== ativa) {
+            // Trocou de aba: comeca do topo. Quem clicou na outra linguagem
+            // quer ler do inicio, nao cair no fim do arquivo.
+            abaAnterior.current = ativa
+            el.scrollTop = 0
+            return
+        }
         // Digitando: acompanha a escrita, sem arrastar a pagina junto.
-        // Ja completo (troca de aba): volta ao topo — quem clicou na outra
-        // linguagem quer ler do inicio, nao cair no fim do arquivo.
-        el.scrollTop = mostrarTudo ? 0 : el.scrollHeight
-    }, [linhaAtual, mostrarTudo, ativa])
+        // Nao mexe no scroll ao CONCLUIR — isso daria um pulo para o topo
+        // no instante em que a digitacao termina.
+        if (!concluido) el.scrollTop = el.scrollHeight
+    }, [linhaAtual, ativa, concluido])
 
     return (
         <motion.div
@@ -223,10 +250,7 @@ export default function CodeTerminal({ snippets }: CodeTerminalProps) {
                                 key={s.id}
                                 role="tab"
                                 aria-selected={i === ativa}
-                                onClick={() => {
-                                    setJaTrocou(true)
-                                    setAtiva(i)
-                                }}
+                                onClick={() => trocarPara(i)}
                                 className={`px-2 py-0.5 rounded text-xs font-mono transition-colors ${
                                     i === ativa
                                         ? "bg-slate-700/70 dark:bg-orange-900/30 text-slate-200 dark:text-orange-200"
