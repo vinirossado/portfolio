@@ -55,9 +55,12 @@ export async function getMediumPosts(limit = 3): Promise<MediumPost[]> {
         title: stripHtml(pick(raw, "title")),
         link: pick(raw, "link").split("?")[0],
         date: pick(raw, "pubDate"),
+        // 5 e o teto do proprio Medium por post, entao na pratica isto mostra
+        // TODAS as tags. Era 3, o que escondia duas de cada card sem nenhum
+        // sinal de que existiam.
         tags: [...raw.matchAll(/<category><!\[CDATA\[(.*?)\]\]><\/category>/g)]
           .map((m) => m[1])
-          .slice(0, 3),
+          .slice(0, 5),
         snippet: text.slice(0, 160) + (text.length > 160 ? "…" : ""),
       }
     })
