@@ -2,13 +2,14 @@
 
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
-import { Compass, Hammer, Sprout, ExternalLink, ArrowUpRight } from "lucide-react"
+import { Compass, Hammer, Sprout, ExternalLink, ArrowUpRight, Music } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
 import type { MediumPost } from "@/lib/medium"
+import type { TidalPlaylist } from "@/lib/tidal"
 
 const MEDIUM_URL = "https://medium.com/@viniciusrossado"
 
-export default function Now({ posts }: { posts: MediumPost[] }) {
+export default function Now({ posts, playlist }: { posts: MediumPost[]; playlist: TidalPlaylist | null }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.1, margin: "0px 0px 15% 0px" })
   const { t } = useLanguage()
@@ -69,6 +70,88 @@ export default function Now({ posts }: { posts: MediumPost[] }) {
             </motion.div>
           ))}
         </div>
+
+        {/* ---------- Playlist / Tidal ---------- */}
+        {playlist && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.35 }}
+            className="mb-16 rounded-xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-lg overflow-hidden"
+          >
+            {/*
+              A faixa fina no topo usa a cor dominante que o proprio Tidal
+              extrai da capa. E o unico lugar do site com uma cor que nao e
+              azul/laranja — e ela muda junto com a playlist, entao o bloco
+              sempre combina com a arte que esta mostrando.
+            */}
+            {playlist.cor && <div className="h-1 w-full" style={{ backgroundColor: playlist.cor }} />}
+
+            <div className="flex flex-col sm:flex-row gap-6 p-6">
+              {playlist.capa && (
+                <a
+                  href={playlist.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-shrink-0 self-start"
+                >
+                  <img
+                    src={playlist.capa}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className="w-40 h-40 sm:w-44 sm:h-44 rounded-lg object-cover shadow-md bg-slate-100 dark:bg-slate-700"
+                  />
+                </a>
+              )}
+
+              <div className="flex flex-col min-w-0 flex-grow">
+                <div className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-blue-600 dark:text-orange-400">
+                  <Music size={13} /> {t("listening")}
+                </div>
+                <a
+                  href={playlist.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-1 text-lg font-bold text-slate-800 dark:text-white hover:text-blue-600 dark:hover:text-orange-400 transition-colors"
+                >
+                  {playlist.nome}
+                </a>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  {playlist.totalFaixas} {t("tracks")} · {playlist.duracaoMin} min
+                </p>
+
+                {playlist.faixas.length > 0 && (
+                  <ol className="mt-4 space-y-1.5">
+                    {playlist.faixas.slice(0, 5).map((f, i) => (
+                      <li key={f.id} className="flex items-baseline gap-3 text-sm">
+                        <span className="w-4 flex-shrink-0 text-right text-xs tabular-nums text-slate-400 dark:text-slate-500">
+                          {i + 1}
+                        </span>
+                        <span className="truncate text-slate-700 dark:text-slate-200">{f.titulo}</span>
+                        <span className="truncate text-slate-500 dark:text-slate-400">{f.artista}</span>
+                        <span className="ml-auto flex-shrink-0 text-xs tabular-nums text-slate-400 dark:text-slate-500">
+                          {f.duracao}
+                        </span>
+                      </li>
+                    ))}
+                  </ol>
+                )}
+
+                <div className="mt-5 flex">
+                  <a
+                    href={playlist.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-blue-300 dark:hover:border-orange-700 hover:text-blue-600 dark:hover:text-orange-400 transition-colors"
+                  >
+                    {t("listenOnTidal")} <ArrowUpRight size={15} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
 
         {/* ---------- Escrita / Medium ---------- */}
         <motion.div

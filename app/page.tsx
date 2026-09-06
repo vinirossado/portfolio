@@ -13,6 +13,7 @@ import BuyMeACoffeeButton from "@/components/buy-me-a-coffee"
 import EasterEggs from "@/components/easter-eggs"
 import { getMediumPosts } from "@/lib/medium"
 import { getGithubData } from "@/lib/github"
+import { getTidalPlaylist } from "@/lib/tidal"
 
 export default async function Home() {
   /*
@@ -23,7 +24,11 @@ export default async function Home() {
     numero aqui ja escondeu posts duas vezes — ver o comentario em lib/medium.ts.
   */
   // As duas leituras externas correm juntas: uma nao espera a outra.
-  const [posts, github] = await Promise.all([getMediumPosts(), getGithubData()])
+  const [posts, github, playlist] = await Promise.all([
+    getMediumPosts(),
+    getGithubData(),
+    getTidalPlaylist(),
+  ])
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
@@ -36,7 +41,7 @@ export default async function Home() {
       <Projects />
       <Experience />
       <GithubStats dados={github} />
-      <Now posts={posts} />
+      <Now posts={posts} playlist={playlist} />
       {/*
         Contato escondido por enquanto (sem backend para receber o envio).
         O componente continua pronto: basta descomentar e, se quiser o envio

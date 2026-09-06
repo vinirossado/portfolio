@@ -34,7 +34,16 @@ jobs:
 
       - run: npm ci
 
+      # As credenciais do Tidal e do Medium sao lidas DURANTE o build: o site e
+      # estatico, entao o que nao for buscado aqui nao existe na pagina. Sem
+      # estas variaveis a secao da playlist simplesmente nao e renderizada — a
+      # pagina continua correta, so mais pobre. Por isso nao ha verificacao que
+      # falhe por causa delas.
       - run: npm run build
+        env:
+          TIDAL_CLIENT_ID: ${{ secrets.TIDAL_CLIENT_ID }}
+          TIDAL_CLIENT_SECRET: ${{ secrets.TIDAL_CLIENT_SECRET }}
+          TIDAL_PLAYLIST: ${{ secrets.TIDAL_PLAYLIST }}
 
       # ---------------------------------------------------------------------
       # Portao de qualidade antes de publicar.

@@ -12,6 +12,9 @@ interface LanguageContextType {
 
 const translations = {
   pt: {
+    listening: "Ouvindo",
+    tracks: "faixas",
+    listenOnTidal: "Ouvir no Tidal",
     readOnMedium: "Leia no Medium",
     latestPost: "Mais recente",
     // ---- Chaves que faltavam: t() devolve a propria chave quando nao acha,
@@ -398,6 +401,9 @@ const translations = {
     ghLastPush: "Ultimo push em",
   },
   en: {
+    listening: "Listening to",
+    tracks: "tracks",
+    listenOnTidal: "Listen on Tidal",
     readOnMedium: "Read on Medium",
     latestPost: "Latest",
     footerRights: "All rights reserved.",
@@ -773,6 +779,9 @@ const translations = {
     ghLastPush: "Last push on",
   },
   ru: {
+    listening: "Слушаю",
+    tracks: "треков",
+    listenOnTidal: "Слушать в Tidal",
     readOnMedium: "Читать на Medium",
     latestPost: "Последняя статья",
     footerRights: "Все права защищены.",
@@ -1145,6 +1154,9 @@ const translations = {
     ghLastPush: "Posledniy push",
   },
   et: {
+    listening: "Kuulan",
+    tracks: "lugu",
+    listenOnTidal: "Kuula Tidalis",
     readOnMedium: "Loe Mediumis",
     latestPost: "Viimane",
     footerRights: "Kõik õigused kaitstud.",
