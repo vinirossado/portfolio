@@ -4,6 +4,8 @@ export interface MediumPost {
   date: string
   tags: string[]
   snippet: string
+  /** Primeira imagem do post, usada como capa. Vazio se o post nao tiver. */
+  capa: string
 }
 
 const FEED = "https://medium.com/feed/@viniciusrossado"
@@ -31,6 +33,19 @@ function stripHtml(html: string) {
 }
 
 /**
+ * Primeira imagem do corpo do post — no Medium, e a capa.
+ *
+ * O feed nao tem um campo de imagem destacada; o que existe e o HTML inteiro
+ * do post dentro de `content:encoded`. A primeira <img> dali e a capa em todos
+ * os posts verificados. Devolve "" quando o post nao tem imagem nenhuma, e a
+ * secao simplesmente nao mostra capa nesse caso.
+ */
+function primeiraImagem(html: string) {
+  const m = html.match(/<img[^>]+src="([^"]+)"/)
+  return m ? m[1] : ""
+}
+
+/**
  * Le o RSS do Medium em BUILD TIME.
  *
  * O site e `output: 'export'`, entao Server Components rodam durante o build e
@@ -41,7 +56,17 @@ function stripHtml(html: string) {
  * Se a rede falhar no build, retorna [] e a secao mostra so o link do perfil —
  * o build nunca quebra por causa disso.
  */
-export async function getMediumPosts(limit = 3): Promise<MediumPost[]> {
+/*
+  Sem limite por padrao, e isso e deliberado.
+
+  Este parametro ja foi 3 (escondia o quarto post) e depois 4, fixado com a
+  justificativa de que "preenche exatamente uma linha da grade". Dois dias
+  depois saiu um quinto post e o mais antigo sumiu de novo, em silencio — o
+  mesmo bug, pela mesma causa: um numero cravado no codigo para casar com um
+  layout. O layout agora e destaque + lista, que acomoda qualquer quantidade,
+  entao o corte deixou de existir. O proprio Medium ja limita o feed a ~10.
+*/
+export async function getMediumPosts(limit = 20): Promise<MediumPost[]> {
   try {
     const res = await fetch(FEED, { next: { revalidate: 3600 } })
     if (!res.ok) return []
@@ -51,6 +76,7 @@ export async function getMediumPosts(limit = 3): Promise<MediumPost[]> {
     return items.map((raw) => {
       const content = pick(raw, "content:encoded")
       const text = stripHtml(content)
+      const capa = primeiraImagem(content)
       return {
         title: stripHtml(pick(raw, "title")),
         link: pick(raw, "link").split("?")[0],
@@ -61,7 +87,10 @@ export async function getMediumPosts(limit = 3): Promise<MediumPost[]> {
         tags: [...raw.matchAll(/<category><!\[CDATA\[(.*?)\]\]><\/category>/g)]
           .map((m) => m[1])
           .slice(0, 5),
-        snippet: text.slice(0, 160) + (text.length > 160 ? "…" : ""),
+        // 240 e nao 160: so o card em destaque mostra trecho, e ele tem
+        // espaco para mais uma linha ou duas.
+        snippet: text.slice(0, 240) + (text.length > 240 ? "…" : ""),
+        capa,
       }
     })
   } catch {

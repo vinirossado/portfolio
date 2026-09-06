@@ -12,6 +12,8 @@ interface LanguageContextType {
 
 const translations = {
   pt: {
+    readOnMedium: "Leia no Medium",
+    latestPost: "Mais recente",
     // ---- Chaves que faltavam: t() devolve a propria chave quando nao acha,
     // entao o rodape mostrava literalmente "footerRights" e as barras de
     // skill diziam "9 years" mesmo em portugues. ----
@@ -396,6 +398,8 @@ const translations = {
     ghLastPush: "Ultimo push em",
   },
   en: {
+    readOnMedium: "Read on Medium",
+    latestPost: "Latest",
     footerRights: "All rights reserved.",
     years: "years",
     // Tres formas: o russo pede 1 год / 2-4 года / 5+ лет. Nos outros
@@ -769,6 +773,8 @@ const translations = {
     ghLastPush: "Last push on",
   },
   ru: {
+    readOnMedium: "Читать на Medium",
+    latestPost: "Последняя статья",
     footerRights: "Все права защищены.",
     years: "лет",
     // Tres formas: o russo pede 1 год / 2-4 года / 5+ лет. Nos outros
@@ -1139,6 +1145,8 @@ const translations = {
     ghLastPush: "Posledniy push",
   },
   et: {
+    readOnMedium: "Loe Mediumis",
+    latestPost: "Viimane",
     footerRights: "Kõik õigused kaitstud.",
     years: "aastat",
     // Tres formas: o russo pede 1 год / 2-4 года / 5+ лет. Nos outros

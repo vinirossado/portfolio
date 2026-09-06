@@ -76,63 +76,145 @@ export default function Now({ posts }: { posts: MediumPost[] }) {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <div className="flex items-center justify-between gap-4 mb-6">
-            <h3 className="text-2xl font-bold text-slate-800 dark:text-white">{t("writing")}</h3>
-            <a
-              href={MEDIUM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-medium text-blue-600 dark:text-orange-400 hover:underline flex items-center gap-1 whitespace-nowrap"
-            >
-              {t("seeAllOnMedium")} <ExternalLink size={14} />
-            </a>
-          </div>
+          <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">{t("writing")}</h3>
 
           {posts.length > 0 ? (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {posts.map((post, index) => (
-                <motion.a
-                  key={post.link}
-                  href={post.link}
+            <>
+              {/*
+                Destaque + lista, e nao uma grade uniforme: o numero de posts
+                muda sozinho conforme eu publico, e toda grade de N colunas
+                acaba com um buraco em alguma contagem. Assim 4, 5 ou 9 posts
+                ficam igualmente bem, e o mais recente ganha a capa grande.
+              */}
+              <div className="grid lg:grid-cols-2 gap-6">
+                {(() => {
+                  const [destaque, ...resto] = posts
+                  return (
+                    <>
+                      <motion.article
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 0.5, delay: 0.45 }}
+                        className="flex flex-col bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-700 hover:border-blue-200 dark:hover:border-orange-800 hover:shadow-xl transition-all group"
+                      >
+                        {destaque.capa && (
+                          <a href={destaque.link} target="_blank" rel="noopener noreferrer" tabIndex={-1} aria-hidden="true">
+                            {/* aspect-video reserva o espaco antes da imagem chegar,
+                                senao o card salta quando ela carrega */}
+                            <img
+                              src={destaque.capa}
+                              alt=""
+                              loading="lazy"
+                              decoding="async"
+                              className="w-full aspect-video object-cover bg-slate-100 dark:bg-slate-700"
+                            />
+                          </a>
+                        )}
+                        <div className="flex flex-col flex-grow p-6">
+                          <span className="text-xs font-medium uppercase tracking-wider text-blue-600 dark:text-orange-400 mb-2">
+                            {t("latestPost")}
+                          </span>
+                          <a
+                            href={destaque.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xl font-bold text-slate-800 dark:text-white leading-snug group-hover:text-blue-600 dark:group-hover:text-orange-400 transition-colors"
+                          >
+                            {destaque.title}
+                          </a>
+                          <p className="mt-3 text-sm text-slate-600 dark:text-slate-300 flex-grow">{destaque.snippet}</p>
+                          <div className="mt-4 flex flex-wrap items-center gap-2">
+                            {destaque.tags.map((tag) => (
+                              <span
+                                key={tag}
+                                className="text-xs px-2 py-0.5 bg-blue-100 dark:bg-slate-700 text-blue-700 dark:text-orange-400 rounded-full"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                          <div className="mt-5 flex items-center justify-between gap-4">
+                            {destaque.date && (
+                              <time className="text-xs text-slate-500 dark:text-slate-400">
+                                {new Date(destaque.date).toLocaleDateString(undefined, {
+                                  year: "numeric", month: "short", day: "numeric",
+                                })}
+                              </time>
+                            )}
+                            <a
+                              href={destaque.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 hover:bg-blue-700 dark:bg-orange-500 dark:hover:bg-orange-600 text-white transition-colors"
+                            >
+                              {t("readOnMedium")} <ArrowUpRight size={15} />
+                            </a>
+                          </div>
+                        </div>
+                      </motion.article>
+
+                      <div className="flex flex-col gap-4">
+                        {resto.map((post, index) => (
+                          <motion.a
+                            key={post.link}
+                            href={post.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            initial={{ opacity: 0, y: 16 }}
+                            animate={isInView ? { opacity: 1, y: 0 } : {}}
+                            transition={{ duration: 0.4, delay: 0.5 + index * 0.07 }}
+                            className="flex gap-4 bg-white dark:bg-slate-800 rounded-xl p-4 shadow-md border border-slate-100 dark:border-slate-700 hover:border-blue-200 dark:hover:border-orange-800 hover:shadow-lg transition-all group"
+                          >
+                            {post.capa && (
+                              <img
+                                src={post.capa}
+                                alt=""
+                                loading="lazy"
+                                decoding="async"
+                                className="w-24 h-24 flex-shrink-0 rounded-lg object-cover bg-slate-100 dark:bg-slate-700"
+                              />
+                            )}
+                            <div className="flex flex-col min-w-0">
+                              <h4 className="font-bold text-sm text-slate-800 dark:text-white leading-snug group-hover:text-blue-600 dark:group-hover:text-orange-400 transition-colors">
+                                {post.title}
+                              </h4>
+                              <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                                {post.tags.slice(0, 3).map((tag) => (
+                                  <span
+                                    key={tag}
+                                    className="text-[11px] px-1.5 py-0.5 bg-blue-100 dark:bg-slate-700 text-blue-700 dark:text-orange-400 rounded-full"
+                                  >
+                                    {tag}
+                                  </span>
+                                ))}
+                              </div>
+                              {post.date && (
+                                <time className="mt-auto pt-2 text-xs text-slate-500 dark:text-slate-400">
+                                  {new Date(post.date).toLocaleDateString(undefined, {
+                                    year: "numeric", month: "short", day: "numeric",
+                                  })}
+                                </time>
+                              )}
+                            </div>
+                          </motion.a>
+                        ))}
+                      </div>
+                    </>
+                  )
+                })()}
+              </div>
+
+              <div className="mt-8 flex justify-center">
+                <a
+                  href={MEDIUM_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.4, delay: 0.45 + index * 0.08 }}
-                  className="flex flex-col bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg border border-slate-100 dark:border-slate-700 hover:border-blue-200 dark:hover:border-orange-800 hover:shadow-xl transition-all group"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:border-blue-300 dark:hover:border-orange-700 hover:text-blue-600 dark:hover:text-orange-400 transition-colors shadow-sm"
                 >
-                  <div className="flex items-start justify-between gap-3 mb-2">
-                    <h4 className="font-bold text-slate-800 dark:text-white leading-snug group-hover:text-blue-600 dark:group-hover:text-orange-400 transition-colors">
-                      {post.title}
-                    </h4>
-                    <ArrowUpRight
-                      size={16}
-                      className="flex-shrink-0 mt-1 text-slate-400 group-hover:text-blue-600 dark:group-hover:text-orange-400 transition-colors"
-                    />
-                  </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-300 flex-grow">{post.snippet}</p>
-                  <div className="mt-4 flex flex-wrap items-center gap-2">
-                    {post.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs px-2 py-0.5 bg-blue-100 dark:bg-slate-700 text-blue-700 dark:text-orange-400 rounded-full"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  {post.date && (
-                    <time className="mt-3 text-xs text-slate-500 dark:text-slate-400">
-                      {new Date(post.date).toLocaleDateString(undefined, {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </time>
-                  )}
-                </motion.a>
-              ))}
-            </div>
+                  {t("seeAllOnMedium")} <ExternalLink size={15} />
+                </a>
+              </div>
+            </>
           ) : (
             // Feed indisponivel no build — nunca deixa a secao vazia
             <a
