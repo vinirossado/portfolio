@@ -12,6 +12,7 @@ import ThemeToggle from "@/components/theme-toggle"
 import BuyMeACoffeeButton from "@/components/buy-me-a-coffee"
 import EasterEggs from "@/components/easter-eggs"
 import { getMediumPosts } from "@/lib/medium"
+import { getGithubData } from "@/lib/github"
 
 export default async function Home() {
   /*
@@ -21,7 +22,8 @@ export default async function Home() {
     Sem limite: a secao mostra todos os posts que o feed devolver. Fixar um
     numero aqui ja escondeu posts duas vezes — ver o comentario em lib/medium.ts.
   */
-  const posts = await getMediumPosts()
+  // As duas leituras externas correm juntas: uma nao espera a outra.
+  const [posts, github] = await Promise.all([getMediumPosts(), getGithubData()])
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
@@ -30,10 +32,10 @@ export default async function Home() {
       <BuyMeACoffeeButton variant="header" />
       <Hero name="Vinicius Rossado" title="Senior Software Engineer" photoUrl="/profilepic.jpeg" />
       <About />
-      <Skills />
+      <Skills repos={github.lista} />
       <Projects />
       <Experience />
-      <GithubStats />
+      <GithubStats dados={github} />
       <Now posts={posts} />
       {/*
         Contato escondido por enquanto (sem backend para receber o envio).

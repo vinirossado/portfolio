@@ -5,7 +5,7 @@ import { motion, useInView } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 import { Cloud, Code, Database, ExternalLink, Layers, Smartphone, Star } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
-import { GithubRepository } from "@/models/github-repository"
+import type { RepoResumo } from "@/lib/github"
 import { anosDeExperiencia, anosDesde, EMPRESA_ATUAL } from "@/lib/career"
 
 interface Skill {
@@ -185,14 +185,12 @@ const skills: Skill[] = [
 // constante solta. Se um dia a skill mais antiga mudar, a escala acompanha.
 const maxYears = Math.max(...skills.map((s) => s.year))
 
-export default function Skills() {
+export default function Skills({ repos = [] }: { repos?: RepoResumo[] }) {
   const ref = useRef(null)
   const detailsRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, amount: 0.1, margin: "0px 0px 15% 0px" })
   const [activeSkill, setActiveSkill] = useState<Skill | null>(null)
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
-  const [repos, setRepos] = useState<GithubRepository[]>([])
-  const [isLoading, setIsLoading] = useState(false)
 
   const { t, language } = useLanguage()
 
@@ -235,27 +233,12 @@ export default function Skills() {
     }
   }
 
-  // Fetch repos once and cache them
-  useEffect(() => {
-    const fetchRepos = async () => {
-      if (repos.length > 0) return
-      if (activeSkill && getGithubLanguage(activeSkill)) {
-        setIsLoading(true)
-        try {
-          const response = await fetch(`https://api.github.com/users/vinirossado/repos?sort=updated&per_page=100`)
-          const data = await response.json()
-          setRepos(data)
-        } catch (error) {
-          console.error("Error fetching repos:", error)
-          setRepos([])
-        } finally {
-          setIsLoading(false)
-        }
-      }
-    }
-    fetchRepos()
-  }, [activeSkill])
-
+  /*
+    Os repositorios chegam prontos do build (lib/github.ts). Antes este
+    componente disparava a MESMA chamada que o github-stats ja fazia — duas
+    requisicoes identicas por visitante, ambas contra o limite de 60/hora por
+    IP da API sem token.
+  */
   const githubLang = activeSkill ? getGithubLanguage(activeSkill) : null
   const filteredRepos = githubLang
     ? repos.filter((repo) => repo.language === githubLang)
@@ -477,22 +460,8 @@ export default function Skills() {
                       )}
                     </h5>
 
-                    {isLoading ? (
-                      <div className="flex justify-center items-center py-6 space-x-2">
-                        <div
-                          className="w-2 h-2 rounded-full bg-blue-400 animate-bounce"
-                          style={{ animationDelay: "0ms" }}
-                        ></div>
-                        <div
-                          className="w-2 h-2 rounded-full bg-blue-400 animate-bounce"
-                          style={{ animationDelay: "150ms" }}
-                        ></div>
-                        <div
-                          className="w-2 h-2 rounded-full bg-blue-400 animate-bounce"
-                          style={{ animationDelay: "300ms" }}
-                        ></div>
-                      </div>
-                    ) : filteredRepos.length > 0 ? (
+                    {/* sem estado de carregamento: os repos vem do build, ja estao aqui */}
+                    {filteredRepos.length > 0 ? (
                       <div className="space-y-3 max-h-64 overflow-y-auto pr-1 custom-scrollbar">
                         {filteredRepos.sort((a, b) => b.stargazers_count - a.stargazers_count).slice(0, 5).map((repo) => (
                           <motion.div

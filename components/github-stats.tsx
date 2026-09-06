@@ -1,10 +1,10 @@
 "use client"
 
 import { motion, useInView } from "framer-motion"
-import { useEffect, useRef, useState } from "react"
+import { useRef } from "react"
 import { Star, GitFork, Github, Code2, CircleDot } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
-import { GithubRepository } from "@/models/github-repository"
+import type { GithubDados } from "@/lib/github"
 
 const USER = "vinirossado"
 
@@ -24,70 +24,24 @@ const LANG_COLOR: Record<string, string> = {
   Python: "#3572A5",
 }
 
-interface Stats {
-  repos: number
-  stars: number
-  forks: number
-  languages: { name: string; count: number; pct: number }[]
-  lastPush: string | null
-}
-
-export default function GithubStats() {
+export default function GithubStats({ dados }: { dados: GithubDados }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.1, margin: "0px 0px 15% 0px" })
   const { t } = useLanguage()
-  const [stats, setStats] = useState<Stats | null>(null)
-  const [failed, setFailed] = useState(false)
 
-  useEffect(() => {
-    if (!isInView || stats || failed) return
-    let cancelado = false
-
-    ;(async () => {
-      try {
-        const res = await fetch(`https://api.github.com/users/${USER}/repos?sort=pushed&per_page=100`)
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        const data: GithubRepository[] = await res.json()
-        if (!Array.isArray(data)) throw new Error("resposta inesperada")
-        if (cancelado) return
-
-        const proprios = data.filter((r: any) => !r.fork)
-        const porLingua = new Map<string, number>()
-        for (const r of proprios) {
-          if (!r.language) continue
-          porLingua.set(r.language, (porLingua.get(r.language) ?? 0) + 1)
-        }
-        const totalComLingua = [...porLingua.values()].reduce((a, b) => a + b, 0) || 1
-        const languages = [...porLingua.entries()]
-          .map(([name, count]) => ({ name, count, pct: (count / totalComLingua) * 100 }))
-          .sort((a, b) => b.count - a.count)
-          .slice(0, 6)
-
-        setStats({
-          repos: proprios.length,
-          stars: proprios.reduce((a, r) => a + (r.stargazers_count ?? 0), 0),
-          forks: proprios.reduce((a, r: any) => a + (r.forks_count ?? 0), 0),
-          languages,
-          lastPush: (proprios[0] as any)?.pushed_at ?? null,
-        })
-      } catch {
-        // API do GitHub tem rate limit de 60 req/h por IP sem token.
-        // Falhar em silencio e melhor do que mostrar zeros como se fossem reais.
-        if (!cancelado) setFailed(true)
-      }
-    })()
-
-    return () => {
-      cancelado = true
-    }
-  }, [isInView, stats, failed])
-
-  if (failed) return null
+  /*
+    Os dados chegam prontos do build (lib/github.ts). Nao ha mais fetch no
+    cliente, entao tambem nao ha estado de carregamento nem de falha: ou o
+    build conseguiu ler a API e a secao aparece completa, ou nao conseguiu e
+    ela nao existe. Meio-termo com esqueleto piscando era pior.
+  */
+  const stats = dados
+  if (stats.repos === 0) return null
 
   const numeros = [
-    { icon: <Code2 className="w-4 h-4" />, valor: stats?.repos, labelKey: "ghRepos" },
-    { icon: <Star className="w-4 h-4" />, valor: stats?.stars, labelKey: "ghStars" },
-    { icon: <GitFork className="w-4 h-4" />, valor: stats?.forks, labelKey: "ghForks" },
+    { icon: <Code2 className="w-4 h-4" />, valor: stats.repos, labelKey: "ghRepos" },
+    { icon: <Star className="w-4 h-4" />, valor: stats.stars, labelKey: "ghStars" },
+    { icon: <GitFork className="w-4 h-4" />, valor: stats.forks, labelKey: "ghForks" },
   ]
 
   return (
@@ -127,11 +81,7 @@ export default function GithubStats() {
                 </span>
               </div>
               <div className="text-4xl font-bold text-slate-800 dark:text-white tabular-nums">
-                {n.valor === undefined ? (
-                  <span className="inline-block w-16 h-9 rounded bg-slate-200 dark:bg-slate-700 animate-pulse" />
-                ) : (
-                  n.valor
-                )}
+                {n.valor}
               </div>
             </motion.div>
           ))}
@@ -155,10 +105,8 @@ export default function GithubStats() {
             </a>
           </div>
 
-          {stats ? (
-            <>
-              {/* barra unica proporcional, como no GitHub */}
-              <div className="flex h-2.5 w-full rounded-full overflow-hidden bg-slate-200 dark:bg-slate-700 mb-5">
+          {/* barra unica proporcional, como no GitHub */}
+          <div className="flex h-2.5 w-full rounded-full overflow-hidden bg-slate-200 dark:bg-slate-700 mb-5">
                 {stats.languages.map((l) => (
                   <div
                     key={l.name}
@@ -167,9 +115,9 @@ export default function GithubStats() {
                   />
                 ))}
               </div>
-              <div className="flex flex-wrap gap-x-6 gap-y-2">
-                {stats.languages.map((l) => (
-                  <div key={l.name} className="flex items-center gap-2 text-sm">
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            {stats.languages.map((l) => (
+              <div key={l.name} className="flex items-center gap-2 text-sm">
                     <span
                       className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                       style={{ backgroundColor: LANG_COLOR[l.name] ?? "#94A3B8" }}
@@ -179,7 +127,7 @@ export default function GithubStats() {
                   </div>
                 ))}
               </div>
-              {stats.lastPush && (
+          {stats.lastPush && (
                 <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-700 flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
                   <CircleDot size={12} className="text-green-500" />
                   {t("ghLastPush")}{" "}
@@ -190,13 +138,6 @@ export default function GithubStats() {
                   })}
                 </div>
               )}
-            </>
-          ) : (
-            <div className="space-y-3">
-              <div className="h-2.5 w-full rounded-full bg-slate-200 dark:bg-slate-700 animate-pulse" />
-              <div className="h-4 w-2/3 rounded bg-slate-200 dark:bg-slate-700 animate-pulse" />
-            </div>
-          )}
         </motion.div>
       </div>
     </section>
