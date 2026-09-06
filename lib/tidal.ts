@@ -26,6 +26,10 @@ export interface TidalFaixa {
 }
 
 export interface TidalPlaylist {
+  /* O id vive aqui para que o player embutido e os dados do card venham da
+     MESMA playlist. Colar a URL do embed a parte deixaria os dois livres para
+     divergir — o card descrevendo uma playlist e o player tocando outra. */
+  id: string
   nome: string
   url: string
   capa: string
@@ -132,6 +136,7 @@ export async function getTidalPlaylist(): Promise<TidalPlaylist | null> {
     }
 
     return {
+      id,
       nome: attrs.name ?? "",
       url:
         attrs.externalLinks?.[0]?.href ?? `https://tidal.com/browse/playlist/${id}`,

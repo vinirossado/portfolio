@@ -12,6 +12,9 @@ interface LanguageContextType {
 
 const translations = {
   pt: {
+    playHere: "Tocar aqui",
+    closePlayer: "Fechar",
+    previewNote: "Prévias de 30s. Ouça completo no Tidal.",
     listening: "Ouvindo",
     tracks: "faixas",
     listenOnTidal: "Ouvir no Tidal",
@@ -401,6 +404,9 @@ const translations = {
     ghLastPush: "Ultimo push em",
   },
   en: {
+    playHere: "Play here",
+    closePlayer: "Close",
+    previewNote: "30-second previews. Full tracks on Tidal.",
     listening: "Listening to",
     tracks: "tracks",
     listenOnTidal: "Listen on Tidal",
@@ -779,6 +785,9 @@ const translations = {
     ghLastPush: "Last push on",
   },
   ru: {
+    playHere: "Слушать здесь",
+    closePlayer: "Закрыть",
+    previewNote: "30-секундные превью. Полные треки в Tidal.",
     listening: "Слушаю",
     tracks: "треков",
     listenOnTidal: "Слушать в Tidal",
@@ -1154,6 +1163,9 @@ const translations = {
     ghLastPush: "Posledniy push",
   },
   et: {
+    playHere: "Kuula siin",
+    closePlayer: "Sulge",
+    previewNote: "30-sekundilised eelvaated. Täispikad lood Tidalis.",
     listening: "Kuulan",
     tracks: "lugu",
     listenOnTidal: "Kuula Tidalis",
